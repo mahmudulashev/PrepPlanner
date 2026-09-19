@@ -58,12 +58,14 @@ enum EditorSheet: Identifiable {
     case ielts(IELTSMock?)
     case sat(SATMock?)
     case error(ErrorEntry?, ErrorPrefill?)
+    case habit(Habit?)
 
     var id: String {
         switch self {
         case .ielts(let m): "ielts-\(m?.uid.uuidString ?? "new")"
         case .sat(let m): "sat-\(m?.uid.uuidString ?? "new")"
         case .error(let e, _): "error-\(e?.uid.uuidString ?? "new")"
+        case .habit(let h): "habit-\(h?.uid.uuidString ?? "new")"
         }
     }
 }

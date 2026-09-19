@@ -29,6 +29,7 @@ struct RootView: View {
             case .ielts(let mock): IELTSEditor(mock: mock)
             case .sat(let mock): SATEditor(mock: mock)
             case .error(let entry, let prefill): ErrorEditor(entry: entry, prefill: prefill)
+            case .habit(let habit): HabitEditor(habit: habit)
             }
         }
         .tint(Theme.accent)
@@ -40,7 +41,7 @@ struct RootView: View {
         case .planner:
             PlannerView()
         case .habits:
-            ComingSoonView(title: "Habits", symbol: "checkmark.circle", phase: 4)
+            HabitsView()
         case .results:
             ResultsView()
         case .errors:
@@ -76,19 +77,5 @@ private struct SidebarCountdown: View {
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(.secondary)
         }
-    }
-}
-
-private struct ComingSoonView: View {
-    let title: String
-    let symbol: String
-    let phase: Int
-
-    var body: some View {
-        ContentUnavailableView(title, systemImage: symbol,
-                               description: Text("This screen is built in Phase \(phase)."))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Theme.background)
-            .navigationTitle(title)
     }
 }

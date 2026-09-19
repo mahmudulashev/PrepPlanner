@@ -40,6 +40,18 @@ enum Seeder {
         if count(ErrorType.self, in: context) == 0 {
             seedErrorTypes(context)
         }
+        // Seed starter habits once; the user may delete them all later.
+        let habitsKey = "didSeedHabits"
+        if !UserDefaults.standard.bool(forKey: habitsKey) {
+            if count(Habit.self, in: context) == 0 {
+                let starters = [("Wrote Task 2", "✍️"), ("Recorded speaking", "🎙️"),
+                                ("Slept 7+ hours", "😴"), ("Reviewed error log", "📒")]
+                for (i, item) in starters.enumerated() {
+                    context.insert(Habit(name: DefaultNames.seedName(item.0), emoji: item.1, order: i))
+                }
+            }
+            UserDefaults.standard.set(true, forKey: habitsKey)
+        }
         try? context.save()
     }
 

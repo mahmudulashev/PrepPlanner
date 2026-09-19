@@ -20,6 +20,11 @@ struct AppCommands: Commands {
                 state.editor = .sat(nil)
             }
             .keyboardShortcut("r", modifiers: [.command, .shift])
+            Button("New Habit…") {
+                state.section = .habits
+                state.editor = .habit(nil)
+            }
+            .keyboardShortcut("n", modifiers: [.command, .option])
         }
         CommandGroup(replacing: .saveItem) {}
         CommandGroup(replacing: .printItem) {}

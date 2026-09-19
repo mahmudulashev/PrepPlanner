@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-/// English and Uzbek names for the built-in categories, templates, template blocks and error types.
+/// English and Uzbek names for the built-in categories, templates, template blocks, habits and error types.
 enum DefaultNames {
     static let pairs: [(en: String, uz: String)] = [
         // Categories
@@ -32,6 +32,11 @@ enum DefaultNames {
         ("Mock error analysis", "Sinov xatolarini tahlil qilish"),
         ("Redo missed Math questions", "Xato qilingan Math savollarini qayta ishlash"),
         ("Redo missed R&W questions", "Xato qilingan R&W savollarini qayta ishlash"),
+        // Habits
+        ("Wrote Task 2", "Task 2 yozdim"),
+        ("Recorded speaking", "Speakingni yozib oldim"),
+        ("Slept 7+ hours", "7+ soat uxladim"),
+        ("Reviewed error log", "Xatolar jurnalini koʻrib chiqdim"),
         // Error types
         ("Spelling/plural", "Imlo/koʻplik"),
         ("Word limit", "Soʻz chegarasi"),
@@ -84,6 +89,7 @@ enum DefaultNames {
         for b in (try? context.fetch(FetchDescriptor<TemplateBlock>())) ?? [] { rename(&b.title) }
         for b in (try? context.fetch(FetchDescriptor<TimeBlock>())) ?? [] { rename(&b.title) }
         for e in (try? context.fetch(FetchDescriptor<ErrorType>())) ?? [] { rename(&e.name) }
+        for h in (try? context.fetch(FetchDescriptor<Habit>())) ?? [] { rename(&h.name) }
         try? context.save()
         return count
     }
