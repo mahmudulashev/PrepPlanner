@@ -125,6 +125,7 @@ struct ErrorLogView: View {
                     search = ""
                 }
                 .buttonStyle(.link)
+                .foregroundStyle(Theme.accent)
             }
             Text("\(count) error\(count == 1 ? "" : "s")")
                 .font(.callout.weight(.semibold))
@@ -198,7 +199,7 @@ struct ErrorLogView: View {
             }
             .width(min: 120, ideal: 170)
         }
-        .tableStyle(.inset)
+        .tableStyle(.inset(alternatesRowBackgrounds: false))
         .scrollContentBackground(.hidden)
         .contextMenu(forSelectionType: PersistentIdentifier.self) { ids in
             let items = rows.filter { ids.contains($0.persistentModelID) }

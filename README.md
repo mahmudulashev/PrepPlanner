@@ -29,8 +29,19 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
   Merge / Replace / Skip handling for days that already have blocks
 - Header with planned vs completed study hours and countdowns to both exams
 
+### Results
+- IELTS mocks: raw Listening and Academic Reading scores (0–40) are converted to bands automatically;
+  Writing and Speaking bands with optional marking criteria (TR/CC/LR/GRA, FC/LR/GRA/P)
+- Overall band = average of the four bands rounded to the nearest half band (.25 rounds up to .5, .75 up to the next band)
+- SAT mocks: Reading & Writing and Math (200–800) with automatic total
+- Latest scores, change since the previous mock and distance to your targets
+
+### Error Log
+- Log each mistake with date, skill, error type, note and an optional link to a mock test
+- Filter by skill, type, last 7 / 30 days and text search; "most frequent" chips to drill down
+- Error types per skill are editable in Settings
+
 ### Coming next
-- Results (IELTS band conversion, SAT scores) and Error Log
 - Analytics dashboard with insights
 - Habits with streaks and heatmap, notifications, menu bar item, JSON/CSV export
 
@@ -40,6 +51,8 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 |---|---|
 | ⌘1 – ⌘5 | Switch section |
 | ⌘N | New block at the next free slot |
+| ⌘E | Log an error |
+| ⌘R / ⇧⌘R | New IELTS / SAT mock |
 | ⌫ | Delete selected block |
 | ↑ / ↓ | Move selected block by 15 minutes |
 | ⇧⌘D / ⇧⌘P / ⇧⌘K | Mark Done / Partial / Skipped |
@@ -47,4 +60,4 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 | ⌘T, ⌘[, ⌘] | Today, previous day, next day |
 | ⇧⌘S / ⇧⌘T | Save day as template / apply template |
 | ⌥⌘I | Show or hide the inspector |
-| ⌘, | Settings (exam dates, targets, categories, templates) |
+| ⌘, | Settings (exam dates, targets, categories, templates, error types) |

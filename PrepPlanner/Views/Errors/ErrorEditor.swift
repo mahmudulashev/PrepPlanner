@@ -61,7 +61,8 @@ struct ErrorEditor: View {
                     }
                 }
                 Section("What went wrong") {
-                    TextField("e.g. wrote “analysis” instead of “analyses”", text: $note, axis: .vertical)
+                    TextField("Note", text: $note, prompt: Text("e.g. wrote “analysis” instead of “analyses”"), axis: .vertical)
+                        .labelsHidden()
                         .lineLimit(2...5)
                         .focused($noteFocused)
                 }

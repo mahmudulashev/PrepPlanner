@@ -150,7 +150,7 @@ private struct IELTSResults: View {
                 Text(m.note).foregroundStyle(.secondary).lineLimit(1)
             }
         }
-        .tableStyle(.inset)
+        .tableStyle(.inset(alternatesRowBackgrounds: false))
         .scrollContentBackground(.hidden)
         .contextMenu(forSelectionType: PersistentIdentifier.self) { ids in
             let items = mocks.filter { ids.contains($0.persistentModelID) }
@@ -399,7 +399,7 @@ private struct SATResults: View {
                 Text(m.note).foregroundStyle(.secondary).lineLimit(1)
             }
         }
-        .tableStyle(.inset)
+        .tableStyle(.inset(alternatesRowBackgrounds: false))
         .scrollContentBackground(.hidden)
         .contextMenu(forSelectionType: PersistentIdentifier.self) { ids in
             let items = mocks.filter { ids.contains($0.persistentModelID) }

@@ -101,7 +101,8 @@ struct IELTSEditor: View {
                     }
                 }
                 Section("Note") {
-                    TextField("e.g. Cambridge 18 Test 2, felt rushed in Reading P3", text: $note, axis: .vertical)
+                    TextField("Note", text: $note, prompt: Text("e.g. Cambridge 18 Test 2, felt rushed in Reading P3"), axis: .vertical)
+                        .labelsHidden()
                         .lineLimit(2...4)
                 }
             }
@@ -234,7 +235,8 @@ struct SATEditor: View {
                     scoreRow("Math", value: $math, skill: .satMath)
                 }
                 Section("Note") {
-                    TextField("e.g. Bluebook Practice Test 4", text: $note, axis: .vertical)
+                    TextField("Note", text: $note, prompt: Text("e.g. Bluebook Practice Test 4"), axis: .vertical)
+                        .labelsHidden()
                         .lineLimit(2...4)
                 }
             }
