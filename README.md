@@ -41,9 +41,23 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - Filter by skill, type, last 7 / 30 days and text search; "most frequent" chips to drill down
 - Error types per skill are editable in Settings
 
+### Analytics
+- Weekly KPIs, planned vs actual hours per category (daily and weekly stacked bars) and daily completion rate
+- IELTS band trends with dashed target lines; SAT total with target line and section trends
+- Most frequent error types by skill and date range
+- Automatic insights, e.g. "Writing time this week is 30% below plan" or "Listening improved +0.5 since last mock"
+
+### Languages
+- English and Uzbek (Latin). Switch in Settings ▸ General ▸ Language and restart the app.
+- "Built-in names" renames the default categories, templates and error types to the chosen language.
+
 ### Coming next
-- Analytics dashboard with insights
 - Habits with streaks and heatmap, notifications, menu bar item, JSON/CSV export
+
+## Localization
+
+Strings live in `PrepPlanner/Localizable.xcstrings`. After adding UI text, build the app and run
+`python3 scripts/sync_strings.py` to add new keys to the catalog and list anything still missing an Uzbek translation.
 
 ## Keyboard shortcuts
 

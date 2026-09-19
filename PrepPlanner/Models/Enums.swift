@@ -8,12 +8,12 @@ enum Skill: String, Codable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .listening: "Listening"
-        case .reading: "Reading"
-        case .writing: "Writing"
-        case .speaking: "Speaking"
-        case .satRW: "SAT R&W"
-        case .satMath: "SAT Math"
+        case .listening: String(localized: "Listening")
+        case .reading: String(localized: "Reading")
+        case .writing: String(localized: "Writing")
+        case .speaking: String(localized: "Speaking")
+        case .satRW: String(localized: "SAT R&W")
+        case .satMath: String(localized: "SAT Math")
         }
     }
 
@@ -30,7 +30,24 @@ enum BlockStatus: String, Codable, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    var title: String { rawValue.capitalized }
+    var title: String {
+        switch self {
+        case .planned: String(localized: "Planned")
+        case .done: String(localized: "Done")
+        case .partial: String(localized: "Partial")
+        case .skipped: String(localized: "Skipped")
+        }
+    }
+
+    /// Context-menu wording for switching to this status.
+    var actionTitle: String {
+        switch self {
+        case .planned: String(localized: "Reset to Planned")
+        case .done: String(localized: "Mark Done")
+        case .partial: String(localized: "Mark Partial")
+        case .skipped: String(localized: "Mark Skipped")
+        }
+    }
 
     var symbol: String {
         switch self {
@@ -60,9 +77,9 @@ enum TemplateConflictMode: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .merge: "Merge (add alongside)"
-        case .replace: "Replace existing blocks"
-        case .skip: "Skip those days"
+        case .merge: String(localized: "Merge (add alongside)")
+        case .replace: String(localized: "Replace existing blocks")
+        case .skip: String(localized: "Skip those days")
         }
     }
 }

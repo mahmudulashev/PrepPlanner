@@ -1,0 +1,2952 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ %@": {
+      "shouldTranslate": false
+    },
+    "%@ / %@": {
+      "shouldTranslate": false
+    },
+    "%@ actual": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ amalda"
+          }
+        }
+      }
+    },
+    "%@ dropped %@ since last mock.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ oxirgi sinovdan beri %2$@ ga pasaydi."
+          }
+        }
+      }
+    },
+    "%@ improved %@ since last mock.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ oxirgi sinovdan beri %2$@ ga oshdi."
+          }
+        }
+      }
+    },
+    "%@ is on plan this week (%@ of %@).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ bu hafta rejaga mos (%2$@ / %3$@)."
+          }
+        }
+      }
+    },
+    "%@ time this week is %lld%% below plan (%@ of %@).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu hafta %1$@ vaqti rejadan %2$lld%% kam (%3$@ / %4$@)."
+          }
+        }
+      }
+    },
+    "%@ to target %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "maqsad %2$@ gacha %1$@ qoldi"
+          }
+        }
+      }
+    },
+    "%@ vs last": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "oldingisiga nisbatan %@"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "shouldTranslate": false
+    },
+    "%@h": {
+      "comment": "Number of hours, e.g. 4.5h",
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ soat"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld logged": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta yozilgan"
+          }
+        }
+      }
+    },
+    "%lld logged in total": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "jami %lld ta"
+          }
+        }
+      }
+    },
+    "%lld points to go to your SAT target of %@.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT maqsadingiz %2$@ gacha %1$lld ball qoldi."
+          }
+        }
+      }
+    },
+    "%lld saved": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta saqlandi"
+          }
+        }
+      }
+    },
+    "%lld to target %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "maqsad %2$@ gacha %1$lld qoldi"
+          }
+        }
+      }
+    },
+    "%lld%% completed": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% bajarildi"
+          }
+        }
+      }
+    },
+    "%lld/40": {
+      "shouldTranslate": false
+    },
+    "%lldd": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld k"
+          }
+        }
+      }
+    },
+    "%lldh": {
+      "comment": "Duration in whole hours",
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld soat"
+          }
+        }
+      }
+    },
+    "%lldh %lldm": {
+      "comment": "Duration in hours and minutes",
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld soat %2$lld daq"
+          }
+        }
+      }
+    },
+    "%lldm": {
+      "comment": "Duration in minutes",
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld daq"
+          }
+        }
+      }
+    },
+    "24:00": {
+      "shouldTranslate": false
+    },
+    "30 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 kun"
+          }
+        }
+      }
+    },
+    "7 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 kun"
+          }
+        }
+      }
+    },
+    "A template named “%@” already exists. It will be replaced.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” nomli shablon allaqachon bor. U almashtiriladi."
+          }
+        }
+      }
+    },
+    "Actual": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amalda"
+          }
+        }
+      }
+    },
+    "Actual minutes": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haqiqiy daqiqalar"
+          }
+        }
+      }
+    },
+    "Add Category": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriya qoʻshish"
+          }
+        }
+      }
+    },
+    "Add IELTS Mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS sinovini qoʻshish"
+          }
+        }
+      }
+    },
+    "Add SAT Mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT sinovini qoʻshish"
+          }
+        }
+      }
+    },
+    "Add Type": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tur qoʻshish"
+          }
+        }
+      }
+    },
+    "Add in Settings…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sozlamalarda qoʻshish…"
+          }
+        }
+      }
+    },
+    "Adds ^[%lld block](inflect: true) to %lld days (the maximum).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ta blok %2$lld kunga qoʻshiladi (maksimum)."
+          }
+        }
+      }
+    },
+    "Adds ^[%lld block](inflect: true) to ^[%lld day](inflect: true).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ta blok %2$lld kunga qoʻshiladi."
+          }
+        }
+      }
+    },
+    "All": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hammasi"
+          }
+        }
+      }
+    },
+    "All four IELTS skills meet their targets in the latest mock.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi sinovda IELTSning toʻrttala koʻnikmasi ham maqsadga yetdi."
+          }
+        }
+      }
+    },
+    "All skills": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha koʻnikmalar"
+          }
+        }
+      }
+    },
+    "All types": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha turlar"
+          }
+        }
+      }
+    },
+    "Analytics": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analitika"
+          }
+        }
+      }
+    },
+    "App language": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ilova tili"
+          }
+        }
+      }
+    },
+    "Applied “%@” to ^[%lld day](inflect: true)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%1$@” %2$lld kunga qoʻllandi"
+          }
+        }
+      }
+    },
+    "Apply": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qoʻllash"
+          }
+        }
+      }
+    },
+    "Apply Template…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonni qoʻllash…"
+          }
+        }
+      }
+    },
+    "Apply template": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonni qoʻllash"
+          }
+        }
+      }
+    },
+    "Band": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Band"
+          }
+        }
+      }
+    },
+    "Best total": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng yaxshi natija"
+          }
+        }
+      }
+    },
+    "Biggest gap to target: %@ (%@ vs %@).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsaddan eng katta farq: %1$@ (%2$@, maqsad %3$@)."
+          }
+        }
+      }
+    },
+    "Block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok"
+          }
+        }
+      }
+    },
+    "Blocks from the last 7 days without a status: %lld.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi 7 kundagi holati belgilanmagan bloklar: %lld."
+          }
+        }
+      }
+    },
+    "Blocks using this category: %lld. They stay on your planner without a category.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu kategoriyadagi bloklar: %lld. Ular rejada kategoriyasiz qoladi."
+          }
+        }
+      }
+    },
+    "Built-in names": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standart nomlar"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekor qilish"
+          }
+        }
+      }
+    },
+    "Categories": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriyalar"
+          }
+        }
+      }
+    },
+    "Category": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriya"
+          }
+        }
+      }
+    },
+    "Choose a template on the left.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chap tomondan shablon tanlang."
+          }
+        }
+      }
+    },
+    "Clear Filters": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtrlarni tozalash"
+          }
+        }
+      }
+    },
+    "Color": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rang"
+          }
+        }
+      }
+    },
+    "Completion": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarilish"
+          }
+        }
+      }
+    },
+    "Completion rate per day": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunlik bajarilish darajasi"
+          }
+        }
+      }
+    },
+    "Completion rate this week is %lld%% (last week %lld%%).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu haftadagi bajarilish: %1$lld%% (oʻtgan hafta %2$lld%%)."
+          }
+        }
+      }
+    },
+    "Completion rate this week is %lld%%.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu haftadagi bajarilish: %lld%%."
+          }
+        }
+      }
+    },
+    "Completion this week": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu hafta bajarilish"
+          }
+        }
+      }
+    },
+    "Conflicts": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toʻqnashuvlar"
+          }
+        }
+      }
+    },
+    "Count": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soni"
+          }
+        }
+      }
+    },
+    "Criteria (optional)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezonlar (ixtiyoriy)"
+          }
+        }
+      }
+    },
+    "Criteria average %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezonlar oʻrtachasi %@"
+          }
+        }
+      }
+    },
+    "Daily": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunlik"
+          }
+        }
+      }
+    },
+    "Dashed lines are your targets": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uzuq chiziqlar — maqsadlaringiz"
+          }
+        }
+      }
+    },
+    "Date": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sana"
+          }
+        }
+      }
+    },
+    "Day": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kun"
+          }
+        }
+      }
+    },
+    "Day summary": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kun xulosasi"
+          }
+        }
+      }
+    },
+    "Day templates": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kun shablonlari"
+          }
+        }
+      }
+    },
+    "Days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunlar"
+          }
+        }
+      }
+    },
+    "Days that already have blocks: %lld": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloklari bor kunlar: %lld"
+          }
+        }
+      }
+    },
+    "Days you already applied it to are not changed.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "U qoʻllangan kunlar oʻzgarmaydi."
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete Block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blokni oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete Template": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonni oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete ^[%lld entry](inflect: true)?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta yozuv oʻchirilsinmi?"
+          }
+        }
+      }
+    },
+    "Delete ^[%lld mock](inflect: true)?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta sinov oʻchirilsinmi?"
+          }
+        }
+      }
+    },
+    "Delete category": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriyani oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete selected block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tanlangan blokni oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete template “%@”?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” shabloni oʻchirilsinmi?"
+          }
+        }
+      }
+    },
+    "Delete type": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turni oʻchirish"
+          }
+        }
+      }
+    },
+    "Delete “%@”?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” oʻchirilsinmi?"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarildi"
+          }
+        }
+      }
+    },
+    "Done / Partial / Skipped": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarildi / Qisman / Oʻtkazildi"
+          }
+        }
+      }
+    },
+    "Done 100% · Partial 50% · Skipped 0%": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarildi 100% · Qisman 50% · Oʻtkazildi 0%"
+          }
+        }
+      }
+    },
+    "Drag on the timeline to create a block, press ⌘N, or apply a template (⇧⌘T).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok yaratish uchun jadvalda sichqonchani torting, ⌘N ni bosing yoki shablon qoʻllang (⇧⌘T)."
+          }
+        }
+      }
+    },
+    "Drag rows to reorder.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tartibni oʻzgartirish uchun qatorlarni torting."
+          }
+        }
+      }
+    },
+    "Drag rows to reorder. “Study” categories count toward study hours; linking a skill feeds analytics.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tartibni oʻzgartirish uchun qatorlarni torting. “Mashgʻulot” belgilangan kategoriyalar mashgʻulot soatlariga qoʻshiladi; koʻnikma bogʻlansa, analitikada hisobga olinadi."
+          }
+        }
+      }
+    },
+    "Duplicate": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nusxalash"
+          }
+        }
+      }
+    },
+    "Duplicate Block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blokni nusxalash"
+          }
+        }
+      }
+    },
+    "Duration": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Davomiylik"
+          }
+        }
+      }
+    },
+    "Edit IELTS mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS sinovini tahrirlash"
+          }
+        }
+      }
+    },
+    "Edit SAT mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT sinovini tahrirlash"
+          }
+        }
+      }
+    },
+    "Edit error": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xatoni tahrirlash"
+          }
+        }
+      }
+    },
+    "Edit…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahrirlash…"
+          }
+        }
+      }
+    },
+    "End": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tugash"
+          }
+        }
+      }
+    },
+    "Enter raw Listening and Reading scores; bands and the overall score are calculated for you.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tinglash va Oʻqish boʻyicha toʻgʻri javoblar sonini kiriting — bandlar va umumiy ball avtomatik hisoblanadi."
+          }
+        }
+      }
+    },
+    "Enter your Reading & Writing and Math section scores; the total is calculated for you.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading & Writing va Matematika boʻlimlari ballarini kiriting — umumiy ball avtomatik hisoblanadi."
+          }
+        }
+      }
+    },
+    "Error Log": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xatolar jurnali"
+          }
+        }
+      }
+    },
+    "Error Types": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato turlari"
+          }
+        }
+      }
+    },
+    "Error log entries linked to it are kept but unlinked.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unga bogʻlangan xato yozuvlari saqlanadi, lekin bogʻlanish uziladi."
+          }
+        }
+      }
+    },
+    "Error type": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato turi"
+          }
+        }
+      }
+    },
+    "Errors": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xatolar"
+          }
+        }
+      }
+    },
+    "Errors, last 7 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xatolar, oxirgi 7 kun"
+          }
+        }
+      }
+    },
+    "Exam": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imtihon"
+          }
+        }
+      }
+    },
+    "Exam dates": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imtihon sanalari"
+          }
+        }
+      }
+    },
+    "Exam day — good luck!": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imtihon kuni — omad!"
+          }
+        }
+      }
+    },
+    "Exam done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imtihon oʻtdi"
+          }
+        }
+      }
+    },
+    "From": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qachondan"
+          }
+        }
+      }
+    },
+    "General": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umumiy"
+          }
+        }
+      }
+    },
+    "Go": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻtish"
+          }
+        }
+      }
+    },
+    "Granularity": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Davr"
+          }
+        }
+      }
+    },
+    "Habits": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odatlar"
+          }
+        }
+      }
+    },
+    "Happy %@ 👋": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xayrli %@ 👋"
+          }
+        }
+      }
+    },
+    "Hide Inspector": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspektorni yashirish"
+          }
+        }
+      }
+    },
+    "Hours": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soatlar"
+          }
+        }
+      }
+    },
+    "IELTS": {
+      "shouldTranslate": false
+    },
+    "IELTS band targets": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS band maqsadlari"
+          }
+        }
+      }
+    },
+    "IELTS bands": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS bandlari"
+          }
+        }
+      }
+    },
+    "Insights": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xulosalar"
+          }
+        }
+      }
+    },
+    "Inspector": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspektor"
+          }
+        }
+      }
+    },
+    "Jump to a date": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sanaga oʻtish"
+          }
+        }
+      }
+    },
+    "Jump to today (⌘T)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugunga oʻtish (⌘T)"
+          }
+        }
+      }
+    },
+    "Kind": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turi"
+          }
+        }
+      }
+    },
+    "LATEST OVERALL": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OXIRGI UMUMIY"
+          }
+        }
+      }
+    },
+    "LATEST TOTAL": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OXIRGI NATIJA"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Til"
+          }
+        }
+      }
+    },
+    "Last 30 days · Done 100%, Partial 50%, Skipped 0%": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi 30 kun · Bajarildi 100%, Qisman 50%, Oʻtkazildi 0%"
+          }
+        }
+      }
+    },
+    "Latest IELTS": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi IELTS"
+          }
+        }
+      }
+    },
+    "Latest SAT": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi SAT"
+          }
+        }
+      }
+    },
+    "Latest SAT total %@ meets your %@ target.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi SAT natijasi %1$@ — %2$@ maqsadiga yetdi."
+          }
+        }
+      }
+    },
+    "Linked mock (optional)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bogʻlangan sinov (ixtiyoriy)"
+          }
+        }
+      }
+    },
+    "Listening": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tinglash"
+          }
+        }
+      }
+    },
+    "Listening & Reading (raw score out of 40)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tinglash va Oʻqish (40 tadan toʻgʻri javoblar)"
+          }
+        }
+      }
+    },
+    "Log Another Like This…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shunga oʻxshashini yozish…"
+          }
+        }
+      }
+    },
+    "Log Error": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato yozish"
+          }
+        }
+      }
+    },
+    "Log Error for This Mock…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu sinov uchun xato yozish…"
+          }
+        }
+      }
+    },
+    "Log Error…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato yozish…"
+          }
+        }
+      }
+    },
+    "Log IELTS mocks in Results to see your band trends.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Band dinamikasini koʻrish uchun Natijalar boʻlimida IELTS sinovlarini kiriting."
+          }
+        }
+      }
+    },
+    "Log SAT mocks in Results to see your score trends.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball dinamikasini koʻrish uchun Natijalar boʻlimida SAT sinovlarini kiriting."
+          }
+        }
+      }
+    },
+    "Log an Error": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato yozish"
+          }
+        }
+      }
+    },
+    "Log an error": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato yozish"
+          }
+        }
+      }
+    },
+    "Log an error (⌘E)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xato yozish (⌘E)"
+          }
+        }
+      }
+    },
+    "Log each mistake with its skill and type. Patterns show up here and in Analytics.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Har bir xatoni koʻnikmasi va turi bilan yozing. Takrorlanuvchi xatolar shu yerda va Analitikada koʻrinadi."
+          }
+        }
+      }
+    },
+    "Logged errors using this type: %lld. They are kept and marked Untyped.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu turdagi yozilgan xatolar: %lld. Ular saqlanadi va “Turi yoʻq” deb belgilanadi."
+          }
+        }
+      }
+    },
+    "Mark Done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarildi deb belgilash"
+          }
+        }
+      }
+    },
+    "Mark Partial": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qisman deb belgilash"
+          }
+        }
+      }
+    },
+    "Mark Skipped": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻtkazildi deb belgilash"
+          }
+        }
+      }
+    },
+    "Mark as planned": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejadagi holatga qaytarish"
+          }
+        }
+      }
+    },
+    "Mark blocks as Done, Partial or Skipped to see your completion rate.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarilish darajasini koʻrish uchun bloklarni Bajarildi, Qisman yoki Oʻtkazildi deb belgilang."
+          }
+        }
+      }
+    },
+    "Mark done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajarildi deb belgilash"
+          }
+        }
+      }
+    },
+    "Math": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matematika"
+          }
+        }
+      }
+    },
+    "Merge (add alongside)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Birlashtirish (yoniga qoʻshish)"
+          }
+        }
+      }
+    },
+    "Minutes": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daqiqalar"
+          }
+        }
+      }
+    },
+    "Mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sinov"
+          }
+        }
+      }
+    },
+    "Mock test": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sinov testi"
+          }
+        }
+      }
+    },
+    "Most frequent": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng koʻp uchraydigan"
+          }
+        }
+      }
+    },
+    "Most frequent %@ error: %@ (×%lld).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng koʻp uchraydigan %1$@ xatosi: %2$@ (×%3$lld)."
+          }
+        }
+      }
+    },
+    "Most frequent error types": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng koʻp uchraydigan xato turlari"
+          }
+        }
+      }
+    },
+    "Move selected block 15 min": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tanlangan blokni 15 daq surish"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nomi"
+          }
+        }
+      }
+    },
+    "Needs review": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Belgilash kerak"
+          }
+        }
+      }
+    },
+    "New Block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi blok"
+          }
+        }
+      }
+    },
+    "New IELTS Mock…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi IELTS sinovi…"
+          }
+        }
+      }
+    },
+    "New IELTS mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi IELTS sinovi"
+          }
+        }
+      }
+    },
+    "New IELTS mock (⌘R)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi IELTS sinovi (⌘R)"
+          }
+        }
+      }
+    },
+    "New Mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi sinov"
+          }
+        }
+      }
+    },
+    "New SAT Mock…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi SAT sinovi…"
+          }
+        }
+      }
+    },
+    "New SAT mock": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi SAT sinovi"
+          }
+        }
+      }
+    },
+    "New SAT mock (⇧⌘R)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi SAT sinovi (⇧⌘R)"
+          }
+        }
+      }
+    },
+    "New block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi blok"
+          }
+        }
+      }
+    },
+    "New block (⌘N)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi blok (⌘N)"
+          }
+        }
+      }
+    },
+    "Next Day": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyingi kun"
+          }
+        }
+      }
+    },
+    "Next day (⌘])": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyingi kun (⌘])"
+          }
+        }
+      }
+    },
+    "No IELTS mock in the last 14 days, and the exam is in %lld days.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi 14 kunda IELTS sinovi boʻlmadi, imtihongacha esa %lld kun qoldi."
+          }
+        }
+      }
+    },
+    "No IELTS mocks yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali IELTS sinovlari yoʻq"
+          }
+        }
+      }
+    },
+    "No SAT mock in the last 14 days, and the exam is in %lld days.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi 14 kunda SAT sinovi boʻlmadi, imtihongacha esa %lld kun qoldi."
+          }
+        }
+      }
+    },
+    "No SAT mocks yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali SAT sinovlari yoʻq"
+          }
+        }
+      }
+    },
+    "No blocks yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali bloklar yoʻq"
+          }
+        }
+      }
+    },
+    "No category": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoriyasiz"
+          }
+        }
+      }
+    },
+    "No days match the selected range and weekdays.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tanlangan oraliq va hafta kunlariga mos kun yoʻq."
+          }
+        }
+      }
+    },
+    "No error types for %@ yet.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ uchun hali xato turlari yoʻq."
+          }
+        }
+      }
+    },
+    "No errors logged yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali xatolar yozilmagan"
+          }
+        }
+      }
+    },
+    "No skill": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koʻnikmasiz"
+          }
+        }
+      }
+    },
+    "No study blocks in this period yet.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu davrda hali mashgʻulot bloklari yoʻq."
+          }
+        }
+      }
+    },
+    "No templates": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonlar yoʻq"
+          }
+        }
+      }
+    },
+    "No templates yet.\nSave a day first (⇧⌘S).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali shablonlar yoʻq.\nAvval kunni saqlang (⇧⌘S)."
+          }
+        }
+      }
+    },
+    "No typed errors for this filter.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu filtr uchun turi belgilangan xatolar yoʻq."
+          }
+        }
+      }
+    },
+    "No typed errors in this view.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu koʻrinishda turi belgilangan xatolar yoʻq."
+          }
+        }
+      }
+    },
+    "No types for %@ yet.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ uchun hali turlar yoʻq."
+          }
+        }
+      }
+    },
+    "None": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yoʻq"
+          }
+        }
+      }
+    },
+    "Note": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Izoh"
+          }
+        }
+      }
+    },
+    "OVERALL": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UMUMIY"
+          }
+        }
+      }
+    },
+    "Overall": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umumiy"
+          }
+        }
+      }
+    },
+    "Partial": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qisman"
+          }
+        }
+      }
+    },
+    "Period": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Davr"
+          }
+        }
+      }
+    },
+    "Plan a day, then choose Block ▸ Save Day as Template (⇧⌘S).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunni rejalashtiring, soʻng Blok ▸ Kunni shablon sifatida saqlash (⇧⌘S) ni tanlang."
+          }
+        }
+      }
+    },
+    "Plan blocks, mark their status and log mocks to see insights here.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xulosalarni koʻrish uchun bloklarni rejalashtiring, holatini belgilang va sinovlarni kiriting."
+          }
+        }
+      }
+    },
+    "Planned": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejada"
+          }
+        }
+      }
+    },
+    "Planned vs actual hours": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reja va amaldagi soatlar"
+          }
+        }
+      }
+    },
+    "Planner": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejalashtirgich"
+          }
+        }
+      }
+    },
+    "Prep": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tayyorgarlik"
+          }
+        }
+      }
+    },
+    "PrepPlanner": {
+      "shouldTranslate": false
+    },
+    "Previous / next day / today": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldingi / keyingi kun / bugun"
+          }
+        }
+      }
+    },
+    "Previous Day": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldingi kun"
+          }
+        }
+      }
+    },
+    "Previous day (⌘[)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldingi kun (⌘[)"
+          }
+        }
+      }
+    },
+    "Range": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oraliq"
+          }
+        }
+      }
+    },
+    "Reading": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻqish"
+          }
+        }
+      }
+    },
+    "Reading & Writing": {
+      "shouldTranslate": false
+    },
+    "Renamed %lld items.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta element qayta nomlandi."
+          }
+        }
+      }
+    },
+    "Renames the default categories, templates and error types. Names you changed yourself are kept.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standart kategoriyalar, shablonlar va xato turlarini qayta nomlaydi. Oʻzingiz oʻzgartirgan nomlar saqlanadi."
+          }
+        }
+      }
+    },
+    "Replace": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almashtirish"
+          }
+        }
+      }
+    },
+    "Replace existing blocks": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mavjud bloklarni almashtirish"
+          }
+        }
+      }
+    },
+    "Reset to Planned": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejadagi holatga qaytarish"
+          }
+        }
+      }
+    },
+    "Restart Now": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hozir qayta ishga tushirish"
+          }
+        }
+      }
+    },
+    "Restart PrepPlanner to switch the language.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilni almashtirish uchun PrepPlannerʼni qayta ishga tushiring."
+          }
+        }
+      }
+    },
+    "Results": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natijalar"
+          }
+        }
+      }
+    },
+    "SAT": {
+      "shouldTranslate": false
+    },
+    "SAT Math": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT Matematika"
+          }
+        }
+      }
+    },
+    "SAT R&W": {
+      "shouldTranslate": false
+    },
+    "SAT scores": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT ballari"
+          }
+        }
+      }
+    },
+    "SAT target": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT maqsadi"
+          }
+        }
+      }
+    },
+    "SAT total is down %lld since last mock (%@).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT natijasi oxirgi sinovdan beri %1$lld ballga pasaydi (%2$@)."
+          }
+        }
+      }
+    },
+    "SAT total is up %lld since last mock (%@).": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT natijasi oxirgi sinovdan beri %1$lld ballga oshdi (%2$@)."
+          }
+        }
+      }
+    },
+    "SAT view": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT koʻrinishi"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saqlash"
+          }
+        }
+      }
+    },
+    "Save & Add Another": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saqlash va yana qoʻshish"
+          }
+        }
+      }
+    },
+    "Save / apply template": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonni saqlash / qoʻllash"
+          }
+        }
+      }
+    },
+    "Save Day as Template…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunni shablon sifatida saqlash…"
+          }
+        }
+      }
+    },
+    "Save day as template": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kunni shablon sifatida saqlash"
+          }
+        }
+      }
+    },
+    "Saved template “%@” (^[%lld block](inflect: true))": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%1$@” shabloni saqlandi (%2$lld ta blok)"
+          }
+        }
+      }
+    },
+    "Saves ^[%lld block](inflect: true) from %@: times, titles, categories and notes. Statuses aren't saved.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%2$@ dagi %1$lld ta blok saqlanadi: vaqtlar, nomlar, kategoriyalar va izohlar. Holatlar saqlanmaydi."
+          }
+        }
+      }
+    },
+    "Score": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ball"
+          }
+        }
+      }
+    },
+    "Search notes and types": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Izoh va turlardan qidirish"
+          }
+        }
+      }
+    },
+    "Section": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boʻlim"
+          }
+        }
+      }
+    },
+    "Section scores (200–800)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boʻlim ballari (200–800)"
+          }
+        }
+      }
+    },
+    "Sections": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boʻlimlar"
+          }
+        }
+      }
+    },
+    "Sets the band to the criteria average, rounded down to the nearest half band": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bandni mezonlar oʻrtachasiga teng qiladi (eng yaqin yarim bandgacha pastga yaxlitlanadi)"
+          }
+        }
+      }
+    },
+    "Shortcuts": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tezkor tugmalar"
+          }
+        }
+      }
+    },
+    "Show Inspector": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspektorni koʻrsatish"
+          }
+        }
+      }
+    },
+    "Show only %@ (%@)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faqat %1$@ (%2$@) ni koʻrsatish"
+          }
+        }
+      }
+    },
+    "Show or hide the inspector (⌥⌘I)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspektorni koʻrsatish yoki yashirish (⌥⌘I)"
+          }
+        }
+      }
+    },
+    "Skill": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koʻnikma"
+          }
+        }
+      }
+    },
+    "Skip those days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu kunlarni oʻtkazib yuborish"
+          }
+        }
+      }
+    },
+    "Skipped": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻtkazildi"
+          }
+        }
+      }
+    },
+    "Speaking": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gapirish"
+          }
+        }
+      }
+    },
+    "Start": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boshlanish"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Holat"
+          }
+        }
+      }
+    },
+    "Study": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mashgʻulot"
+          }
+        }
+      }
+    },
+    "Study categories only. Light bars are planned, solid bars are actual.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faqat mashgʻulot kategoriyalari. Och ustunlar — reja, toʻq ustunlar — amalda."
+          }
+        }
+      }
+    },
+    "Study this week": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu hafta mashgʻulot"
+          }
+        }
+      }
+    },
+    "System default": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tizim tili"
+          }
+        }
+      }
+    },
+    "THIS DAY · STUDY HOURS": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SHU KUN · MASHGʻULOT SOATLARI"
+          }
+        }
+      }
+    },
+    "TODAY · STUDY HOURS": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BUGUN · MASHGʻULOT SOATLARI"
+          }
+        }
+      }
+    },
+    "TOTAL": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JAMI"
+          }
+        }
+      }
+    },
+    "Target": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsad"
+          }
+        }
+      }
+    },
+    "Target %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsad %@"
+          }
+        }
+      }
+    },
+    "Target %@ reached": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsad %@ bajarildi"
+          }
+        }
+      }
+    },
+    "Target %@ reached 🎉": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsad %@ bajarildi 🎉"
+          }
+        }
+      }
+    },
+    "Template name, e.g. IELTS full day": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablon nomi, masalan: IELTS toʻliq kun"
+          }
+        }
+      }
+    },
+    "Templates": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablonlar"
+          }
+        }
+      }
+    },
+    "This block has ended. How did it go?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu blok tugadi. Qanday oʻtdi?"
+          }
+        }
+      }
+    },
+    "This day has no blocks yet, so there's nothing to save.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu kunda hali bloklar yoʻq, saqlanadigan narsa yoʻq."
+          }
+        }
+      }
+    },
+    "This screen is built in Phase %lld.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu ekran %lld-bosqichda qoʻshiladi."
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vaqt"
+          }
+        }
+      }
+    },
+    "Title": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nomi"
+          }
+        }
+      }
+    },
+    "To": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qachongacha"
+          }
+        }
+      }
+    },
+    "To change a template's blocks: apply it to a day, edit that day, then save it again with the same name.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shablon bloklarini oʻzgartirish uchun uni biror kunga qoʻllang, kunni tahrirlang va shu nom bilan qayta saqlang."
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugun"
+          }
+        }
+      }
+    },
+    "Tomorrow, %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ertaga, %@"
+          }
+        }
+      }
+    },
+    "Total": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jami"
+          }
+        }
+      }
+    },
+    "Total score": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umumiy ball"
+          }
+        }
+      }
+    },
+    "Total with your target": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jami ball va maqsadingiz"
+          }
+        }
+      }
+    },
+    "Type": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turi"
+          }
+        }
+      }
+    },
+    "Untitled": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nomsiz"
+          }
+        }
+      }
+    },
+    "Untyped": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turi yoʻq"
+          }
+        }
+      }
+    },
+    "Use %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ni qoʻllash"
+          }
+        }
+      }
+    },
+    "Weekly": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haftalik"
+          }
+        }
+      }
+    },
+    "What went wrong": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nima notoʻgʻri boʻldi"
+          }
+        }
+      }
+    },
+    "Writing": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yozish"
+          }
+        }
+      }
+    },
+    "Yesterday, %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kecha, %@"
+          }
+        }
+      }
+    },
+    "^[%lld block](inflect: true) to review": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Belgilanishi kerak: %lld ta blok"
+          }
+        }
+      }
+    },
+    "^[%lld block](inflect: true) · %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld ta blok · %2$@"
+          }
+        }
+      }
+    },
+    "^[%lld error](inflect: true)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta xato"
+          }
+        }
+      }
+    },
+    "^[%lld mock](inflect: true) logged": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta sinov kiritilgan"
+          }
+        }
+      }
+    },
+    "day to %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "kun %@gacha"
+          }
+        }
+      }
+    },
+    "days to %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "kun %@gacha"
+          }
+        }
+      }
+    },
+    "done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tugadi"
+          }
+        }
+      }
+    },
+    "e.g. Bluebook Practice Test 4": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "masalan: Bluebook Practice Test 4"
+          }
+        }
+      }
+    },
+    "e.g. Cambridge 18 Test 2, felt rushed in Reading P3": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "masalan: Cambridge 18 Test 2, Reading P3 da vaqt yetmadi"
+          }
+        }
+      }
+    },
+    "e.g. wrote “analysis” instead of “analyses”": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "masalan: “analyses” oʻrniga “analysis” yozdim"
+          }
+        }
+      }
+    },
+    "of %@ planned": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rejada %@"
+          }
+        }
+      }
+    },
+    "out of 800": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "800 dan"
+          }
+        }
+      }
+    },
+    "target %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "maqsad %@"
+          }
+        }
+      }
+    },
+    "vs Target": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maqsadga nisbatan"
+          }
+        }
+      }
+    },
+    "· %@": {
+      "shouldTranslate": false
+    },
+    "×%lld": {
+      "shouldTranslate": false
+    },
+    "–": {
+      "shouldTranslate": false
+    },
+    "⇧⌘↩ saves and keeps the date, skill and mock for the next one.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "⇧⌘↩ saqlaydi va keyingisi uchun sana, koʻnikma va sinovni qoldiradi."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

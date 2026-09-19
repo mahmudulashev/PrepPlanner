@@ -62,7 +62,7 @@ private struct IELTSResults: View {
                 table.card(padding: 0)
             }
             .confirmationDialog(
-                pendingDelete.count == 1 ? "Delete this mock?" : "Delete \(pendingDelete.count) mocks?",
+                "Delete ^[\(pendingDelete.count) mock](inflect: true)?",
                 isPresented: Binding(get: { !pendingDelete.isEmpty }, set: { if !$0 { pendingDelete = [] } })
             ) {
                 Button("Delete", role: .destructive) {
@@ -111,8 +111,8 @@ private struct IELTSResults: View {
 
     private func overallSubtitle(latest: IELTSMock, previous: IELTSMock?, target: Double?) -> String {
         var parts: [String] = [latest.date.formatted(.dateTime.day().month(.abbreviated))]
-        if let p = previous { parts.append("\(Band.formatDelta(latest.overallBand - p.overallBand)) vs last") }
-        if let t = target { parts.append("target \(Band.format(t))") }
+        if let p = previous { parts.append(String(localized: "\(Band.formatDelta(latest.overallBand - p.overallBand)) vs last")) }
+        if let t = target { parts.append(String(localized: "target \(Band.format(t))")) }
         return parts.joined(separator: " · ")
     }
 
@@ -279,7 +279,7 @@ private struct SATResults: View {
                 table.card(padding: 0)
             }
             .confirmationDialog(
-                pendingDelete.count == 1 ? "Delete this mock?" : "Delete \(pendingDelete.count) mocks?",
+                "Delete ^[\(pendingDelete.count) mock](inflect: true)?",
                 isPresented: Binding(get: { !pendingDelete.isEmpty }, set: { if !$0 { pendingDelete = [] } })
             ) {
                 Button("Delete", role: .destructive) {
@@ -324,7 +324,7 @@ private struct SATResults: View {
                 Text(verbatim: String(best))
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .monospacedDigit()
-                Text("\(mocks.count) mock\(mocks.count == 1 ? "" : "s") logged")
+                Text("^[\(mocks.count) mock](inflect: true) logged")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

@@ -8,6 +8,14 @@ enum ErrorDateRange: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
+    var title: String {
+        switch self {
+        case .week: String(localized: "7 days")
+        case .month: String(localized: "30 days")
+        case .all: String(localized: "All")
+        }
+    }
+
     var startDate: Date? {
         switch self {
         case .week: Date().startOfDay.adding(days: -6)
@@ -76,7 +84,7 @@ struct ErrorLogView: View {
             }
         }
         .confirmationDialog(
-            pendingDelete.count == 1 ? "Delete this entry?" : "Delete \(pendingDelete.count) entries?",
+            "Delete ^[\(pendingDelete.count) entry](inflect: true)?",
             isPresented: Binding(get: { !pendingDelete.isEmpty }, set: { if !$0 { pendingDelete = [] } })
         ) {
             Button("Delete", role: .destructive) {
@@ -109,7 +117,7 @@ struct ErrorLogView: View {
             .frame(width: 240)
 
             Picker("Range", selection: $range) {
-                ForEach(ErrorDateRange.allCases) { Text($0.rawValue).tag($0) }
+                ForEach(ErrorDateRange.allCases) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
             .labelsHidden()
@@ -127,7 +135,7 @@ struct ErrorLogView: View {
                 .buttonStyle(.link)
                 .foregroundStyle(Theme.accent)
             }
-            Text("\(count) error\(count == 1 ? "" : "s")")
+            Text("^[\(count) error](inflect: true)")
                 .font(.callout.weight(.semibold))
                 .foregroundStyle(.secondary)
         }

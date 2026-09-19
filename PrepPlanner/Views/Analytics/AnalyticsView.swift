@@ -191,14 +191,14 @@ struct AnalyticsView: View {
                     ForEach(Skill.allCases) { Text($0.title).tag(Optional($0)) }
                 }
                 .labelsHidden()
-                .frame(width: 120)
+                .frame(width: 160)
                 Picker("Range", selection: $errorRange) {
                     Text("7 days").tag(ErrorDateRange.week)
                     Text("All").tag(ErrorDateRange.all)
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                .frame(width: 110)
+                .fixedSize()
             }
         } content: {
             if rows.isEmpty {

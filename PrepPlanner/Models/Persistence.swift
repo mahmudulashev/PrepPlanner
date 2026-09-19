@@ -66,7 +66,7 @@ enum Seeder {
         ]
         var result: [String: StudyCategory] = [:]
         for (i, item) in defaults.enumerated() {
-            let c = StudyCategory(name: item.0, colorHex: item.1, order: i, skill: item.2, isStudy: item.3)
+            let c = StudyCategory(name: DefaultNames.seedName(item.0), colorHex: item.1, order: i, skill: item.2, isStudy: item.3)
             context.insert(c)
             result[item.0] = c
         }
@@ -95,10 +95,11 @@ enum Seeder {
             ]),
         ]
         for (name, items) in templates {
-            let t = DayTemplate(name: name)
+            let t = DayTemplate(name: DefaultNames.seedName(name))
             context.insert(t)
             for item in items {
-                let tb = TemplateBlock(startMin: TimeFmt.parse(item.0), endMin: TimeFmt.parse(item.1), title: item.3)
+                let tb = TemplateBlock(startMin: TimeFmt.parse(item.0), endMin: TimeFmt.parse(item.1),
+                                       title: DefaultNames.seedName(item.3))
                 context.insert(tb)
                 tb.category = categories[item.2]
                 tb.template = t
@@ -118,7 +119,7 @@ enum Seeder {
         ]
         for (skill, names) in map {
             for (i, name) in names.enumerated() {
-                context.insert(ErrorType(name: name, skill: skill, order: i))
+                context.insert(ErrorType(name: DefaultNames.seedName(name), skill: skill, order: i))
             }
         }
     }

@@ -220,9 +220,9 @@ private struct DaySummary: View {
         }
     }
 
-    private func shortcut(_ keys: String, _ label: String) -> some View {
+    private func shortcut(_ keys: String, _ label: LocalizedStringKey) -> some View {
         HStack {
-            Text(keys).font(.callout.monospaced()).foregroundStyle(.secondary).frame(width: 110, alignment: .leading)
+            Text(verbatim: keys).font(.callout.monospaced()).foregroundStyle(.secondary).frame(width: 110, alignment: .leading)
             Text(label)
         }
     }

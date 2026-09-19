@@ -18,10 +18,10 @@ struct PlannerHeader: View {
     private var greeting: String {
         let weekday = day.formatted(.dateTime.weekday(.wide))
         let cal = Calendar.current
-        if isToday { return "Happy \(weekday) 👋" }
-        if cal.isDateInTomorrow(day) { return "Tomorrow, \(weekday)" }
-        if cal.isDateInYesterday(day) { return "Yesterday, \(weekday)" }
-        return weekday
+        if isToday { return String(localized: "Happy \(weekday) 👋") }
+        if cal.isDateInTomorrow(day) { return String(localized: "Tomorrow, \(weekday)") }
+        if cal.isDateInYesterday(day) { return String(localized: "Yesterday, \(weekday)") }
+        return weekday.prefix(1).uppercased() + weekday.dropFirst()
     }
 
     var body: some View {
@@ -93,7 +93,13 @@ private struct DayProgressCard: View {
                 }
             }
             .frame(height: 8)
-            Text(review > 0 ? "\(review) block\(review == 1 ? "" : "s") to review" : "\(Int(fraction * 100))% completed")
+            Group {
+                if review > 0 {
+                    Text("^[\(review) block](inflect: true) to review")
+                } else {
+                    Text("\(Int(fraction * 100))% completed")
+                }
+            }
                 .font(.caption.weight(review > 0 ? .semibold : .regular))
                 .foregroundStyle(review > 0 ? Theme.accent : .secondary)
         }
@@ -130,8 +136,8 @@ private struct CountdownCard: View {
     }
 
     private func subtitle(_ days: Int) -> String {
-        if days < 0 { return "Exam done" }
-        if days == 0 { return "Exam day — good luck!" }
+        if days < 0 { return String(localized: "Exam done") }
+        if days == 0 { return String(localized: "Exam day — good luck!") }
         return date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated).year())
     }
 }

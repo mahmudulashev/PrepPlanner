@@ -3,8 +3,8 @@ import SwiftData
 
 /// Shared frame for add/edit sheets: title, content, Cancel/Save footer.
 struct EditorScaffold<Content: View, Trailing: View>: View {
-    let title: String
-    var saveTitle = "Save"
+    let title: LocalizedStringKey
+    var saveTitle: LocalizedStringKey = "Save"
     var canSave = true
     let onSave: () -> Void
     @ViewBuilder var trailing: Trailing

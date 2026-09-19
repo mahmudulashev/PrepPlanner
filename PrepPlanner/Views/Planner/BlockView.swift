@@ -63,7 +63,7 @@ struct BlockView: View {
                 .lineLimit(1)
                 if height > 62 {
                     HStack(spacing: 6) {
-                        Text(block.category?.name ?? "No category")
+                        Text(block.category?.name ?? String(localized: "No category"))
                             .font(.caption2.weight(.semibold))
                             .padding(.horizontal, 7)
                             .padding(.vertical, 2)
@@ -86,14 +86,14 @@ struct BlockView: View {
     }
 
     private var titleText: Text {
-        Text(block.title.isEmpty ? "Untitled" : block.title)
+        Text(block.title.isEmpty ? String(localized: "Untitled") : block.title)
             .strikethrough(block.status == .done)
     }
 
     private var actualLabel: String? {
         guard block.status == .done || block.status == .partial,
               let a = block.actualMinutes, a != block.plannedMinutes else { return nil }
-        return "\(TimeFmt.duration(a)) actual"
+        return String(localized: "\(TimeFmt.duration(a)) actual")
     }
 
     private var statusButton: some View {

@@ -23,18 +23,18 @@ enum TimeFmt {
     /// 75 -> "1h 15m"
     static func duration(_ minutes: Int) -> String {
         let h = minutes / 60, m = minutes % 60
-        if h == 0 { return "\(m)m" }
-        if m == 0 { return "\(h)h" }
-        return "\(h)h \(m)m"
+        if h == 0 { return String(localized: "\(m)m", comment: "Duration in minutes") }
+        if m == 0 { return String(localized: "\(h)h", comment: "Duration in whole hours") }
+        return String(localized: "\(h)h \(m)m", comment: "Duration in hours and minutes")
     }
 
     /// 270 -> "4.5h", 105 -> "1.75h"
     static func hours(_ minutes: Int) -> String {
         let h = Double(minutes) / 60
-        if h == h.rounded() { return "\(Int(h))h" }
         var s = String(format: "%.2f", h)
         while s.hasSuffix("0") { s.removeLast() }
-        return s + "h"
+        if s.hasSuffix(".") { s.removeLast() }
+        return String(localized: "\(s)h", comment: "Number of hours, e.g. 4.5h")
     }
 
     /// "07:45" -> 465

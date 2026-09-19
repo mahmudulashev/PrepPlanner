@@ -9,11 +9,11 @@ enum SidebarSection: String, CaseIterable, Identifiable, Hashable {
 
     var title: String {
         switch self {
-        case .planner: "Planner"
-        case .habits: "Habits"
-        case .results: "Results"
-        case .errors: "Error Log"
-        case .analytics: "Analytics"
+        case .planner: String(localized: "Planner")
+        case .habits: String(localized: "Habits")
+        case .results: String(localized: "Results")
+        case .errors: String(localized: "Error Log")
+        case .analytics: String(localized: "Analytics")
         }
     }
 
@@ -149,7 +149,7 @@ final class AppState {
     @discardableResult
     func createBlock(start: Int, end: Int, category: StudyCategory? = nil) -> TimeBlock {
         let cat = category ?? defaultCategory()
-        let block = TimeBlock(day: day, startMin: start, endMin: end, title: cat?.name ?? "Study")
+        let block = TimeBlock(day: day, startMin: start, endMin: end, title: cat?.name ?? String(localized: "Study"))
         context.insert(block)
         block.category = cat
         section = .planner
@@ -237,7 +237,7 @@ final class AppState {
             tb.template = template
         }
         try? context.save()
-        showToast("Saved template “\(name)” (\(source.count) blocks)")
+        showToast(String.inflected("Saved template “\(name)” (^[\(source.count) block](inflect: true))"))
     }
 
     /// Returns the number of days the template was applied to.

@@ -57,7 +57,7 @@ struct SaveTemplateSheet: View {
         VStack(alignment: .leading, spacing: 14) {
             Text("Save day as template")
                 .font(.title2.bold())
-            Text("Saves the \(blocks.count) block\(blocks.count == 1 ? "" : "s") from \(state.day.formatted(date: .complete, time: .omitted)): times, titles, categories and notes. Statuses aren't saved.")
+            Text("Saves ^[\(blocks.count) block](inflect: true) from \(state.day.formatted(date: .complete, time: .omitted)): times, titles, categories and notes. Statuses aren't saved.")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -117,8 +117,11 @@ struct ApplyTemplateSheet: View {
     @State private var weekdays: Set<Int> = Set(1...7)
     @State private var mode: TemplateConflictMode = .merge
 
-    /// Calendar weekday numbers in Monday-first order.
-    private let weekdayOrder: [(Int, String)] = [(2, "M"), (3, "T"), (4, "W"), (5, "T"), (6, "F"), (7, "S"), (1, "S")]
+    /// Calendar weekday numbers in Monday-first order, with the locale's one-letter names.
+    private let weekdayOrder: [(Int, String)] = {
+        let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
+        return [2, 3, 4, 5, 6, 7, 1].map { ($0, symbols[$0 - 1]) }
+    }()
     private let maxDays = 180
 
     private var selected: DayTemplate? { templates.first { $0.uid == selectedID } }
@@ -178,7 +181,7 @@ struct ApplyTemplateSheet: View {
 
                     if conflicts > 0 {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("\(conflicts) of these day\(conflicts == 1 ? " already has" : "s already have") blocks:")
+                            Text("Days that already have blocks: \(conflicts)")
                                 .font(.callout.weight(.medium))
                             Picker("Conflicts", selection: $mode) {
                                 ForEach(TemplateConflictMode.allCases) { Text($0.title).tag($0) }
@@ -191,7 +194,7 @@ struct ApplyTemplateSheet: View {
             }
 
             HStack {
-                Text(summary(days: days.count))
+                summary(days: days.count)
                     .font(.callout)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -217,7 +220,7 @@ struct ApplyTemplateSheet: View {
             ForEach(templates) { t in
                 VStack(alignment: .leading, spacing: 2) {
                     Text(t.name).font(.body.weight(.medium))
-                    Text("\(t.blocks.count) blocks · \(TimeFmt.hours(t.totalMinutes))")
+                    Text("^[\(t.blocks.count) block](inflect: true) · \(TimeFmt.hours(t.totalMinutes))")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -249,7 +252,7 @@ struct ApplyTemplateSheet: View {
                 Button {
                     if on { weekdays.remove(weekday) } else { weekdays.insert(weekday) }
                 } label: {
-                    Text(label)
+                    Text(verbatim: label)
                         .font(.callout.weight(.semibold))
                         .frame(width: 30, height: 30)
                         .background(Circle().fill(on ? Theme.ink : Theme.cardMuted))
@@ -260,17 +263,17 @@ struct ApplyTemplateSheet: View {
         }
     }
 
-    private func summary(days: Int) -> String {
-        guard let t = selected else { return "" }
-        if days == 0 { return "No days match the selected range and weekdays." }
-        let capped = days == maxDays ? " (max \(maxDays))" : ""
-        return "Adds \(t.blocks.count) blocks to \(days) day\(days == 1 ? "" : "s")\(capped)."
+    private func summary(days: Int) -> Text {
+        guard let t = selected else { return Text(verbatim: "") }
+        if days == 0 { return Text("No days match the selected range and weekdays.") }
+        if days == maxDays { return Text("Adds ^[\(t.blocks.count) block](inflect: true) to \(days) days (the maximum).") }
+        return Text("Adds ^[\(t.blocks.count) block](inflect: true) to ^[\(days) day](inflect: true).")
     }
 
     private func apply(_ days: [Date]) {
         guard let t = selected else { return }
         let n = state.apply(t, to: days, mode: mode)
-        state.showToast("Applied “\(t.name)” to \(n) day\(n == 1 ? "" : "s")")
+        state.showToast(String.inflected("Applied “\(t.name)” to ^[\(n) day](inflect: true)"))
         dismiss()
     }
 }

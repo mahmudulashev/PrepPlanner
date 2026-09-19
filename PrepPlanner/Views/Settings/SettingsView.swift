@@ -34,10 +34,39 @@ private struct GeneralSettings: View {
 
 private struct GeneralForm: View {
     @Bindable var settings: AppSettings
+    @Environment(\.modelContext) private var context
+    @State private var language = AppLanguage.current
+    @State private var renameResult: String?
+    private let launchLanguage = AppLanguage.current
     private let bands = Array(stride(from: 4.0, through: 9.0, by: 0.5))
 
     var body: some View {
         Form {
+            Section("Language") {
+                Picker("App language", selection: $language) {
+                    Text("System default").tag(AppLanguage.system)
+                    Text(verbatim: "English").tag(AppLanguage.english)
+                    Text(verbatim: "Oʻzbekcha").tag(AppLanguage.uzbek)
+                }
+                .onChange(of: language) { language.apply() }
+                if language != launchLanguage {
+                    HStack {
+                        Text("Restart PrepPlanner to switch the language.")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Restart Now") { AppLanguage.relaunch() }
+                    }
+                }
+                LabeledContent("Built-in names") {
+                    HStack {
+                        Button { rename(toUzbek: true) } label: { Text(verbatim: "Oʻzbekcha") }
+                        Button { rename(toUzbek: false) } label: { Text(verbatim: "English") }
+                    }
+                }
+                Text(renameResult ?? String(localized: "Renames the default categories, templates and error types. Names you changed yourself are kept."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
             Section("Exam dates") {
                 DatePicker("IELTS", selection: $settings.ieltsDate, displayedComponents: .date)
                 DatePicker("SAT", selection: $settings.satDate, displayedComponents: .date)
@@ -57,7 +86,12 @@ private struct GeneralForm: View {
         .formStyle(.grouped)
     }
 
-    private func bandPicker(_ title: String, _ value: Binding<Double>) -> some View {
+    private func rename(toUzbek: Bool) {
+        let n = DefaultNames.translate(toUzbek: toUzbek, in: context)
+        renameResult = String(localized: "Renamed \(n) items.")
+    }
+
+    private func bandPicker(_ title: LocalizedStringKey, _ value: Binding<Double>) -> some View {
         Picker(title, selection: value) {
             ForEach(bands, id: \.self) { b in
                 Text(String(format: "%.1f", b)).tag(b)
@@ -99,7 +133,7 @@ private struct CategorySettings: View {
         ) { c in
             Button("Delete", role: .destructive) { context.delete(c) }
         } message: { c in
-            Text("\(c.blocks.count) block(s) use this category. They stay on your planner without a category.")
+            Text("Blocks using this category: \(c.blocks.count). They stay on your planner without a category.")
         }
     }
 
@@ -198,7 +232,7 @@ private struct TemplateRow: View {
         HStack(spacing: 10) {
             TextField("Name", text: $template.name)
                 .textFieldStyle(.roundedBorder)
-            Text("\(template.blocks.count) blocks · \(TimeFmt.hours(template.totalMinutes))")
+            Text("^[\(template.blocks.count) block](inflect: true) · \(TimeFmt.hours(template.totalMinutes))")
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(.secondary)
                 .frame(width: 130, alignment: .trailing)
@@ -257,7 +291,7 @@ private struct ErrorTypeSettings: View {
         ) { t in
             Button("Delete", role: .destructive) { context.delete(t) }
         } message: { t in
-            Text("\(t.entries.count) logged error(s) use this type. They are kept and marked Untyped.")
+            Text("Logged errors using this type: \(t.entries.count). They are kept and marked Untyped.")
         }
     }
 

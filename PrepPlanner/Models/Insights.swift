@@ -51,7 +51,7 @@ enum InsightEngine {
         let unmarked = blocks.filter { $0.needsReview && $0.day >= now.startOfDay.adding(days: -6) }.count
         if unmarked > 0 {
             infos.append(Insight(tone: .info, symbol: "checklist",
-                                 text: String(localized: "\(unmarked) past blocks from the last 7 days still need a status.")))
+                                 text: String(localized: "Blocks from the last 7 days without a status: \(unmarked).")))
         }
 
         // Completion rate, this week vs last week.
@@ -78,7 +78,7 @@ enum InsightEngine {
         for row in Analytics.errorCounts(recentErrors, skill: nil, since: nil, limit: 2) where row.count >= 2 {
             warnings.append(Insight(
                 tone: .warning, symbol: "exclamationmark.bubble",
-                text: String(localized: "Most frequent \(row.skill.title) error: \(row.name) (\(row.count) times)."))
+                text: String(localized: "Most frequent \(row.skill.title) error: \(row.name) (×\(row.count))."))
             )
         }
 

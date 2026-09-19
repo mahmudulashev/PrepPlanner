@@ -155,7 +155,7 @@ struct DayTimeline: View {
     @ViewBuilder
     private func contextMenu(for b: TimeBlock) -> some View {
         ForEach(BlockStatus.allCases) { s in
-            Button { b.setStatus(s) } label: { Label(s == .planned ? "Reset to Planned" : "Mark \(s.title)", systemImage: s.symbol) }
+            Button { b.setStatus(s) } label: { Label(s.actionTitle, systemImage: s.symbol) }
         }
         Divider()
         Menu("Category") {
