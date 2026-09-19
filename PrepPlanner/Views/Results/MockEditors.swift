@@ -217,7 +217,7 @@ struct SATEditor: View {
         EditorScaffold(title: mock == nil ? "New SAT mock" : "Edit SAT mock", onSave: save) {
             VStack(alignment: .trailing, spacing: 0) {
                 Text("TOTAL").font(.caption2.weight(.semibold)).opacity(0.8)
-                Text("\(total)")
+                Text(verbatim: String(total))
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .monospacedDigit()
             }

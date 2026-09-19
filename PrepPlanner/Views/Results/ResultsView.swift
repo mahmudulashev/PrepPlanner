@@ -303,10 +303,10 @@ private struct SATResults: View {
                 Text("LATEST TOTAL")
                     .font(.caption.weight(.semibold))
                     .opacity(0.8)
-                Text("\(latest.total)")
+                Text(verbatim: String(latest.total))
                     .font(.system(size: 40, weight: .bold, design: .rounded))
                     .monospacedDigit()
-                Text(gap > 0 ? "\(gap) to target \(target)" : "Target \(target) reached 🎉")
+                Text(gap > 0 ? "\(gap) to target \(String(target))" : "Target \(String(target)) reached 🎉")
                     .font(.caption)
                     .opacity(0.8)
             }
@@ -321,7 +321,7 @@ private struct SATResults: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 Text("Best total").font(.callout.weight(.semibold))
-                Text("\(best)")
+                Text(verbatim: String(best))
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .monospacedDigit()
                 Text("\(mocks.count) mock\(mocks.count == 1 ? "" : "s") logged")
@@ -347,7 +347,7 @@ private struct SATResults: View {
                         .foregroundStyle(d > 0 ? Theme.success : d < 0 ? Theme.danger : .secondary)
                 }
             }
-            Text("\(score)")
+            Text(verbatim: String(score))
                 .font(.system(size: 28, weight: .bold, design: .rounded))
                 .monospacedDigit()
             GeometryReader { g in
@@ -371,13 +371,13 @@ private struct SATResults: View {
             }
             .width(min: 90, ideal: 110)
             TableColumn("Reading & Writing") { m in
-                Text("\(m.readingWriting)").monospacedDigit()
+                Text(verbatim: String(m.readingWriting)).monospacedDigit()
             }
             TableColumn("Math") { m in
-                Text("\(m.math)").monospacedDigit()
+                Text(verbatim: String(m.math)).monospacedDigit()
             }
             TableColumn("Total") { m in
-                Text("\(m.total)")
+                Text(verbatim: String(m.total))
                     .font(.callout.weight(.semibold))
                     .monospacedDigit()
                     .padding(.horizontal, 8)

@@ -46,7 +46,7 @@ struct RootView: View {
         case .errors:
             ErrorLogView()
         case .analytics:
-            ComingSoonView(title: "Analytics", symbol: "chart.xyaxis.line", phase: 3)
+            AnalyticsView()
         }
     }
 }
