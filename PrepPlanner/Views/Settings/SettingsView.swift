@@ -10,6 +10,8 @@ struct SettingsView: View {
                 .tabItem { Label("Categories", systemImage: "paintpalette") }
             TemplateSettings()
                 .tabItem { Label("Templates", systemImage: "square.on.square") }
+            ErrorTypeSettings()
+                .tabItem { Label("Error Types", systemImage: "exclamationmark.bubble") }
         }
         .frame(width: 600, height: 500)
         .tint(Theme.accent)
@@ -204,6 +206,89 @@ private struct TemplateRow: View {
                 Image(systemName: "trash")
             }
             .buttonStyle(.borderless)
+        }
+        .padding(.vertical, 2)
+    }
+}
+
+// MARK: - Error types
+
+private struct ErrorTypeSettings: View {
+    @Environment(\.modelContext) private var context
+    @Query(sort: \ErrorType.order) private var allTypes: [ErrorType]
+    @State private var skill: Skill = .listening
+    @State private var pendingDelete: ErrorType?
+
+    private var types: [ErrorType] { allTypes.filter { $0.skill == skill } }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Picker("Skill", selection: $skill) {
+                ForEach(Skill.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .padding(12)
+
+            List {
+                ForEach(types) { t in
+                    ErrorTypeRow(type: t) { pendingDelete = t }
+                }
+                .onMove(perform: move)
+            }
+            .overlay {
+                if types.isEmpty {
+                    Text("No error types for \(skill.title) yet.").foregroundStyle(.secondary)
+                }
+            }
+
+            Divider()
+            HStack {
+                Button { add() } label: { Label("Add Type", systemImage: "plus") }
+                Spacer()
+                Text("Drag rows to reorder.").font(.caption).foregroundStyle(.secondary)
+            }
+            .padding(12)
+        }
+        .confirmationDialog(
+            "Delete “\(pendingDelete?.name ?? "")”?",
+            isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
+            presenting: pendingDelete
+        ) { t in
+            Button("Delete", role: .destructive) { context.delete(t) }
+        } message: { t in
+            Text("\(t.entries.count) logged error(s) use this type. They are kept and marked Untyped.")
+        }
+    }
+
+    private func move(from source: IndexSet, to destination: Int) {
+        var ordered = types
+        ordered.move(fromOffsets: source, toOffset: destination)
+        for (i, t) in ordered.enumerated() { t.order = i }
+    }
+
+    private func add() {
+        context.insert(ErrorType(name: "New type", skill: skill, order: (types.last?.order ?? -1) + 1))
+    }
+}
+
+private struct ErrorTypeRow: View {
+    @Bindable var type: ErrorType
+    var onDelete: () -> Void
+
+    var body: some View {
+        HStack(spacing: 10) {
+            TextField("Name", text: $type.name)
+                .textFieldStyle(.roundedBorder)
+            Text("\(type.entries.count) logged")
+                .font(.callout.monospacedDigit())
+                .foregroundStyle(.secondary)
+                .frame(width: 80, alignment: .trailing)
+            Button(role: .destructive, action: onDelete) {
+                Image(systemName: "trash")
+            }
+            .buttonStyle(.borderless)
+            .help("Delete type")
         }
         .padding(.vertical, 2)
     }

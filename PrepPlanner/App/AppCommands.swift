@@ -7,6 +7,19 @@ struct AppCommands: Commands {
         CommandGroup(replacing: .newItem) {
             Button("New Block") { state.newBlockAtNextFreeSlot() }
                 .keyboardShortcut("n")
+            Divider()
+            Button("Log Error…") { state.editor = .error(nil, nil) }
+                .keyboardShortcut("e")
+            Button("New IELTS Mock…") {
+                state.resultsTab = .ielts
+                state.editor = .ielts(nil)
+            }
+            .keyboardShortcut("r")
+            Button("New SAT Mock…") {
+                state.resultsTab = .sat
+                state.editor = .sat(nil)
+            }
+            .keyboardShortcut("r", modifiers: [.command, .shift])
         }
         CommandGroup(replacing: .saveItem) {}
         CommandGroup(replacing: .printItem) {}

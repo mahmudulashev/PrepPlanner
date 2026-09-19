@@ -38,6 +38,36 @@ enum SidebarSection: String, CaseIterable, Identifiable, Hashable {
     }
 }
 
+enum ResultsTab: String, CaseIterable, Identifiable {
+    case ielts = "IELTS"
+    case sat = "SAT"
+
+    var id: String { rawValue }
+}
+
+/// Values to pre-fill when logging an error from a mock test.
+struct ErrorPrefill {
+    var date: Date?
+    var skill: Skill?
+    var ieltsMockID: UUID?
+    var satMockID: UUID?
+}
+
+/// Add/edit sheets that can be opened from anywhere in the app.
+enum EditorSheet: Identifiable {
+    case ielts(IELTSMock?)
+    case sat(SATMock?)
+    case error(ErrorEntry?, ErrorPrefill?)
+
+    var id: String {
+        switch self {
+        case .ielts(let m): "ielts-\(m?.uid.uuidString ?? "new")"
+        case .sat(let m): "sat-\(m?.uid.uuidString ?? "new")"
+        case .error(let e, _): "error-\(e?.uid.uuidString ?? "new")"
+        }
+    }
+}
+
 /// Shared UI state plus planner actions, so menu commands and views use the same code paths.
 @MainActor
 @Observable
@@ -52,6 +82,8 @@ final class AppState {
     /// A newly created block whose title field should receive focus.
     var pendingTitleFocusID: UUID?
     var toast: String?
+    var resultsTab: ResultsTab = .ielts
+    var editor: EditorSheet?
 
     @ObservationIgnored let context: ModelContext
 

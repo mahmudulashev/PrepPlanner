@@ -24,6 +24,14 @@ struct RootView: View {
             detail
         }
         .tint(Theme.accent)
+        .sheet(item: $state.editor) { sheet in
+            switch sheet {
+            case .ielts(let mock): IELTSEditor(mock: mock)
+            case .sat(let mock): SATEditor(mock: mock)
+            case .error(let entry, let prefill): ErrorEditor(entry: entry, prefill: prefill)
+            }
+        }
+        .tint(Theme.accent)
     }
 
     @ViewBuilder
@@ -34,9 +42,9 @@ struct RootView: View {
         case .habits:
             ComingSoonView(title: "Habits", symbol: "checkmark.circle", phase: 4)
         case .results:
-            ComingSoonView(title: "Results", symbol: "graduationcap", phase: 2)
+            ResultsView()
         case .errors:
-            ComingSoonView(title: "Error Log", symbol: "exclamationmark.bubble", phase: 2)
+            ErrorLogView()
         case .analytics:
             ComingSoonView(title: "Analytics", symbol: "chart.xyaxis.line", phase: 3)
         }

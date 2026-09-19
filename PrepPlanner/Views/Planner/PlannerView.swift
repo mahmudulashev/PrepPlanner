@@ -20,8 +20,8 @@ struct PlannerView: View {
             BlockInspector(day: state.day)
                 .inspectorColumnWidth(min: 270, ideal: 310, max: 400)
         }
-        .sheet(isPresented: $state.showSaveTemplate) { SaveTemplateSheet() }
-        .sheet(isPresented: $state.showApplyTemplate) { ApplyTemplateSheet() }
+        .sheet(isPresented: $state.showSaveTemplate) { SaveTemplateSheet().tint(Theme.accent) }
+        .sheet(isPresented: $state.showApplyTemplate) { ApplyTemplateSheet().tint(Theme.accent) }
         .overlay(alignment: .bottom) { toast }
         .animation(.spring(duration: 0.3), value: state.toast)
     }
