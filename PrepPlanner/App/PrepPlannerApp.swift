@@ -21,9 +21,10 @@ struct PrepPlannerApp: App {
             RootView()
                 .environment(state)
                 .task { NotificationScheduler.shared.start(container: container) }
-                .frame(minWidth: 1180, minHeight: 720)
+                .frame(minWidth: 860, minHeight: 600)
         }
         .defaultSize(width: 1360, height: 880)
+        .windowResizability(.contentMinSize)
         .modelContainer(container)
         .commands { AppCommands(state: state) }
 

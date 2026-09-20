@@ -170,6 +170,7 @@ private struct DaySummary: View {
                 contact
             }
             .padding(18)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -188,11 +189,16 @@ private struct DaySummary: View {
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
                         Circle().fill(Color(hex: row.color)).frame(width: 9, height: 9)
-                        Text(row.name).font(.callout.weight(.medium))
-                        Spacer()
+                        Text(row.name)
+                            .font(.callout.weight(.medium))
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                        Spacer(minLength: 8)
                         Text("\(TimeFmt.hours(row.done)) / \(TimeFmt.hours(row.planned))")
                             .font(.callout.monospacedDigit())
                             .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .layoutPriority(1)
                     }
                     GeometryReader { g in
                         ZStack(alignment: .leading) {
@@ -225,10 +231,14 @@ private struct DaySummary: View {
     private var contact: some View {
         VStack(alignment: .leading, spacing: 6) {
             Link(destination: URL(string: "https://github.com/mahmudulashev/PrepPlanner")!) {
-                Label { Text(verbatim: "github.com/mahmudulashev/PrepPlanner") } icon: { Image(systemName: "chevron.left.forwardslash.chevron.right") }
+                Label {
+                    Text(verbatim: "github.com/mahmudulashev/PrepPlanner")
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                } icon: { Image(systemName: "chevron.left.forwardslash.chevron.right") }
             }
             Link(destination: URL(string: "mailto:mahmud_u@icloud.com")!) {
-                Label { Text(verbatim: "mahmud_u@icloud.com") } icon: { Image(systemName: "envelope") }
+                Label { Text(verbatim: "mahmud_u@icloud.com").lineLimit(1) } icon: { Image(systemName: "envelope") }
             }
         }
         .font(.caption)
@@ -236,9 +246,15 @@ private struct DaySummary: View {
     }
 
     private func shortcut(_ keys: String, _ label: LocalizedStringKey) -> some View {
-        HStack {
-            Text(verbatim: keys).font(.callout.monospaced()).foregroundStyle(.secondary).frame(width: 110, alignment: .leading)
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text(verbatim: keys)
+                .font(.callout.monospaced())
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .frame(width: 96, alignment: .leading)
             Text(label)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

@@ -99,47 +99,82 @@ struct ErrorLogView: View {
     // MARK: Filters
 
     private func filterBar(count: Int) -> some View {
-        HStack(spacing: 12) {
-            Picker("Skill", selection: $skillFilter) {
-                Text("All skills").tag(Skill?.none)
-                Divider()
-                ForEach(Skill.allCases) { s in Text(s.title).tag(Optional(s)) }
+        // One row while the pickers fit; two rows once the window (or a translation) is narrower.
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 12) {
+                skillPicker
+                typePicker
+                rangePicker
+                Spacer(minLength: 12)
+                clearButton
+                countLabel(count)
             }
-            .frame(width: 170)
-
-            Picker("Type", selection: $typeFilter) {
-                Text("All types").tag(UUID?.none)
-                Divider()
-                ForEach(types.filter { skillFilter == nil || $0.skill == skillFilter }) { t in
-                    Text(skillFilter == nil ? "\(t.name) (\(t.skill.title))" : t.name).tag(Optional(t.uid))
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 12) {
+                    skillPicker
+                    typePicker
+                    Spacer(minLength: 0)
+                }
+                HStack(spacing: 12) {
+                    rangePicker
+                    Spacer(minLength: 12)
+                    clearButton
+                    countLabel(count)
                 }
             }
-            .frame(width: 240)
-
-            Picker("Range", selection: $range) {
-                ForEach(ErrorDateRange.allCases) { Text($0.title).tag($0) }
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .frame(width: 210)
-
-            Spacer()
-
-            if skillFilter != nil || typeFilter != nil || range != .all || !search.isEmpty {
-                Button("Clear Filters") {
-                    skillFilter = nil
-                    typeFilter = nil
-                    range = .all
-                    search = ""
-                }
-                .buttonStyle(.link)
-                .foregroundStyle(Theme.accent)
-            }
-            Text("^[\(count) error](inflect: true)")
-                .font(.callout.weight(.semibold))
-                .foregroundStyle(.secondary)
         }
         .card(padding: 12)
+    }
+
+    private var skillPicker: some View {
+        Picker("Skill", selection: $skillFilter) {
+            Text("All skills").tag(Skill?.none)
+            Divider()
+            ForEach(Skill.allCases) { s in Text(s.title).tag(Optional(s)) }
+        }
+        .frame(width: 170)
+    }
+
+    private var typePicker: some View {
+        Picker("Type", selection: $typeFilter) {
+            Text("All types").tag(UUID?.none)
+            Divider()
+            ForEach(types.filter { skillFilter == nil || $0.skill == skillFilter }) { t in
+                Text(skillFilter == nil ? "\(t.name) (\(t.skill.title))" : t.name).tag(Optional(t.uid))
+            }
+        }
+        .frame(width: 240)
+    }
+
+    private var rangePicker: some View {
+        Picker("Range", selection: $range) {
+            ForEach(ErrorDateRange.allCases) { Text($0.title).tag($0) }
+        }
+        .pickerStyle(.segmented)
+        .labelsHidden()
+        .frame(width: 210)
+    }
+
+    @ViewBuilder
+    private var clearButton: some View {
+        if skillFilter != nil || typeFilter != nil || range != .all || !search.isEmpty {
+            Button("Clear Filters") {
+                skillFilter = nil
+                typeFilter = nil
+                range = .all
+                search = ""
+            }
+            .buttonStyle(.link)
+            .foregroundStyle(Theme.accent)
+            .lineLimit(1)
+        }
+    }
+
+    private func countLabel(_ count: Int) -> some View {
+        Text("^[\(count) error](inflect: true)")
+            .font(.callout.weight(.semibold))
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
     }
 
     /// The most frequent types in the current filter, clickable to drill down.
