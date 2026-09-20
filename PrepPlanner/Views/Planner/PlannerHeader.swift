@@ -56,11 +56,12 @@ struct PlannerHeader: View {
                 }
             }
 
-            // Narrow: the two countdowns share the last row.
-            VStack(alignment: .leading, spacing: 12) {
+            // Narrow: the two countdowns share the last row, and every card drops to the
+            // compact density so the header leaves the timeline some room.
+            VStack(alignment: .leading, spacing: 10) {
                 title(size: 22)
-                progress(planned: planned, done: done, review: review, width: .fill)
-                row { countdowns(width: .fill) }
+                row { progress(planned: planned, done: done, review: review, width: .fill, density: .compact) }
+                row { countdowns(width: .fill, density: .compact) }
             }
         }
     }
@@ -116,17 +117,20 @@ struct PlannerHeader: View {
         }
     }
 
-    private func progress(planned: Int, done: Int, review: Int, width: HeroCardWidth) -> some View {
-        DayProgressCard(planned: planned, done: done, review: review, isToday: isToday)
+    private func progress(
+        planned: Int, done: Int, review: Int,
+        width: HeroCardWidth, density: HeroDensity = .regular
+    ) -> some View {
+        DayProgressCard(planned: planned, done: done, review: review, isToday: isToday, density: density)
             .heroCardWidth(width)
     }
 
     @ViewBuilder
-    private func countdowns(width: HeroCardWidth) -> some View {
+    private func countdowns(width: HeroCardWidth, density: HeroDensity = .regular) -> some View {
         if let s = settings.first {
-            CountdownCard(exam: "IELTS", date: s.ieltsDate, fill: Theme.accent, foreground: .white)
+            CountdownCard(exam: "IELTS", date: s.ieltsDate, fill: Theme.accent, foreground: .white, density: density)
                 .heroCardWidth(width)
-            CountdownCard(exam: "SAT", date: s.satDate, fill: Theme.ink, foreground: Theme.onInk)
+            CountdownCard(exam: "SAT", date: s.satDate, fill: Theme.ink, foreground: Theme.onInk, density: density)
                 .heroCardWidth(width)
         }
     }
@@ -153,18 +157,32 @@ private extension View {
     }
 }
 
-/// One card in the header row. Every card shares the same radius, padding, shadow and
-/// stretches to the height of its row, so the three read as one set.
+/// How tightly a hero card is packed. The narrow layout stacks all three cards, so it uses
+/// the compact set to keep the header from crowding out the timeline.
+enum HeroDensity {
+    case regular, compact
+
+    var padding: CGFloat { self == .regular ? 14 : 11 }
+    var cornerRadius: CGFloat { self == .regular ? Theme.cornerRadius : 14 }
+    var spacing: CGFloat { self == .regular ? 6 : 3 }
+    var metric: Font { .system(size: self == .regular ? 28 : 22, weight: .bold, design: .rounded) }
+    var label: Font { self == .regular ? .callout : .footnote }
+    var caption: Font { self == .regular ? .caption : .caption2 }
+}
+
+/// One card in the header row. Every card in a row shares the same radius, padding, shadow
+/// and density, and stretches to the height of that row, so they read as one set.
 private struct HeroCard<Content: View>: View {
     var fill: Color = Theme.card
+    var density: HeroDensity = .regular
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) { content }
+        VStack(alignment: .leading, spacing: density.spacing) { content }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(14)
+            .padding(density.padding)
             .background(
-                RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(fill)
+                RoundedRectangle(cornerRadius: density.cornerRadius, style: .continuous).fill(fill)
             )
             .shadow(color: .black.opacity(0.07), radius: 10, y: 4)
     }
@@ -177,12 +195,13 @@ private struct DayProgressCard: View {
     let done: Int
     let review: Int
     let isToday: Bool
+    var density: HeroDensity = .regular
 
     var body: some View {
         let fraction = planned > 0 ? min(Double(done) / Double(planned), 1) : 0
-        HeroCard {
+        HeroCard(density: density) {
             Text(isToday ? "TODAY · STUDY HOURS" : "THIS DAY · STUDY HOURS")
-                .font(.caption.weight(.semibold))
+                .font(density.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
@@ -199,11 +218,11 @@ private struct DayProgressCard: View {
                 }
             }
 
-            Spacer(minLength: 4)
+            Spacer(minLength: density == .regular ? 4 : 2)
 
             Capsule()
                 .fill(Theme.cardMuted)
-                .frame(height: 8)
+                .frame(height: density == .regular ? 8 : 6)
                 .overlay(alignment: .leading) {
                     GeometryReader { g in
                         Capsule()
@@ -213,20 +232,24 @@ private struct DayProgressCard: View {
                 }
                 .animation(.easeOut(duration: 0.25), value: fraction)
 
-            footnote(fraction: fraction)
+            // The percentage only repeats what the bar already says; compact keeps the
+            // line for the review prompt, which is the one thing worth acting on.
+            if review > 0 || density == .regular {
+                footnote(fraction: fraction)
+            }
         }
     }
 
     private var hours: some View {
         Text(TimeFmt.hours(done))
-            .font(.system(size: 28, weight: .bold, design: .rounded))
+            .font(density.metric)
             .lineLimit(1)
             .minimumScaleFactor(0.6)
     }
 
     private var plannedLabel: some View {
         Text("of \(TimeFmt.hours(planned)) planned")
-            .font(.callout)
+            .font(density.label)
             .foregroundStyle(.secondary)
             .lineLimit(1)
             .minimumScaleFactor(0.7)
@@ -240,7 +263,7 @@ private struct DayProgressCard: View {
                 Text("\(Int(fraction * 100))% completed")
             }
         }
-        .font(.caption.weight(review > 0 ? .semibold : .regular))
+        .font(density.caption.weight(review > 0 ? .semibold : .regular))
         .foregroundStyle(review > 0 ? Theme.accent : .secondary)
         .lineLimit(1)
         .minimumScaleFactor(0.7)
@@ -252,21 +275,30 @@ private struct CountdownCard: View {
     let date: Date
     let fill: Color
     let foreground: Color
+    var density: HeroDensity = .regular
 
     var body: some View {
         let days = Countdown.days(to: date)
-        HeroCard(fill: fill) {
-            // Count above the label, always: "days to IELTS" and "days to SAT" are different
-            // lengths in every language, and the two cards must break the same way.
-            VStack(alignment: .leading, spacing: 0) {
-                count(days)
-                label(days)
+        HeroCard(fill: fill, density: density) {
+            // The layout is fixed per density rather than per card: "days to IELTS" and
+            // "days to SAT" are different lengths in every language, and the two cards
+            // have to break the same way to read as a pair.
+            if density == .regular {
+                VStack(alignment: .leading, spacing: 0) {
+                    count(days)
+                    label(days)
+                }
+            } else {
+                HStack(alignment: .firstTextBaseline, spacing: 5) {
+                    count(days)
+                    label(days)
+                }
             }
 
-            Spacer(minLength: 4)
+            Spacer(minLength: density == .regular ? 4 : 1)
 
             Text(subtitle(days))
-                .font(.caption)
+                .font(density.caption)
                 .opacity(0.8)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
@@ -276,15 +308,15 @@ private struct CountdownCard: View {
 
     private func count(_ days: Int) -> some View {
         Text("\(max(days, 0))")
-            .font(.system(size: 28, weight: .bold, design: .rounded))
+            .font(density.metric)
             .monospacedDigit()
             .lineLimit(1)
     }
 
     private func label(_ days: Int) -> some View {
         Text(days == 1 ? "day to \(exam)" : "days to \(exam)")
-            .font(.callout.weight(.semibold))
-            .lineLimit(2)
+            .font(density.label.weight(.semibold))
+            .lineLimit(density == .regular ? 2 : 1)
             .minimumScaleFactor(0.75)
             .fixedSize(horizontal: false, vertical: true)
     }
