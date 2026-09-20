@@ -57,7 +57,7 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - Add, edit, reorder, archive and delete habits
 
 ### Reminders, menu bar and backups
-- A reminder before each block starts (5 minutes by default, adjustable or off)
+- A reminder before each block starts (5 minutes by default, adjustable or off), with snooze and a prompt to mark how the block went when it ends
 - Menu bar item showing the current block and time left, with buttons to mark it Done, Partial or Skipped
 - Full JSON backup and restore, and CSV export of IELTS results, SAT results and the error log
 

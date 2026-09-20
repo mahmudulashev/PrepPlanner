@@ -493,6 +493,16 @@
         }
       }
     },
+    "Ask how it went when a block ends": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok tugaganda qanday oʻtganini soʻrash"
+          }
+        }
+      }
+    },
     "Backup (JSON)": {
       "localizations": {
         "uz": {
@@ -659,6 +669,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Filtrlarni tozalash"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yopish"
           }
         }
       }
@@ -1009,6 +1029,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "“%@” oʻchirilsinmi?"
+          }
+        }
+      }
+    },
+    "Dismiss": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yopish"
           }
         }
       }
@@ -1429,6 +1459,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Qanday oʻtdi?"
+          }
+        }
+      }
+    },
+    "How did it go? %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qanday oʻtdi? %@"
           }
         }
       }
@@ -2416,6 +2456,16 @@
         }
       }
     },
+    "Open Planner": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejalashtirgichni ochish"
+          }
+        }
+      }
+    },
     "Open PrepPlanner": {
       "localizations": {
         "uz": {
@@ -2522,6 +2572,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rejalashtirgich"
+          }
+        }
+      }
+    },
+    "Play a sound with reminders": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eslatmalarda ovoz chalish"
           }
         }
       }
@@ -3014,6 +3074,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oʻtkazildi"
+          }
+        }
+      }
+    },
+    "Snooze 5 min": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 daqiqaga kechiktirish"
+          }
+        }
+      }
+    },
+    "Snoozed: %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kechiktirilgan: %@"
           }
         }
       }

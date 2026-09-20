@@ -71,22 +71,59 @@ final class NowTracker {
         doneMinutes = study.reduce(0) { $0 + $1.effectiveActual }
     }
 
-    /// Shows the in-app reminder for blocks about to start, but only when system notifications don't work.
+    /// Shows the in-app reminder for blocks about to start or just finished,
+    /// but only when system notifications don't work.
     private func checkReminders(_ blocks: [TimeBlock]) {
         guard !NotificationScheduler.shared.systemDeliveryWorks,
               let settings = try? context.fetch(FetchDescriptor<AppSettings>()).first,
               settings.notificationsEnabled else { return }
+
         let lead = TimeInterval(settings.notificationLeadMinutes * 60)
         for block in blocks where block.status == .planned {
+            let snapshot = BlockSnapshot(block)
+            let subtitle = [TimeFmt.range(block.startMin, block.endMin), block.category?.name]
+                .compactMap { $0 }.joined(separator: " · ")
+
+            // About to start.
             let fire = block.startDate.addingTimeInterval(-lead)
-            guard fire <= now, now.timeIntervalSince(fire) < 120 else { continue }
-            let title = block.title.isEmpty ? String(localized: "Untitled") : block.title
-            InAppReminder.shared.show(
-                title: String(localized: "Starts in \(settings.notificationLeadMinutes) min: \(title)"),
-                subtitle: [TimeFmt.range(block.startMin, block.endMin), block.category?.name].compactMap { $0 }.joined(separator: " · "),
-                colorHex: block.category?.colorHex ?? "#F4852B",
-                key: "\(block.uid.uuidString)-\(block.startMin)"
-            )
+            if fire <= now, now.timeIntervalSince(fire) < 120 {
+                InAppReminder.shared.show(
+                    key: "start-\(snapshot.uid.uuidString)-\(snapshot.startMin)",
+                    content: InAppReminder.Content(
+                        title: String(localized: "Starts in \(settings.notificationLeadMinutes) min: \(snapshot.title)"),
+                        subtitle: subtitle,
+                        colorHex: snapshot.colorHex,
+                        symbol: "clock.badge",
+                        actions: [
+                            InAppReminder.Action(title: String(localized: "Snooze 5 min")) { InAppReminder.shared.snooze(minutes: 5) },
+                            InAppReminder.Action(title: String(localized: "Open Planner"), isProminent: true) { InAppReminder.shared.openPlanner() },
+                        ],
+                        playSound: settings.reminderSound
+                    )
+                )
+            }
+
+            // Just finished and still unmarked: offer the three statuses.
+            if settings.endOfBlockPrompt, block.endDate <= now, now.timeIntervalSince(block.endDate) < 120 {
+                let uid = snapshot.uid
+                InAppReminder.shared.show(
+                    key: "end-\(uid.uuidString)-\(snapshot.endMin)",
+                    content: InAppReminder.Content(
+                        title: String(localized: "How did it go? \(snapshot.title)"),
+                        subtitle: subtitle,
+                        colorHex: snapshot.colorHex,
+                        symbol: "checkmark.circle",
+                        actions: BlockStatus.allCases.filter { $0 != .planned }.map { status in
+                            InAppReminder.Action(title: status.title, isProminent: status == .done) { [weak self] in
+                                self?.setStatus(status, for: uid)
+                                InAppReminder.shared.dismiss()
+                            }
+                        },
+                        autoDismiss: 40,
+                        playSound: settings.reminderSound
+                    )
+                )
+            }
         }
     }
 

@@ -94,6 +94,10 @@ private struct GeneralForm: View {
                     }
                     .font(.callout)
                 }
+                Toggle("Play a sound with reminders", isOn: $settings.reminderSound)
+                    .disabled(!settings.notificationsEnabled)
+                Toggle("Ask how it went when a block ends", isOn: $settings.endOfBlockPrompt)
+                    .disabled(!settings.notificationsEnabled)
                 Button("Show a Test Reminder") { InAppReminder.shared.showTest() }
                     .disabled(!settings.notificationsEnabled)
             }

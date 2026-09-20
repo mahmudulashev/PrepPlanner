@@ -259,6 +259,9 @@ final class AppSettings {
     var targetSAT: Int = 1450
     var notificationsEnabled: Bool = true
     var notificationLeadMinutes: Int = 5
+    var reminderSound: Bool = true
+    /// Ask how it went when a block ends.
+    var endOfBlockPrompt: Bool = true
 
     init(ieltsDate: Date, satDate: Date) {
         self.ieltsDate = ieltsDate
