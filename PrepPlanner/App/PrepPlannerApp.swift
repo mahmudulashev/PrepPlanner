@@ -14,13 +14,13 @@ struct PrepPlannerApp: App {
         self.container = container
         _state = State(initialValue: AppState(context: container.mainContext))
         _tracker = State(initialValue: NowTracker(context: container.mainContext))
-        NotificationScheduler.shared.start(container: container)
     }
 
     var body: some Scene {
         Window("PrepPlanner", id: "main") {
             RootView()
                 .environment(state)
+                .task { NotificationScheduler.shared.start(container: container) }
                 .frame(minWidth: 1180, minHeight: 720)
         }
         .defaultSize(width: 1360, height: 880)
