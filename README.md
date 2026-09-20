@@ -61,10 +61,19 @@ A daily checklist with current and best streaks, and a GitHub-style heatmap of t
 
 1. Download `PrepPlanner.dmg` from the [latest release](../../releases/latest).
 2. Open it and drag **PrepPlanner** to Applications.
-3. The app is signed with a development certificate but not notarized by Apple, so the first launch
-   needs: **right-click the app ▸ Open ▸ Open**.
+3. The app is signed with a development certificate and is not notarized by Apple, so the first
+   launch is blocked with *“Apple could not verify PrepPlanner is free of malware”*. To allow it:
+   - Click **Done** in that dialog — **not** *Move to Trash*, which deletes the app.
+   - Open **System Settings ▸ Privacy & Security**, scroll to the **Security** section, and click
+     **Open Anyway** next to the note about PrepPlanner.
+   - Confirm with Touch ID or your password, then click **Open Anyway** once more.
 
-Or build it yourself — open `PrepPlanner.xcodeproj` in Xcode and press ⌘R.
+   macOS only lists the app there after a blocked launch attempt, so step one is required. On
+   macOS 15 and later the old right-click ▸ Open shortcut no longer works. The equivalent from a
+   terminal is `xattr -dr com.apple.quarantine /Applications/PrepPlanner.app`.
+
+Or build it yourself — open `PrepPlanner.xcodeproj` in Xcode and press ⌘R. A copy you build
+locally is never quarantined, so it opens without any of the above.
 
 ## Features
 
