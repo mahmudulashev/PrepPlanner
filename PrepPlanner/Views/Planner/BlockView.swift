@@ -43,7 +43,10 @@ struct BlockView: View {
     private var content: some View {
         if compact {
             HStack(spacing: 6) {
-                titleText.font(.caption.weight(.semibold))
+                titleText
+                    .font(.caption.weight(.semibold))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
                 Text(TimeFmt.range(start, end))
                     .font(.caption2.monospacedDigit())
                     .foregroundStyle(.secondary)
@@ -51,7 +54,10 @@ struct BlockView: View {
             }
         } else {
             VStack(alignment: .leading, spacing: 3) {
-                titleText.font(.callout.weight(.semibold))
+                titleText
+                    .font(.callout.weight(.semibold))
+                    .lineLimit(2)
+                    .truncationMode(.tail)
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
                     Text("\(TimeFmt.range(start, end)) · \(TimeFmt.duration(end - start))")
@@ -65,6 +71,8 @@ struct BlockView: View {
                     HStack(spacing: 6) {
                         Text(block.category?.name ?? String(localized: "No category"))
                             .font(.caption2.weight(.semibold))
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                             .padding(.horizontal, 7)
                             .padding(.vertical, 2)
                             .background(Capsule().fill(color.opacity(0.22)))
@@ -72,6 +80,9 @@ struct BlockView: View {
                             Text("Needs review")
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(Theme.accent)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .layoutPriority(-1)
                         }
                     }
                 }

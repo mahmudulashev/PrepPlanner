@@ -6,6 +6,8 @@ import AppKit
 struct DayTimeline: View {
     static let pointsPerMinute: CGFloat = 1.25
     static let gutter: CGFloat = 60
+    /// Narrowest a block may get before overlapping blocks start to cascade instead of divide.
+    static let minBlockWidth: CGFloat = 118
     static var hourHeight: CGFloat { 60 * pointsPerMinute }
     static var totalHeight: CGFloat { CGFloat(TimelineBounds.end - TimelineBounds.start) * pointsPerMinute }
 
@@ -95,7 +97,11 @@ struct DayTimeline: View {
         return ForEach(frames, id: \.block.uid) { item in
             let b = item.block
             let slot = layout[b.uid] ?? ColumnSlot(column: 0, count: 1)
-            let width = columnWidth / CGFloat(slot.count)
+            // Overlapping blocks share the column, but never below a readable width: past
+            // that they cascade, each one starting a little right of the last so every
+            // block's left edge and title stay visible.
+            let width = max(columnWidth / CGFloat(slot.count), min(Self.minBlockWidth, columnWidth))
+            let step = slot.count > 1 ? (columnWidth - width) / CGFloat(slot.count - 1) : 0
             let height = CGFloat(item.range.upperBound - item.range.lowerBound) * Self.pointsPerMinute
             BlockView(
                 block: b,
@@ -114,9 +120,9 @@ struct DayTimeline: View {
                 focused = true
             }
             .contextMenu { contextMenu(for: b) }
-            .offset(x: Self.gutter + CGFloat(slot.column) * width + 2,
+            .offset(x: Self.gutter + CGFloat(slot.column) * step + 2,
                     y: y(for: item.range.lowerBound) + 1)
-            .zIndex(drag?.id == b.uid ? 1 : 0)
+            .zIndex(drag?.id == b.uid ? 1000 : Double(slot.column))
         }
     }
 

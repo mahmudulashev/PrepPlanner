@@ -80,31 +80,36 @@ private struct IELTSResults: View {
         let latest = mocks[0]
         let previous = mocks.count > 1 ? mocks[1] : nil
         let s = settings.first
-        return HStack(spacing: 14) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("LATEST OVERALL")
-                    .font(.caption.weight(.semibold))
-                    .opacity(0.85)
-                Text(Band.format(latest.overallBand))
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
-                    .monospacedDigit()
-                Text(overallSubtitle(latest: latest, previous: previous, target: s?.targetOverall))
-                    .font(.caption)
-                    .opacity(0.85)
-            }
-            .foregroundStyle(.white)
-            .padding(16)
-            .frame(width: 190, height: 120, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(Theme.accent))
-            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        let cards = Skill.ielts.map { skill in
+            SkillBandCard(
+                skill: skill,
+                band: latest.band(for: skill) ?? 0,
+                previous: previous?.band(for: skill),
+                target: s?.target(for: skill)
+            )
+        }
+        let hero = ResultsHeroCard(
+            label: "LATEST OVERALL",
+            value: Band.format(latest.overallBand),
+            subtitle: overallSubtitle(latest: latest, previous: previous, target: s?.targetOverall),
+            fill: Theme.accent,
+            foreground: .white
+        )
 
-            ForEach(Skill.ielts) { skill in
-                SkillBandCard(
-                    skill: skill,
-                    band: latest.band(for: skill) ?? 0,
-                    previous: previous?.band(for: skill),
-                    target: s?.target(for: skill)
-                )
+        // All five across while they fit, then the hero over one row of four, then two by two.
+        return ViewThatFits(in: .horizontal) {
+            CardRow {
+                hero
+                ForEach(0..<cards.count, id: \.self) { cards[$0] }
+            }
+            VStack(alignment: .leading, spacing: 14) {
+                CardRow { hero.expanded() }
+                CardRow { ForEach(0..<cards.count, id: \.self) { cards[$0] } }
+            }
+            VStack(alignment: .leading, spacing: 14) {
+                CardRow { hero.expanded() }
+                CardRow { cards[0]; cards[1] }
+                CardRow { cards[2]; cards[3] }
             }
         }
     }
@@ -203,8 +208,11 @@ private struct SkillBandCard: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 6) {
                 Image(systemName: skill.symbol).foregroundStyle(skill.color)
-                Text(skill.title).font(.callout.weight(.semibold))
-                Spacer()
+                Text(skill.title)
+                    .font(.callout.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Spacer(minLength: 4)
                 if let p = previous {
                     let d = band - p
                     Text(Band.formatDelta(d))
@@ -222,9 +230,55 @@ private struct SkillBandCard: View {
                     .foregroundStyle(band >= t ? Theme.success : .secondary)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 88)
+        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
+        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
         .card(padding: 14)
+    }
+}
+
+/// The coloured card at the head of a results summary: one big number and a caption.
+private struct ResultsHeroCard: View {
+    let label: LocalizedStringKey
+    let value: String
+    let subtitle: String
+    let fill: Color
+    let foreground: Color
+    /// True when the card is alone on its row and should span it rather than sit centred.
+    var expands = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(.caption.weight(.semibold))
+                .opacity(0.85)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(verbatim: value)
+                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            Text(verbatim: subtitle)
+                .font(.caption)
+                .opacity(0.85)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundStyle(foreground)
+        .padding(16)
+        .frame(minWidth: 158, idealWidth: 190, maxWidth: expands ? .infinity : 230, alignment: .leading)
+        .frame(minHeight: 120, maxHeight: .infinity, alignment: .topLeading)
+        .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(fill))
+        .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+    }
+}
+
+private extension ResultsHeroCard {
+    func expanded() -> ResultsHeroCard {
+        var copy = self
+        copy.expands = true
+        return copy
     }
 }
 
@@ -298,48 +352,73 @@ private struct SATResults: View {
         let previous = mocks.count > 1 ? mocks[1] : nil
         let best = mocks.map(\.total).max() ?? latest.total
         let gap = target - latest.total
-        return HStack(spacing: 14) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("LATEST TOTAL")
-                    .font(.caption.weight(.semibold))
-                    .opacity(0.8)
-                Text(verbatim: String(latest.total))
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
-                    .monospacedDigit()
-                Text(gap > 0 ? "\(gap) to target \(String(target))" : "Target \(String(target)) reached 🎉")
-                    .font(.caption)
-                    .opacity(0.8)
-            }
-            .foregroundStyle(Theme.onInk)
-            .padding(16)
-            .frame(width: 190, height: 120, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(Theme.ink))
-            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        let hero = ResultsHeroCard(
+            label: "LATEST TOTAL",
+            value: String(latest.total),
+            subtitle: gap > 0
+                ? String(localized: "\(gap) to target \(String(target))")
+                : String(localized: "Target \(String(target)) reached 🎉"),
+            fill: Theme.ink,
+            foreground: Theme.onInk
+        )
 
-            sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
-            sectionCard(.satMath, score: latest.math, previous: previous?.math)
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Best total").font(.callout.weight(.semibold))
-                Text(verbatim: String(best))
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .monospacedDigit()
-                Text("^[\(mocks.count) mock](inflect: true) logged")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+        return ViewThatFits(in: .horizontal) {
+            CardRow {
+                hero
+                sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
+                sectionCard(.satMath, score: latest.math, previous: previous?.math)
+                bestCard(best)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 88)
-            .card(padding: 14)
+            VStack(alignment: .leading, spacing: 14) {
+                CardRow { hero.expanded() }
+                CardRow {
+                    sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
+                    sectionCard(.satMath, score: latest.math, previous: previous?.math)
+                    bestCard(best)
+                }
+            }
+            VStack(alignment: .leading, spacing: 14) {
+                CardRow { hero.expanded() }
+                CardRow {
+                    sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
+                    sectionCard(.satMath, score: latest.math, previous: previous?.math)
+                }
+                CardRow { bestCard(best) }
+            }
         }
+    }
+
+    private func bestCard(_ best: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Best total")
+                .font(.callout.weight(.semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+            Text(verbatim: String(best))
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .monospacedDigit()
+                .lineLimit(1)
+            Text("^[\(mocks.count) mock](inflect: true) logged")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
+        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
+        .card(padding: 14)
     }
 
     private func sectionCard(_ skill: Skill, score: Int, previous: Int?) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 6) {
                 Image(systemName: skill.symbol).foregroundStyle(skill.color)
-                Text(skill.title).font(.callout.weight(.semibold))
-                Spacer()
+                Text(skill.title)
+                    .font(.callout.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Spacer(minLength: 4)
                 if let p = previous {
                     let d = score - p
                     Text(SATScore.formatDelta(d))
@@ -357,10 +436,14 @@ private struct SATResults: View {
                 }
             }
             .frame(height: 8)
-            Text("out of 800").font(.caption).foregroundStyle(.secondary)
+            Text("out of 800")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 88)
+        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
+        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
         .card(padding: 14)
     }
 

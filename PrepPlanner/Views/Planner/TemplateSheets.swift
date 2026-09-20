@@ -92,7 +92,7 @@ struct SaveTemplateSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 460)
+        .frame(minWidth: 460, idealWidth: 470, maxWidth: 620)
         .onAppear { blocks = state.blocks(on: state.day) }
     }
 
@@ -206,7 +206,7 @@ struct ApplyTemplateSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 680)
+        .frame(minWidth: 680, idealWidth: 700, maxWidth: 860)
         .onAppear {
             from = state.day
             to = state.day

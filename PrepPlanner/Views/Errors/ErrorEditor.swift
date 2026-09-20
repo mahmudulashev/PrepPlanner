@@ -107,7 +107,7 @@ struct ErrorEditor: View {
             }
             .padding(16)
         }
-        .frame(width: 520, height: 520)
+        .frame(minWidth: 520, idealWidth: 540, maxWidth: 680, minHeight: 520)
         .onAppear(perform: load)
         .onChange(of: skill) { old, new in
             if let id = typeID, !typesForSkill.contains(where: { $0.uid == id }) { typeID = nil }

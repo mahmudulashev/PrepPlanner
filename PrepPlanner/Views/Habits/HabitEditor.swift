@@ -41,7 +41,7 @@ struct HabitEditor: View {
             }
             .formStyle(.grouped)
         }
-        .frame(width: 440, height: 380)
+        .frame(minWidth: 440, idealWidth: 450, maxWidth: 580, minHeight: 380)
         .onAppear {
             if let habit {
                 name = habit.name

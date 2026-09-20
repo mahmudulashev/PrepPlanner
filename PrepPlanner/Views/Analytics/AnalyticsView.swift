@@ -55,19 +55,34 @@ struct AnalyticsView: View {
         let errorsThisWeek = errors.filter { $0.date >= now.startOfDay.adding(days: -6) }.count
         let s = settings.first
 
-        return HStack(spacing: 14) {
+        let tiles = [
             KPITile(title: "Study this week", value: TimeFmt.hours(actual),
                     detail: String(localized: "of \(TimeFmt.hours(planned)) planned"),
-                    fill: Theme.accent, foreground: .white)
+                    fill: Theme.accent, foreground: .white),
             KPITile(title: "Completion this week", value: rate.map { "\(Int(($0 * 100).rounded()))%" } ?? "–",
-                    detail: String(localized: "Done 100% · Partial 50% · Skipped 0%"))
+                    detail: String(localized: "Done 100% · Partial 50% · Skipped 0%")),
             KPITile(title: "Latest IELTS", value: ielts.last.map { Band.format($0.overallBand) } ?? "–",
-                    detail: s.map { String(localized: "Target \(Band.format($0.targetOverall))") } ?? "")
+                    detail: s.map { String(localized: "Target \(Band.format($0.targetOverall))") } ?? ""),
             KPITile(title: "Latest SAT", value: sat.last.map { "\($0.total)" } ?? "–",
-                    detail: String(localized: "Target \(String(s?.targetSAT ?? 1450))"))
+                    detail: String(localized: "Target \(String(s?.targetSAT ?? 1450))")),
             KPITile(title: "Errors, last 7 days", value: "\(errorsThisWeek)",
                     detail: String(localized: "\(errors.count) logged in total"),
-                    fill: Theme.ink, foreground: Theme.onInk)
+                    fill: Theme.ink, foreground: Theme.onInk),
+        ]
+
+        // Five tiles across only while their titles still fit; a longer translation drops
+        // them onto a second row rather than truncating every heading.
+        return ViewThatFits(in: .horizontal) {
+            CardRow { ForEach(0..<tiles.count, id: \.self) { tiles[$0] } }
+            VStack(spacing: 14) {
+                CardRow { ForEach(0..<3, id: \.self) { tiles[$0] } }
+                CardRow { ForEach(3..<tiles.count, id: \.self) { tiles[$0] } }
+            }
+            VStack(spacing: 14) {
+                CardRow { tiles[0]; tiles[1] }
+                CardRow { tiles[2]; tiles[3] }
+                CardRow { tiles[4] }
+            }
         }
     }
 
@@ -397,7 +412,9 @@ private struct KPITile: View {
                 .font(.caption.weight(.semibold))
                 .textCase(.uppercase)
                 .opacity(0.75)
-                .lineLimit(1)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
             Text(verbatim: value)
                 .font(.system(size: 28, weight: .bold, design: .rounded))
                 .monospacedDigit()
@@ -407,7 +424,8 @@ private struct KPITile: View {
                 .lineLimit(1)
         }
         .foregroundStyle(foreground)
-        .frame(maxWidth: .infinity, minHeight: 74, alignment: .leading)
+        .frame(minWidth: 126, idealWidth: 142, maxWidth: .infinity, alignment: .leading)
+        .frame(minHeight: 74, maxHeight: .infinity, alignment: .topLeading)
         .padding(14)
         .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(fill))
         .shadow(color: .black.opacity(0.06), radius: 10, y: 4)

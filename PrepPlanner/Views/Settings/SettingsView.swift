@@ -16,7 +16,7 @@ struct SettingsView: View {
             AboutSettings()
                 .tabItem { Label("About", systemImage: "info.circle") }
         }
-        .frame(width: 600, height: 500)
+        .frame(width: 640, height: 560)
         .tint(Theme.accent)
     }
 }
@@ -233,7 +233,7 @@ private struct CategoryRow: View {
                 }
             }
             .labelsHidden()
-            .frame(width: 120)
+            .frame(width: 148)
 
             Toggle("Study", isOn: $category.isStudy)
                 .toggleStyle(.checkbox)

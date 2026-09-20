@@ -187,10 +187,13 @@ struct ErrorLogView: View {
             .sorted { $0.1 != $1.1 ? $0.1 > $1.1 : $0.0.name < $1.0.name }
             .prefix(6)
 
-        return HStack(spacing: 10) {
+        // Chips wrap onto further rows: an HStack would squeeze six of them until their
+        // names truncated.
+        return WrapLayout(spacing: 10, rowSpacing: 8) {
             Text("Most frequent")
                 .font(.callout.weight(.semibold))
                 .foregroundStyle(.secondary)
+                .lineLimit(1)
             if counts.isEmpty {
                 Text("No typed errors in this view.").font(.callout).foregroundStyle(.secondary)
             }
@@ -201,7 +204,7 @@ struct ErrorLogView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Circle().fill(type.skill.color).frame(width: 8, height: 8)
-                        Text(type.name)
+                        Text(type.name).lineLimit(1)
                         Text("×\(n)").fontWeight(.bold).monospacedDigit()
                     }
                     .font(.callout)
@@ -213,8 +216,8 @@ struct ErrorLogView: View {
                 .buttonStyle(.plain)
                 .help("Show only \(type.name) (\(type.skill.title))")
             }
-            Spacer()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: Table
