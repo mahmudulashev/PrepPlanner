@@ -61,6 +61,15 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - Menu bar item showing the current block and time left, with buttons to mark it Done, Partial or Skipped
 - Full JSON backup and restore, and CSV export of IELTS results, SAT results and the error log
 
+## App icon
+
+`PrepPlanner/Assets.xcassets/AppIcon.appiconset` holds the rendered sizes. To change the artwork, edit
+`scripts/make_icon.swift` and run:
+
+```bash
+swiftc -O -o /tmp/icongen scripts/make_icon.swift && /tmp/icongen PrepPlanner/Assets.xcassets/AppIcon.appiconset
+```
+
 ## Localization
 
 Strings live in `PrepPlanner/Localizable.xcstrings`. After adding UI text, build the app and run
