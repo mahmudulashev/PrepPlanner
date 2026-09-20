@@ -272,6 +272,19 @@ final class AppState {
         return applied
     }
 
+    // MARK: Backup and export
+
+    func exportBackup() { DataTransfer.exportBackup(context: context) }
+
+    func importBackup() {
+        guard DataTransfer.importBackup(context: context) else { return }
+        selectedBlockID = nil
+        editor = nil
+        showToast(String(localized: "Backup restored"))
+    }
+
+    func exportCSV(_ kind: CSVKind) { DataTransfer.exportCSV(kind, context: context) }
+
     // MARK: Toast
 
     func showToast(_ message: String) {

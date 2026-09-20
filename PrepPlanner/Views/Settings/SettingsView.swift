@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct SettingsView: View {
     var body: some View {
@@ -37,6 +38,8 @@ private struct GeneralForm: View {
     @Environment(\.modelContext) private var context
     @State private var language = AppLanguage.current
     @State private var renameResult: String?
+    @State private var notificationStatus: UNAuthorizationStatus?
+    @AppStorage(MenuBarPreference.key) private var showMenuBar = true
     private let launchLanguage = AppLanguage.current
     private let bands = Array(stride(from: 4.0, through: 9.0, by: 0.5))
 
@@ -67,6 +70,54 @@ private struct GeneralForm: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            Section("Notifications") {
+                Toggle("Notify before each block starts", isOn: $settings.notificationsEnabled)
+                Picker("Remind me", selection: $settings.notificationLeadMinutes) {
+                    ForEach([1, 5, 10, 15], id: \.self) { m in
+                        Text("\(m) min before").tag(m)
+                    }
+                }
+                .disabled(!settings.notificationsEnabled)
+                if settings.notificationsEnabled && notificationStatus != .authorized && notificationStatus != nil {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("macOS isn't delivering notifications for this copy of PrepPlanner, so reminders appear in a small window on top of your screen instead.")
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        HStack {
+                            Button("Open System Settings") {
+                                if let url = URL(string: "x-apple.systempreferences:com.apple.Notifications-Settings.extension") {
+                                    NSWorkspace.shared.open(url)
+                                }
+                            }
+                            Spacer()
+                        }
+                    }
+                    .font(.callout)
+                }
+                Button("Show a Test Reminder") { InAppReminder.shared.showTest() }
+                    .disabled(!settings.notificationsEnabled)
+            }
+            Section("Menu bar") {
+                Toggle("Show the current block in the menu bar", isOn: $showMenuBar)
+            }
+            Section("Data") {
+                LabeledContent("Backup (JSON)") {
+                    HStack {
+                        Button("Export…") { DataTransfer.exportBackup(context: context) }
+                        Button("Import…") { DataTransfer.importBackup(context: context) }
+                    }
+                }
+                LabeledContent("Results (CSV)") {
+                    HStack {
+                        Button { DataTransfer.exportCSV(.ielts, context: context) } label: { Text(verbatim: "IELTS") }
+                        Button { DataTransfer.exportCSV(.sat, context: context) } label: { Text(verbatim: "SAT") }
+                        Button("Error Log") { DataTransfer.exportCSV(.errors, context: context) }
+                    }
+                }
+                Button("Show Backups Folder") { DataTransfer.showBackupsFolder() }
+                    .buttonStyle(.link)
+                    .foregroundStyle(Theme.accent)
+            }
             Section("Exam dates") {
                 DatePicker("IELTS", selection: $settings.ieltsDate, displayedComponents: .date)
                 DatePicker("SAT", selection: $settings.satDate, displayedComponents: .date)
@@ -84,6 +135,11 @@ private struct GeneralForm: View {
             }
         }
         .formStyle(.grouped)
+        .task(id: settings.notificationsEnabled) {
+            NotificationScheduler.shared.scheduleSoon()
+            try? await Task.sleep(for: .seconds(2))
+            notificationStatus = await NotificationScheduler.shared.authorizationStatus()
+        }
     }
 
     private func rename(toUzbek: Bool) {

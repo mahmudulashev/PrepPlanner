@@ -47,6 +47,16 @@
         }
       }
     },
+    "%@ left": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ qoldi"
+          }
+        }
+      }
+    },
     "%@ time this week is %lld%% below plan (%@ of %@).": {
       "localizations": {
         "uz": {
@@ -110,6 +120,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "jami %lld ta"
+          }
+        }
+      }
+    },
+    "%lld min before": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld daqiqa oldin"
           }
         }
       }
@@ -263,6 +283,16 @@
         }
       }
     },
+    "Add Habit": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odat qoʻshish"
+          }
+        }
+      }
+    },
     "Add IELTS Mock": {
       "localizations": {
         "uz": {
@@ -339,6 +369,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oxirgi sinovda IELTSning toʻrttala koʻnikmasi ham maqsadga yetdi."
+          }
+        }
+      }
+    },
+    "All habits are archived.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha odatlar arxivda."
+          }
+        }
+      }
+    },
+    "All habits, last 60 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha odatlar, oxirgi 60 kun"
           }
         }
       }
@@ -423,12 +473,72 @@
         }
       }
     },
+    "Archive": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arxivlash"
+          }
+        }
+      }
+    },
+    "Archived": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arxivlangan"
+          }
+        }
+      }
+    },
+    "Backup (JSON)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxa (JSON)"
+          }
+        }
+      }
+    },
+    "Backup from %@: %lld blocks, %lld mocks, %lld errors, %lld habits. Your current data is saved to the Backups folder first.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ dagi zaxira nusxa: %2$lld blok, %3$lld sinov, %4$lld xato, %5$lld odat. Joriy maʼlumotlaringiz avval Backups papkasiga saqlanadi."
+          }
+        }
+      }
+    },
+    "Backup restored": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxa tiklandi"
+          }
+        }
+      }
+    },
     "Band": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Band"
+          }
+        }
+      }
+    },
+    "Best streak": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng uzun seriya"
           }
         }
       }
@@ -523,6 +633,16 @@
         }
       }
     },
+    "Choose a PrepPlanner backup file": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PrepPlanner zaxira faylini tanlang"
+          }
+        }
+      }
+    },
     "Choose a template on the left.": {
       "localizations": {
         "uz": {
@@ -613,6 +733,36 @@
         }
       }
     },
+    "Couldn’t create the backup.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxa yaratib boʻlmadi."
+          }
+        }
+      }
+    },
+    "Couldn’t restore the backup.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxani tiklab boʻlmadi."
+          }
+        }
+      }
+    },
+    "Couldn’t save the file.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faylni saqlab boʻlmadi."
+          }
+        }
+      }
+    },
     "Count": {
       "localizations": {
         "uz": {
@@ -643,6 +793,16 @@
         }
       }
     },
+    "Current streak": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Joriy seriya"
+          }
+        }
+      }
+    },
     "Daily": {
       "localizations": {
         "uz": {
@@ -659,6 +819,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uzuq chiziqlar — maqsadlaringiz"
+          }
+        }
+      }
+    },
+    "Data": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maʼlumotlar"
           }
         }
       }
@@ -719,6 +889,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bloklari bor kunlar: %lld"
+          }
+        }
+      }
+    },
+    "Days with every habit done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha odatlar bajarilgan kunlar"
           }
         }
       }
@@ -953,12 +1133,32 @@
         }
       }
     },
+    "Edit habit": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odatni tahrirlash"
+          }
+        }
+      }
+    },
     "Edit…": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Tahrirlash…"
+          }
+        }
+      }
+    },
+    "Emoji": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emoji"
           }
         }
       }
@@ -1093,6 +1293,56 @@
         }
       }
     },
+    "Export Backup…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxani eksport qilish…"
+          }
+        }
+      }
+    },
+    "Export Error Log as CSV…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xatolar jurnalini CSV sifatida eksport qilish…"
+          }
+        }
+      }
+    },
+    "Export IELTS Results as CSV…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS natijalarini CSV sifatida eksport qilish…"
+          }
+        }
+      }
+    },
+    "Export SAT Results as CSV…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT natijalarini CSV sifatida eksport qilish…"
+          }
+        }
+      }
+    },
+    "Export…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eksport…"
+          }
+        }
+      }
+    },
     "From": {
       "localizations": {
         "uz": {
@@ -1173,6 +1423,16 @@
         }
       }
     },
+    "How did it go?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qanday oʻtdi?"
+          }
+        }
+      }
+    },
     "IELTS": {
       "shouldTranslate": false
     },
@@ -1196,6 +1456,26 @@
         }
       }
     },
+    "Import Backup…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira nusxani import qilish…"
+          }
+        }
+      }
+    },
+    "Import…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import…"
+          }
+        }
+      }
+    },
     "Insights": {
       "localizations": {
         "uz": {
@@ -1212,6 +1492,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inspektor"
+          }
+        }
+      }
+    },
+    "Its whole history is deleted too. Archive it instead to keep the history.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uning butun tarixi ham oʻchadi. Tarixni saqlash uchun arxivlang."
+          }
+        }
+      }
+    },
+    "JUST FINISHED": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENDIGINA TUGADI"
           }
         }
       }
@@ -1266,6 +1566,16 @@
         }
       }
     },
+    "LONGEST CURRENT STREAK": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENG UZUN JORIY SERIYA"
+          }
+        }
+      }
+    },
     "Language": {
       "localizations": {
         "uz": {
@@ -1282,6 +1592,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oxirgi 30 kun · Bajarildi 100%, Qisman 50%, Oʻtkazildi 0%"
+          }
+        }
+      }
+    },
+    "Last 60 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oxirgi 60 kun"
           }
         }
       }
@@ -1312,6 +1632,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oxirgi SAT natijasi %1$@ — %2$@ maqsadiga yetdi."
+          }
+        }
+      }
+    },
+    "Less": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kam"
           }
         }
       }
@@ -1526,6 +1856,16 @@
         }
       }
     },
+    "Menu bar": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menyu paneli"
+          }
+        }
+      }
+    },
     "Merge (add alongside)": {
       "localizations": {
         "uz": {
@@ -1566,6 +1906,16 @@
         }
       }
     },
+    "More": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koʻp"
+          }
+        }
+      }
+    },
     "Most frequent": {
       "localizations": {
         "uz": {
@@ -1596,12 +1946,52 @@
         }
       }
     },
+    "Move Down": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pastga surish"
+          }
+        }
+      }
+    },
+    "Move Up": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yuqoriga surish"
+          }
+        }
+      }
+    },
     "Move selected block 15 min": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Tanlangan blokni 15 daq surish"
+          }
+        }
+      }
+    },
+    "NEXT": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "KEYINGI"
+          }
+        }
+      }
+    },
+    "NOW": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HOZIR"
           }
         }
       }
@@ -1632,6 +2022,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yangi blok"
+          }
+        }
+      }
+    },
+    "New Habit": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi odat"
+          }
+        }
+      }
+    },
+    "New Habit…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi odat…"
           }
         }
       }
@@ -1726,6 +2136,36 @@
         }
       }
     },
+    "New habit": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi odat"
+          }
+        }
+      }
+    },
+    "New habit (⌥⌘N)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi odat (⌥⌘N)"
+          }
+        }
+      }
+    },
+    "Next %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyingisi %@"
+          }
+        }
+      }
+    },
     "Next Day": {
       "localizations": {
         "uz": {
@@ -1786,6 +2226,16 @@
         }
       }
     },
+    "No block right now": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hozir blok yoʻq"
+          }
+        }
+      }
+    },
     "No blocks yet": {
       "localizations": {
         "uz": {
@@ -1832,6 +2282,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hali xatolar yozilmagan"
+          }
+        }
+      }
+    },
+    "No habits yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali odatlar yoʻq"
           }
         }
       }
@@ -1926,6 +2386,26 @@
         }
       }
     },
+    "Notifications": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bildirishnomalar"
+          }
+        }
+      }
+    },
+    "Notify before each block starts": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Har bir blok boshlanishidan oldin eslatish"
+          }
+        }
+      }
+    },
     "OVERALL": {
       "localizations": {
         "uz": {
@@ -1936,12 +2416,42 @@
         }
       }
     },
+    "Open PrepPlanner": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PrepPlannerni ochish"
+          }
+        }
+      }
+    },
+    "Open System Settings": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tizim sozlamalarini ochish"
+          }
+        }
+      }
+    },
     "Overall": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Umumiy"
+          }
+        }
+      }
+    },
+    "PERFECT DAYS, LAST 30": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MUKAMMAL KUNLAR, OXIRGI 30"
           }
         }
       }
@@ -2059,6 +2569,16 @@
         }
       }
     },
+    "Quit": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chiqish"
+          }
+        }
+      }
+    },
     "Range": {
       "localizations": {
         "uz": {
@@ -2081,6 +2601,16 @@
     },
     "Reading & Writing": {
       "shouldTranslate": false
+    },
+    "Remind me": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eslatish"
+          }
+        }
+      }
     },
     "Renamed %lld items.": {
       "localizations": {
@@ -2108,6 +2638,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Almashtirish"
+          }
+        }
+      }
+    },
+    "Replace all data with this backup?": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha maʼlumotlar shu zaxira nusxa bilan almashtirilsinmi?"
           }
         }
       }
@@ -2152,12 +2692,32 @@
         }
       }
     },
+    "Restore": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiklash"
+          }
+        }
+      }
+    },
     "Results": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Natijalar"
+          }
+        }
+      }
+    },
+    "Results (CSV)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natijalar (CSV)"
           }
         }
       }
@@ -2368,12 +2928,32 @@
         }
       }
     },
+    "Show Backups Folder": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaxira papkasini koʻrsatish"
+          }
+        }
+      }
+    },
     "Show Inspector": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Inspektorni koʻrsatish"
+          }
+        }
+      }
+    },
+    "Show a Test Reminder": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sinov eslatmasini koʻrsatish"
           }
         }
       }
@@ -2394,6 +2974,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inspektorni koʻrsatish yoki yashirish (⌥⌘I)"
+          }
+        }
+      }
+    },
+    "Show the current block in the menu bar": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Joriy blokni menyu panelida koʻrsatish"
           }
         }
       }
@@ -2448,6 +3038,16 @@
         }
       }
     },
+    "Starts in %lld min: %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld daqiqadan soʻng boshlanadi: %2$@"
+          }
+        }
+      }
+    },
     "Status": {
       "localizations": {
         "uz": {
@@ -2484,6 +3084,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu hafta mashgʻulot"
+          }
+        }
+      }
+    },
+    "Suggestions": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tavsiyalar"
           }
         }
       }
@@ -2588,6 +3198,16 @@
         }
       }
     },
+    "Test reminder": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sinov eslatmasi"
+          }
+        }
+      }
+    },
     "This block has ended. How did it go?": {
       "localizations": {
         "uz": {
@@ -2608,12 +3228,22 @@
         }
       }
     },
-    "This screen is built in Phase %lld.": {
+    "This file isn’t a PrepPlanner backup.": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bu ekran %lld-bosqichda qoʻshiladi."
+            "value": "Bu fayl PrepPlanner zaxira nusxasi emas."
+          }
+        }
+      }
+    },
+    "This is how a reminder looks.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eslatma shunday koʻrinadi."
           }
         }
       }
@@ -2664,6 +3294,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bugun"
+          }
+        }
+      }
+    },
+    "Today's habits": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugungi odatlar"
           }
         }
       }
@@ -2878,12 +3518,42 @@
         }
       }
     },
+    "e.g. Wrote Task 2": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "masalan: Task 2 yozdim"
+          }
+        }
+      }
+    },
     "e.g. wrote “analysis” instead of “analyses”": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "masalan: “analyses” oʻrniga “analysis” yozdim"
+          }
+        }
+      }
+    },
+    "in %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ dan soʻng"
+          }
+        }
+      }
+    },
+    "macOS isn't delivering notifications for this copy of PrepPlanner, so reminders appear in a small window on top of your screen instead.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS PrepPlannerning bu nusxasi uchun bildirishnomalarni yetkazmayapti, shuning uchun eslatmalar ekran ustidagi kichik oynada koʻrinadi."
           }
         }
       }
@@ -2943,6 +3613,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "⇧⌘↩ saqlaydi va keyingisi uchun sana, koʻnikma va sinovni qoldiradi."
+          }
+        }
+      }
+    },
+    "🏆 %lld": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🏆 %lld"
+          }
+        }
+      }
+    },
+    "🔥 ^[%lld day](inflect: true)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 %lld kun"
           }
         }
       }

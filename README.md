@@ -51,8 +51,15 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - English and Uzbek (Latin). Switch in Settings ▸ General ▸ Language and restart the app.
 - "Built-in names" renames the default categories, templates and error types to the chosen language.
 
-### Coming next
-- Habits with streaks and heatmap, notifications, menu bar item, JSON/CSV export
+### Habits
+- Daily checklist for today or any past day, with current and best streak per habit
+- GitHub-style heatmap of the last 60 days per habit, plus a combined heatmap
+- Add, edit, reorder, archive and delete habits
+
+### Reminders, menu bar and backups
+- A reminder before each block starts (5 minutes by default, adjustable or off)
+- Menu bar item showing the current block and time left, with buttons to mark it Done, Partial or Skipped
+- Full JSON backup and restore, and CSV export of IELTS results, SAT results and the error log
 
 ## Localization
 

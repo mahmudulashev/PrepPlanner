@@ -105,7 +105,9 @@ final class DayTemplate {
         self.name = name
     }
 
-    var sortedBlocks: [TemplateBlock] { blocks.sorted { $0.startMin < $1.startMin } }
+    var sortedBlocks: [TemplateBlock] {
+        blocks.sorted { ($0.startMin, $0.endMin, $0.uid.uuidString) < ($1.startMin, $1.endMin, $1.uid.uuidString) }
+    }
     var totalMinutes: Int { blocks.reduce(0) { $0 + ($1.endMin - $1.startMin) } }
 }
 

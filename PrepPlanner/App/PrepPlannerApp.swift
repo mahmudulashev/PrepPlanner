@@ -5,12 +5,16 @@ import SwiftData
 struct PrepPlannerApp: App {
     private let container: ModelContainer
     @State private var state: AppState
+    @State private var tracker: NowTracker
+    @AppStorage(MenuBarPreference.key) private var showMenuBar = true
 
     init() {
         let container = Persistence.makeContainer()
         Seeder.seedIfNeeded(container.mainContext)
         self.container = container
         _state = State(initialValue: AppState(context: container.mainContext))
+        _tracker = State(initialValue: NowTracker(context: container.mainContext))
+        NotificationScheduler.shared.start(container: container)
     }
 
     var body: some Scene {
@@ -28,5 +32,17 @@ struct PrepPlannerApp: App {
                 .environment(state)
                 .modelContainer(container)
         }
+
+        MenuBarExtra(isInserted: $showMenuBar) {
+            MenuBarPanel(tracker: tracker)
+                .modelContainer(container)
+        } label: {
+            MenuBarLabel(tracker: tracker)
+        }
+        .menuBarExtraStyle(.window)
     }
+}
+
+enum MenuBarPreference {
+    static let key = "showMenuBarExtra"
 }

@@ -26,6 +26,15 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("n", modifiers: [.command, .option])
         }
+        CommandGroup(replacing: .importExport) {
+            Button("Export Backup…") { state.exportBackup() }
+                .keyboardShortcut("e", modifiers: [.command, .shift])
+            Button("Import Backup…") { state.importBackup() }
+            Divider()
+            Button("Export IELTS Results as CSV…") { state.exportCSV(.ielts) }
+            Button("Export SAT Results as CSV…") { state.exportCSV(.sat) }
+            Button("Export Error Log as CSV…") { state.exportCSV(.errors) }
+        }
         CommandGroup(replacing: .saveItem) {}
         CommandGroup(replacing: .printItem) {}
 
