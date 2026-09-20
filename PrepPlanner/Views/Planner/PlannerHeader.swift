@@ -6,6 +6,7 @@ struct PlannerHeader: View {
     @Query private var blocks: [TimeBlock]
     @Query private var settings: [AppSettings]
     @Environment(AppState.self) private var state
+    @State private var showCalendar = false
 
     init(day: Date) {
         self.day = day
@@ -48,11 +49,29 @@ struct PlannerHeader: View {
             Text(greeting)
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .lineLimit(1)
-            DatePicker("Date", selection: Binding(get: { day }, set: { state.setDay($0) }),
-                       displayedComponents: .date)
-                .labelsHidden()
-                .datePickerStyle(.compact)
-                .help("Jump to a date")
+            Button {
+                showCalendar = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                    Text(verbatim: day.formatted(.dateTime.day().month(.wide).year()))
+                    Image(systemName: "chevron.down").font(.caption2)
+                }
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(showCalendar ? Theme.cardMuted : Color.clear)
+                )
+                .contentShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            }
+            .buttonStyle(.plain)
+            .help("Jump to a date")
+            .popover(isPresented: $showCalendar, arrowEdge: .bottom) {
+                MonthCalendar(selected: day) { state.setDay($0) }
+            }
         }
         .fixedSize()
     }

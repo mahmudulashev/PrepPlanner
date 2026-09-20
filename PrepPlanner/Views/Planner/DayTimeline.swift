@@ -46,6 +46,7 @@ struct DayTimeline: View {
                     .padding(.top, 14)
                     .padding(.bottom, 22)
                 }
+                .scrollIndicators(.never)
                 .onAppear { scrollToStart(proxy) }
                 .onChange(of: day) { scrollToStart(proxy) }
             }

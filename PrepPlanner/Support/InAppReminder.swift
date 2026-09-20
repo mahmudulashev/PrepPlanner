@@ -25,6 +25,8 @@ final class InAppReminder {
         var playSound = true
     }
 
+    static let cardWidth: CGFloat = 360
+
     private var panel: NSPanel?
     private var dismissTask: Task<Void, Never>?
     private var snoozeTask: Task<Void, Never>?
@@ -80,7 +82,8 @@ final class InAppReminder {
 
         let card = ReminderCard(content: content, onClose: { [weak self] in self?.dismiss() })
         let hosting = NSHostingView(rootView: card)
-        let size = NSSize(width: 360, height: hosting.fittingSize.height)
+        let fitting = hosting.fittingSize
+        let size = NSSize(width: max(fitting.width, Self.cardWidth), height: fitting.height)
         let panel = NSPanel(contentRect: NSRect(origin: .zero, size: size),
                             styleMask: [.borderless, .nonactivatingPanel],
                             backing: .buffered, defer: false)
@@ -94,16 +97,27 @@ final class InAppReminder {
         panel.hidesOnDeactivate = false
         panel.isMovableByWindowBackground = true
 
-        let screen = NSScreen.main?.visibleFrame ?? .zero
-        let target = NSPoint(x: screen.maxX - size.width - 20, y: screen.maxY - size.height - 20)
-        panel.setFrameOrigin(NSPoint(x: target.x + 40, y: target.y))
+        // Use the screen the pointer is on, and keep the whole panel inside it.
+        let pointer = NSEvent.mouseLocation
+        let visible = (NSScreen.screens.first { NSMouseInRect(pointer, $0.frame, false) }
+                       ?? NSScreen.main
+                       ?? NSScreen.screens.first)?.visibleFrame ?? .zero
+        let target = NSPoint(
+            x: max(visible.minX + 12, visible.maxX - size.width - 20),
+            y: max(visible.minY + 12, visible.maxY - size.height - 20)
+        )
+        // Place it at its final spot first: if the fade-in animation is skipped
+        // (the app isn't active), the panel must still be fully on screen.
+        panel.setFrameOrigin(target)
         panel.alphaValue = 0
         panel.orderFrontRegardless()
         NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.28
+            context.duration = 0.25
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
-            panel.animator().setFrameOrigin(target)
             panel.animator().alphaValue = 1
+        } completionHandler: {
+            panel.alphaValue = 1
+            panel.setFrameOrigin(target)
         }
         self.panel = panel
 
@@ -179,7 +193,7 @@ private struct ReminderCard: View {
             }
         }
         .padding(16)
-        .frame(width: 360, alignment: .leading)
+        .frame(width: InAppReminder.cardWidth, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(.regularMaterial)

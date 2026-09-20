@@ -913,6 +913,16 @@
         }
       }
     },
+    "Days with blocks show a dot": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloklari bor kunlar nuqta bilan belgilanadi"
+          }
+        }
+      }
+    },
     "Days with every habit done": {
       "localizations": {
         "uz": {
@@ -2226,6 +2236,16 @@
         }
       }
     },
+    "Next month": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyingi oy"
+          }
+        }
+      }
+    },
     "No IELTS mock in the last 14 days, and the exam is in %lld days.": {
       "localizations": {
         "uz": {
@@ -2625,6 +2645,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oldingi kun (⌘[)"
+          }
+        }
+      }
+    },
+    "Previous month": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oldingi oy"
           }
         }
       }
