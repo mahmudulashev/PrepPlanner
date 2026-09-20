@@ -151,6 +151,8 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
   ```bash
   swiftc -O -o /tmp/icongen scripts/make_icon.swift && /tmp/icongen PrepPlanner/Assets.xcassets/AppIcon.appiconset
   ```
+- **Disk image** — `scripts/make_dmg.sh path/to/PrepPlanner.app out.dmg` builds the styled installer
+  window (background, icon positions); the background itself comes from `scripts/make_dmg_background.swift`.
 - **Structure** — `Models/` holds SwiftData models plus the scoring, analytics, insight and backup
   logic; `Views/` is split by screen; `Support/` has theming, formatting, reminders and the menu bar tracker.
 
