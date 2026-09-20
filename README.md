@@ -26,34 +26,34 @@ Everything stays on your Mac: no accounts, no backend, no third-party code.
 Drag on the timeline to create a block, drag it to move, drag its edges to resize. Mark each block
 Done, Partial or Skipped and record the minutes you really spent.
 
-![Day Planner](docs/screenshots/planner.png)
+![Day Planner](docs/screenshots/01-planner.png)
 
 ### Analytics
 
 Planned vs actual hours per category, completion rate, band and score trends, the error types that
 cost you most — and a short list of plain-language insights.
 
-![Analytics](docs/screenshots/analytics.png)
+![Analytics](docs/screenshots/02-analytics.png)
 
 ### Results
 
 Raw Listening and Reading scores become bands automatically, and the overall band follows the IELTS
 rounding rule. SAT sections add up to a total, with the gap to your target always visible.
 
-![Results](docs/screenshots/results.png)
+![Results](docs/screenshots/03-results.png)
 
 ### Error Log
 
 Every mistake with its skill, type, note and the mock it came from. Filter by skill, type, date range
 or text, and click a chip to drill into your most frequent error.
 
-![Error Log](docs/screenshots/errors.png)
+![Error Log](docs/screenshots/04-error-log.png)
 
 ### Habits
 
 A daily checklist with current and best streaks, and a GitHub-style heatmap of the last 60 days.
 
-![Habits](docs/screenshots/habits.png)
+![Habits](docs/screenshots/05-habits.png)
 
 ---
 
