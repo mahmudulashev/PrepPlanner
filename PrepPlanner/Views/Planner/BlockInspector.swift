@@ -166,6 +166,8 @@ private struct DaySummary: View {
 
                 Divider()
                 shortcuts
+                Divider()
+                contact
             }
             .padding(18)
         }
@@ -218,6 +220,19 @@ private struct DaySummary: View {
             }
             .font(.callout)
         }
+    }
+
+    private var contact: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Link(destination: URL(string: "https://github.com/mahmudulashev/PrepPlanner")!) {
+                Label { Text(verbatim: "github.com/mahmudulashev/PrepPlanner") } icon: { Image(systemName: "chevron.left.forwardslash.chevron.right") }
+            }
+            Link(destination: URL(string: "mailto:mahmud_u@icloud.com")!) {
+                Label { Text(verbatim: "mahmud_u@icloud.com") } icon: { Image(systemName: "envelope") }
+            }
+        }
+        .font(.caption)
+        .tint(Theme.accent)
     }
 
     private func shortcut(_ keys: String, _ label: LocalizedStringKey) -> some View {

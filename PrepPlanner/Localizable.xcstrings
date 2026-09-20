@@ -253,6 +253,16 @@
         }
       }
     },
+    "About": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dastur haqida"
+          }
+        }
+      }
+    },
     "Actual": {
       "localizations": {
         "uz": {
@@ -1486,6 +1496,16 @@
     "IELTS": {
       "shouldTranslate": false
     },
+    "IELTS and SAT study planner for macOS": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS uchun IELTS va SAT rejalashtirgichi"
+          }
+        }
+      }
+    },
     "IELTS band targets": {
       "localizations": {
         "uz": {
@@ -1832,6 +1852,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu turdagi yozilgan xatolar: %lld. Ular saqlanadi va “Turi yoʻq” deb belgilanadi."
+          }
+        }
+      }
+    },
+    "Made by Mahmud Ulashev. Your data stays on this Mac.": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muallif: Mahmud Ulashev. Maʼlumotlaringiz shu Macʼda qoladi."
           }
         }
       }
@@ -3494,6 +3524,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ ni qoʻllash"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versiya %@"
           }
         }
       }

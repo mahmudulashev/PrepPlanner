@@ -13,6 +13,8 @@ struct SettingsView: View {
                 .tabItem { Label("Templates", systemImage: "square.on.square") }
             ErrorTypeSettings()
                 .tabItem { Label("Error Types", systemImage: "exclamationmark.bubble") }
+            AboutSettings()
+                .tabItem { Label("About", systemImage: "info.circle") }
         }
         .frame(width: 600, height: 500)
         .tint(Theme.accent)
@@ -385,5 +387,56 @@ private struct ErrorTypeRow: View {
             .help("Delete type")
         }
         .padding(.vertical, 2)
+    }
+}
+
+// MARK: - About
+
+struct AboutSettings: View {
+    private let repo = URL(string: "https://github.com/mahmudulashev/PrepPlanner")!
+    private let email = "mahmud_u@icloud.com"
+
+    private var version: String {
+        let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "\(v) (\(build))"
+    }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            if let icon = NSImage(named: "AppIcon") {
+                Image(nsImage: icon)
+                    .resizable()
+                    .frame(width: 96, height: 96)
+            }
+            VStack(spacing: 4) {
+                Text(verbatim: "PrepPlanner")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                Text("Version \(version)")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                Text("IELTS and SAT study planner for macOS")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
+
+            VStack(spacing: 10) {
+                Link(destination: repo) {
+                    Label { Text(verbatim: "github.com/mahmudulashev/PrepPlanner") } icon: { Image(systemName: "chevron.left.forwardslash.chevron.right") }
+                }
+                Link(destination: URL(string: "mailto:\(email)")!) {
+                    Label { Text(verbatim: email) } icon: { Image(systemName: "envelope") }
+                }
+            }
+            .font(.callout)
+            .tint(Theme.accent)
+
+            Text("Made by Mahmud Ulashev. Your data stays on this Mac.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

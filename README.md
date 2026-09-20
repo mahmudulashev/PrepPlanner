@@ -154,6 +154,13 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - **Structure** — `Models/` holds SwiftData models plus the scoring, analytics, insight and backup
   logic; `Views/` is split by screen; `Support/` has theming, formatting, reminders and the menu bar tracker.
 
+## Contact
+
+- GitHub: [github.com/mahmudulashev](https://github.com/mahmudulashev)
+- Email: [mahmud_u@icloud.com](mailto:mahmud_u@icloud.com)
+
+Both are also in the app under **Settings ▸ About** and in the planner's day summary panel.
+
 ## License
 
 [MIT](LICENSE)
