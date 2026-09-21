@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		AA0000000000000000000001 /* PrepPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrepPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000010 /* PrepPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrepPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +17,22 @@
 			path = PrepPlanner;
 			sourceTree = "<group>";
 		};
+		AA0000000000000000000011 /* PrepPlannerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PrepPlannerTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AA0000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0000000000000000000012 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000002 /* PrepPlanner */,
+				AA0000000000000000000011 /* PrepPlannerTests */,
 				AA0000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000001 /* PrepPlanner.app */,
+				AA0000000000000000000010 /* PrepPlannerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,7 +85,48 @@
 			productReference = AA0000000000000000000001 /* PrepPlanner.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AA0000000000000000000013 /* PrepPlannerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000014 /* Build configuration list for PBXNativeTarget "PrepPlannerTests" */;
+			buildPhases = (
+				AA0000000000000000000015 /* Sources */,
+				AA0000000000000000000012 /* Frameworks */,
+				AA0000000000000000000016 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA0000000000000000000017 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA0000000000000000000011 /* PrepPlannerTests */,
+			);
+			name = PrepPlannerTests;
+			packageProductDependencies = (
+			);
+			productName = PrepPlannerTests;
+			productReference = AA0000000000000000000010 /* PrepPlannerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
+
+/* Begin PBXTargetDependency section */
+		AA0000000000000000000017 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA0000000000000000000006 /* PrepPlanner */;
+			targetProxy = AA0000000000000000000018 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		AA0000000000000000000018 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA000000000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000006;
+			remoteInfo = PrepPlanner;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXProject section */
 		AA000000000000000000000A /* Project object */ = {
@@ -101,6 +157,7 @@
 			projectRoot = "";
 			targets = (
 				AA0000000000000000000006 /* PrepPlanner */,
+				AA0000000000000000000013 /* PrepPlannerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -113,10 +170,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA0000000000000000000016 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AA0000000000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0000000000000000000015 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -219,6 +290,38 @@
 			};
 			name = Release;
 		};
+		AA0000000000000000000019 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7WV32M2R74;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahmudulashev.PrepPlannerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrepPlanner.app/Contents/MacOS/PrepPlanner";
+			};
+			name = Debug;
+		};
+		AA000000000000000000001A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7WV32M2R74;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mahmudulashev.PrepPlannerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrepPlanner.app/Contents/MacOS/PrepPlanner";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -227,6 +330,15 @@
 			buildConfigurations = (
 				AA000000000000000000000E /* Debug */,
 				AA000000000000000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000014 /* Build configuration list for PBXNativeTarget "PrepPlannerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000019 /* Debug */,
+				AA000000000000000000001A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

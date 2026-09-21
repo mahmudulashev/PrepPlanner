@@ -75,6 +75,15 @@ A daily checklist with current and best streaks, and a GitHub-style heatmap of t
 Or build it yourself — open `PrepPlanner.xcodeproj` in Xcode and press ⌘R. A copy you build
 locally is never quarantined, so it opens without any of the above.
 
+## Tests
+
+The scoring rules — IELTS raw-score conversion, band rounding and SAT section scores — are
+covered by unit tests, since a wrong band is not visible in the UI:
+
+```
+xcodebuild test -project PrepPlanner.xcodeproj -scheme PrepPlanner -destination 'platform=macOS'
+```
+
 ## Features
 
 **Day Planner**
