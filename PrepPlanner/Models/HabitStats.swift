@@ -35,12 +35,16 @@ struct HabitStats {
     }
 
     /// Share of active habits checked on each day (0…1).
+    ///
+    /// Each habit counts at most once per day. Counting check rows instead would let a
+    /// habit with two rows for one day stand in for a habit that was never checked,
+    /// which reads as a perfect day in the heatmap and in the perfect-day count.
     static func dailyLevels(habits: [Habit]) -> [Date: Double] {
         guard !habits.isEmpty else { return [:] }
-        var counts: [Date: Int] = [:]
+        var checkedHabits: [Date: Set<UUID>] = [:]
         for h in habits {
-            for c in h.checks { counts[c.day.startOfDay, default: 0] += 1 }
+            for c in h.checks { checkedHabits[c.day.startOfDay, default: []].insert(h.uid) }
         }
-        return counts.mapValues { min(Double($0) / Double(habits.count), 1) }
+        return checkedHabits.mapValues { min(Double($0.count) / Double(habits.count), 1) }
     }
 }
