@@ -245,7 +245,8 @@ extension Backup {
             habit.createdAt = h.createdAt
             habit.isArchived = h.isArchived
             context.insert(habit)
-            for day in h.checkedDays {
+            // A hand-edited or older file can repeat a day; one row per habit-day.
+            for day in Array(Set(h.checkedDays)).sorted() {
                 let check = HabitCheck(day: day)
                 context.insert(check)
                 check.habit = habit
