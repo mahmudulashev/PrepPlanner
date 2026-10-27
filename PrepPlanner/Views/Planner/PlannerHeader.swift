@@ -1,17 +1,20 @@
 import SwiftUI
 import SwiftData
 
-/// Day heading: the date (which opens the month calendar), the day's progress and a strip
-/// of the surrounding week.
+/// Top of the planner: a dark band with the date as a two-tone heading and a bar chart of
+/// the week, and a row of stat cards that overlaps the band's lower edge.
 ///
 /// One query covers the whole week; the day's own numbers are taken from it.
 struct PlannerHeader: View {
     let day: Date
     @Query private var weekBlocks: [TimeBlock]
+    @Query private var settings: [AppSettings]
     @Environment(AppState.self) private var state
     @State private var showCalendar = false
 
     private let weekStart: Date
+    /// How far the stat cards reach up into the dark band.
+    private static let overlap: CGFloat = 46
 
     init(day: Date) {
         self.day = day
@@ -26,71 +29,200 @@ struct PlannerHeader: View {
     var body: some View {
         let dayBlocks = weekBlocks.filter { $0.day == day }
 
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(spacing: 0) {
             ViewThatFits(in: .horizontal) {
-                HStack(alignment: .center, spacing: 24) {
+                HStack(alignment: .bottom, spacing: 24) {
                     title
-                    Spacer(minLength: 12)
-                    DayProgress(blocks: dayBlocks)
-                        .frame(width: 280)
+                    Spacer(minLength: 0)
+                    WeekBars(weekStart: weekStart, selected: day, blocks: weekBlocks) { state.setDay($0) }
                 }
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 18) {
                     title
-                    DayProgress(blocks: dayBlocks)
-                        .frame(maxWidth: 320)
+                    WeekBars(weekStart: weekStart, selected: day, blocks: weekBlocks) { state.setDay($0) }
                 }
             }
-            WeekStrip(weekStart: weekStart, selected: day, blocks: weekBlocks) { state.setDay($0) }
+            .padding(.horizontal, 28)
+            .padding(.top, 22)
+            .padding(.bottom, 22 + Self.overlap)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(HeroBackground(colors: glowColors(dayBlocks)))
+
+            StatCards(blocks: dayBlocks, settings: settings.first)
+                .padding(.horizontal, 16)
+                .padding(.top, -Self.overlap)
         }
-        .padding(.horizontal, 20)
-        .padding(.top, 16)
-        .padding(.bottom, 12)
     }
 
-    // MARK: Pieces
+    // MARK: Title
 
     private var title: some View {
         Button {
             showCalendar = true
         } label: {
-            VStack(alignment: .leading, spacing: 1) {
-                HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(verbatim: day.formatted(.dateTime.weekday(.wide)).capitalized)
-                        .font(.system(size: 22, weight: .semibold))
-                        .lineLimit(1)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 6) {
                     if isToday {
                         Text("Today")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(Theme.accent)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Capsule().fill(Theme.accent.opacity(0.13)))
+                            .foregroundStyle(Theme.onHighlight)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(Capsule().fill(Theme.highlight))
                     }
+                    HStack(spacing: 4) {
+                        Image(systemName: "calendar")
+                        Text("Jump to a date")
+                    }
+                    .foregroundStyle(.white.opacity(0.55))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(Capsule().strokeBorder(.white.opacity(0.18)))
                 }
-                HStack(spacing: 4) {
-                    Text(verbatim: day.formatted(.dateTime.day().month(.wide).year()))
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 9, weight: .semibold))
+                .font(.system(size: 11, weight: .semibold))
+
+                VStack(alignment: .leading, spacing: -4) {
+                    Text(verbatim: day.formatted(.dateTime.weekday(.wide)).capitalized)
+                        .foregroundStyle(.white)
+                    Text(verbatim: day.formatted(.dateTime.day().month(.wide)))
+                        .foregroundStyle(.white.opacity(0.38))
                 }
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
+                .font(.system(size: 40, weight: .bold))
+                .tracking(-0.8)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
             }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .fixedSize()
         .help("Jump to a date")
         .popover(isPresented: $showCalendar, arrowEdge: .bottom) {
             MonthCalendar(selected: day) { state.setDay($0) }
         }
     }
+
+    /// The glow behind the header takes the colors of the day's biggest categories.
+    private func glowColors(_ blocks: [TimeBlock]) -> [Color] {
+        var minutes: [String: Int] = [:]
+        for b in blocks where b.isStudy { minutes[b.category?.colorHex ?? "#8E8E93", default: 0] += b.plannedMinutes }
+        let top = minutes.sorted { $0.value > $1.value }.prefix(3).map { Color(hex: $0.key) }
+        return top.isEmpty ? [Theme.accent, Color(hex: "#7B61D9")] : top
+    }
 }
 
-// MARK: - Progress
+// MARK: - Background
 
-/// Study hours done against planned, with a thin bar and the number of blocks still to mark.
-private struct DayProgress: View {
+/// Near-black band with soft blurred light in the given colors.
+private struct HeroBackground: View {
+    let colors: [Color]
+
+    var body: some View {
+        GeometryReader { g in
+            ZStack {
+                Theme.hero
+                ForEach(Array(colors.enumerated()), id: \.offset) { i, color in
+                    Ellipse()
+                        .fill(color)
+                        .frame(width: g.size.width * 0.42, height: g.size.height * 0.9)
+                        .offset(x: g.size.width * (0.08 + 0.2 * CGFloat(i)), y: -g.size.height * (0.25 - 0.18 * CGFloat(i)))
+                        .opacity(0.55 - 0.1 * Double(i))
+                        .blur(radius: 70)
+                }
+                // Fades the light out towards the cards so the dates stay readable.
+                LinearGradient(colors: [.clear, Theme.hero.opacity(0.85)], startPoint: .top, endPoint: .bottom)
+            }
+            .animation(.easeInOut(duration: 0.6), value: colors)
+        }
+        .clipped()
+    }
+}
+
+// MARK: - Week bars
+
+/// One bar per day of the week: its height is the plan, the bright part is what got done.
+private struct WeekBars: View {
+    let weekStart: Date
+    let selected: Date
     let blocks: [TimeBlock]
+    var onPick: (Date) -> Void
+
+    private static let maxHeight: CGFloat = 86
+
+    var body: some View {
+        let byDay = Dictionary(grouping: blocks.filter(\.isStudy), by: \.day)
+        let totals = (0..<7).map { offset -> (Date, Int, Int) in
+            let d = weekStart.adding(days: offset).startOfDay
+            let items = byDay[d] ?? []
+            return (d, items.reduce(0) { $0 + $1.plannedMinutes }, items.reduce(0) { $0 + $1.effectiveActual })
+        }
+        let most = max(totals.map(\.1).max() ?? 0, 60)
+
+        HStack(alignment: .bottom, spacing: 10) {
+            ForEach(totals, id: \.0) { day, planned, done in
+                Bar(date: day, isSelected: day == selected, planned: planned, done: done,
+                    height: planned > 0 ? max(Self.maxHeight * CGFloat(planned) / CGFloat(most), 14) : 4) {
+                    onPick(day)
+                }
+            }
+        }
+        .frame(height: Self.maxHeight + 34, alignment: .bottom)
+    }
+
+    private struct Bar: View {
+        let date: Date
+        let isSelected: Bool
+        let planned: Int
+        let done: Int
+        let height: CGFloat
+        var action: () -> Void
+
+        @State private var hovering = false
+
+        private var isToday: Bool { Calendar.current.isDateInToday(date) }
+
+        var body: some View {
+            Button(action: action) {
+                VStack(spacing: 7) {
+                    ZStack(alignment: .bottom) {
+                        Capsule()
+                            .fill(isSelected ? Theme.highlight : .white.opacity(hovering ? 0.16 : 0.09))
+                        if !isSelected, planned > 0, done > 0 {
+                            Capsule()
+                                .fill(.white.opacity(0.5))
+                                .frame(height: max(height * min(CGFloat(done) / CGFloat(planned), 1), 8))
+                        }
+                    }
+                    .frame(width: 26, height: height)
+                    .shadow(color: isSelected ? Theme.highlight.opacity(0.55) : .clear, radius: 12)
+
+                    VStack(spacing: 1) {
+                        Text(verbatim: date.formatted(.dateTime.weekday(.abbreviated)).uppercased())
+                            .font(.system(size: 9.5, weight: .semibold))
+                        Text(verbatim: "\(Calendar.current.component(.day, from: date))")
+                            .font(.system(size: 11, weight: .semibold).monospacedDigit())
+                    }
+                    .foregroundStyle(isSelected ? Theme.highlight : .white.opacity(isToday ? 0.85 : 0.42))
+                    .frame(width: 34)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .onHover { hovering = $0 }
+            .animation(.spring(duration: 0.35), value: height)
+            .help(helpText)
+        }
+
+        private var helpText: String {
+            let d = date.formatted(.dateTime.weekday(.wide).day().month(.wide))
+            guard planned > 0 else { return d }
+            return "\(d) · \(TimeFmt.hours(done)) / \(TimeFmt.hours(planned))"
+        }
+    }
+}
+
+// MARK: - Stat cards
+
+private struct StatCards: View {
+    let blocks: [TimeBlock]
+    let settings: AppSettings?
 
     var body: some View {
         // Re-evaluated every minute so blocks that just ended count as "to review".
@@ -99,40 +231,74 @@ private struct DayProgress: View {
             let planned = study.reduce(0) { $0 + $1.plannedMinutes }
             let done = study.reduce(0) { $0 + $1.effectiveActual }
             let review = blocks.filter { $0.status == .planned && $0.endDate < context.date }.count
-            let fraction = planned > 0 ? min(Double(done) / Double(planned), 1) : 0
+            let percent = planned > 0 ? Int((min(Double(done) / Double(planned), 1) * 100).rounded()) : 0
 
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(alignment: .firstTextBaseline, spacing: 4) {
-                    Text(TimeFmt.hours(done))
-                        .font(.system(size: 15, weight: .semibold).monospacedDigit())
-                    Text("of \(TimeFmt.hours(planned)) planned")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                    Spacer(minLength: 4)
-                    if planned > 0 {
-                        Text(verbatim: "\(Int((fraction * 100).rounded()))%")
-                            .font(.system(size: 11, weight: .medium).monospacedDigit())
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                ProgressTrack(fraction: fraction, color: Theme.success)
-                Group {
-                    if review > 0 {
-                        Text("^[\(review) block](inflect: true) to review")
-                            .foregroundStyle(Theme.accent)
-                    } else if planned == 0 {
-                        Text("Nothing planned yet")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text("Study hours")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .font(.system(size: 11, weight: .medium))
-                .lineLimit(1)
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 172), spacing: 12)], spacing: 12) {
+                StatCard(title: Text("Studied"),
+                         subtitle: review > 0 ? Text("^[\(review) block](inflect: true) to review") : Text("today"),
+                         subtitleTint: review > 0 ? Theme.accent : nil,
+                         value: TimeFmt.hours(done), symbol: "clock.fill", color: Theme.accent)
+                StatCard(title: Text("Planned"),
+                         subtitle: Text("^[\(blocks.count) block](inflect: true)"),
+                         value: TimeFmt.hours(planned), symbol: "square.stack.fill", color: Color(hex: "#3F8FD2"))
+                StatCard(title: Text("Progress"),
+                         subtitle: Text("of the plan"),
+                         value: "\(percent)%", symbol: "chart.bar.fill", color: Color(hex: "#9B6BE0"))
+                examCard
             }
         }
+    }
+
+    @ViewBuilder
+    private var examCard: some View {
+        let exams = [("IELTS", settings?.ieltsDate), ("SAT", settings?.satDate)]
+            .compactMap { name, date in date.map { (name, Countdown.days(to: $0)) } }
+            .filter { $0.1 >= 0 }
+            .sorted { $0.1 < $1.1 }
+        if let next = exams.first {
+            StatCard(title: Text(verbatim: next.0),
+                     subtitle: Text(next.1 == 0 ? "is today" : "exam in"),
+                     value: String(localized: "\(next.1)d"), symbol: "graduationcap.fill", color: Theme.success)
+        } else {
+            StatCard(title: Text("Exams"), subtitle: Text("all done"),
+                     value: "–", symbol: "checkmark.seal.fill", color: Theme.success)
+        }
+    }
+}
+
+/// White card with a two-tone label on top and an icon chip and LED number at the bottom.
+private struct StatCard: View {
+    let title: Text
+    let subtitle: Text
+    var subtitleTint: Color? = nil
+    let value: String
+    let symbol: String
+    let color: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 0) {
+                title.foregroundStyle(.primary)
+                subtitle.foregroundStyle(subtitleTint ?? .secondary)
+            }
+            .font(.system(size: 13, weight: .semibold))
+            .lineLimit(1)
+
+            HStack(alignment: .bottom) {
+                IconChip(symbol: symbol, color: color, size: 34)
+                Spacer(minLength: 8)
+                DotNumber(value: value, dot: 3.4)
+                    .foregroundStyle(.primary)
+            }
+            .frame(height: 36, alignment: .bottom)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Theme.card)
+                .shadow(color: .black.opacity(0.10), radius: 16, y: 6)
+        )
     }
 }
 
@@ -155,83 +321,5 @@ struct ProgressTrack: View {
                 }
             }
             .animation(.easeOut(duration: 0.25), value: fraction)
-    }
-}
-
-// MARK: - Week strip
-
-/// The seven days of the selected week. Each day shows how much of its plan is done.
-private struct WeekStrip: View {
-    let weekStart: Date
-    let selected: Date
-    let blocks: [TimeBlock]
-    var onPick: (Date) -> Void
-
-    var body: some View {
-        let byDay = Dictionary(grouping: blocks.filter(\.isStudy), by: \.day)
-        HStack(spacing: 6) {
-            ForEach(0..<7, id: \.self) { offset in
-                let d = weekStart.adding(days: offset).startOfDay
-                let items = byDay[d] ?? []
-                let planned = items.reduce(0) { $0 + $1.plannedMinutes }
-                let done = items.reduce(0) { $0 + $1.effectiveActual }
-                DayCell(date: d, isSelected: d == selected, planned: planned, done: done) { onPick(d) }
-            }
-        }
-    }
-}
-
-private struct DayCell: View {
-    let date: Date
-    let isSelected: Bool
-    let planned: Int
-    let done: Int
-    var action: () -> Void
-
-    @State private var hovering = false
-
-    private var isToday: Bool { Calendar.current.isDateInToday(date) }
-
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 5) {
-                HStack(spacing: 5) {
-                    Text(verbatim: date.formatted(.dateTime.weekday(.abbreviated)))
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(isSelected ? Theme.onInk.opacity(0.75) : .secondary)
-                    Text(verbatim: "\(Calendar.current.component(.day, from: date))")
-                        .font(.system(size: 13, weight: .semibold).monospacedDigit())
-                        .foregroundStyle(isSelected ? Theme.onInk : (isToday ? Theme.accent : .primary))
-                }
-                ProgressTrack(
-                    fraction: planned > 0 ? Double(done) / Double(planned) : 0,
-                    color: isSelected ? Theme.onInk : Theme.success,
-                    track: isSelected ? Theme.onInk.opacity(0.25) : Theme.cardMuted,
-                    height: 3
-                )
-                .opacity(planned > 0 ? 1 : 0)
-                .padding(.horizontal, 10)
-            }
-            .padding(.vertical, 7)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isSelected ? Theme.ink : (hovering ? Theme.cardMuted : Color.clear))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .strokeBorder(isToday && !isSelected ? Theme.accent.opacity(0.5) : .clear, lineWidth: 1)
-            )
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .onHover { hovering = $0 }
-        .help(helpText)
-    }
-
-    private var helpText: String {
-        let d = date.formatted(.dateTime.weekday(.wide).day().month(.wide))
-        guard planned > 0 else { return d }
-        return "\(d) · \(TimeFmt.hours(done)) / \(TimeFmt.hours(planned))"
     }
 }

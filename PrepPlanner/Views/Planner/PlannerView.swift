@@ -6,13 +6,20 @@ struct PlannerView: View {
 
     var body: some View {
         @Bindable var state = state
-        VStack(spacing: 0) {
+        VStack(spacing: 14) {
             PlannerHeader(day: state.day)
-            Divider()
-            DayTimeline(day: state.day)
+            VStack(spacing: 0) {
+                ScheduleBar(day: state.day)
+                DayTimeline(day: state.day)
+            }
+            .background(Theme.card)
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .shadow(color: .black.opacity(0.05), radius: 12, y: 3)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Theme.card)
+        .background(Theme.background)
         .navigationTitle("Planner")
         .toolbar { toolbar }
         .inspector(isPresented: $state.showInspector) {
@@ -36,19 +43,6 @@ struct PlannerView: View {
                 .help("Next day (⌘])")
         }
         ToolbarItem {
-            Menu {
-                Button("Save Day as Template…") { state.showSaveTemplate = true }
-                Button("Apply Template…") { state.showApplyTemplate = true }
-            } label: {
-                Label("Templates", systemImage: "square.on.square")
-            }
-            .help("Day templates")
-        }
-        ToolbarItem {
-            Button { state.newBlockAtNextFreeSlot() } label: { Label("New Block", systemImage: "plus") }
-                .help("New block (⌘N)")
-        }
-        ToolbarItem {
             Button { state.showInspector.toggle() } label: { Label("Inspector", systemImage: "sidebar.trailing") }
                 .help("Show or hide the inspector (⌥⌘I)")
         }
@@ -66,5 +60,58 @@ struct PlannerView: View {
                 .padding(.bottom, 32)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
         }
+    }
+}
+
+/// Title row of the schedule card, with the day's actions as pills.
+private struct ScheduleBar: View {
+    let day: Date
+    @Environment(AppState.self) private var state
+    @Query private var blocks: [TimeBlock]
+
+    init(day: Date) {
+        self.day = day
+        let d = day
+        _blocks = Query(filter: #Predicate<TimeBlock> { $0.day == d })
+    }
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Text("Schedule")
+                .font(.system(size: 17, weight: .bold))
+            Text("^[\(blocks.count) block](inflect: true)")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(.secondary)
+            Spacer()
+            Menu {
+                Button("Save Day as Template…") { state.showSaveTemplate = true }
+                Button("Apply Template…") { state.showApplyTemplate = true }
+            } label: {
+                Label("Templates", systemImage: "square.on.square")
+                    .font(.system(size: 12, weight: .semibold))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Theme.cardMuted))
+            }
+            .menuStyle(.button)
+            .buttonStyle(.plain)
+            .menuIndicator(.hidden)
+            .fixedSize()
+            .help("Day templates")
+
+            Button { state.newBlockAtNextFreeSlot() } label: {
+                Label("New block", systemImage: "plus")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(Theme.onHighlight)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Theme.highlight))
+            }
+            .buttonStyle(.plain)
+            .help("New block (⌘N)")
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+        .padding(.bottom, 6)
     }
 }
