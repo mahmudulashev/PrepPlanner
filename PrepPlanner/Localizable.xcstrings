@@ -317,6 +317,16 @@
         }
       }
     },
+    "Add a note…": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Izoh qoʻshing…"
+          }
+        }
+      }
+    },
     "Add in Settings…": {
       "localizations": {
         "uz": {
@@ -367,22 +377,22 @@
         }
       }
     },
+    "All habits": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barcha odatlar"
+          }
+        }
+      }
+    },
     "All habits are archived.": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Barcha odatlar arxivda."
-          }
-        }
-      }
-    },
-    "All habits, last 60 days": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Barcha odatlar, oxirgi 60 kun"
           }
         }
       }
@@ -643,16 +653,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kategoriya"
-          }
-        }
-      }
-    },
-    "Checklist": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Roʻyxat"
           }
         }
       }
@@ -1117,16 +1117,6 @@
         }
       }
     },
-    "Duration": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Davomiylik"
-          }
-        }
-      }
-    },
     "Edit IELTS mock": {
       "localizations": {
         "uz": {
@@ -1566,6 +1556,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Turi"
+          }
+        }
+      }
+    },
+    "LAST 7 DAYS": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SOʻNGGI 7 KUN"
           }
         }
       }
@@ -2576,16 +2576,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eslatmalarda ovoz chalish"
-          }
-        }
-      }
-    },
-    "Prep": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tayyorgarlik"
           }
         }
       }
@@ -3688,6 +3678,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "rejada %@"
+          }
+        }
+      }
+    },
+    "of all habits done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "barcha odatlardan bajarildi"
           }
         }
       }
