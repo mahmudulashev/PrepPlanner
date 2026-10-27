@@ -2,8 +2,8 @@ import AppKit
 import CoreGraphics
 import Foundation
 
-// Draws the PrepPlanner app icon: a warm squircle with a day-plan card,
-// three colored time blocks and a green "done" badge.
+// Draws the PrepPlanner app icon: a near-black squircle with soft colored light, and the
+// planner's week bar chart with today's bar lit in neon above a row of LED dots.
 
 let outputDir = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "."
 
@@ -39,6 +39,14 @@ func roundedRect(_ rect: CGRect, _ radius: CGFloat) -> CGPath {
     CGPath(roundedRect: rect, cornerWidth: radius, cornerHeight: radius, transform: nil)
 }
 
+/// Soft round light: a radial gradient from `hex` at `alpha` to transparent.
+func glow(_ ctx: CGContext, at center: CGPoint, radius: CGFloat, hex: String, alpha: CGFloat) {
+    let g = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
+                       colors: [color(hex, alpha), color(hex, alpha * 0.45), color(hex, 0)] as CFArray,
+                       locations: [0, 0.45, 1])!
+    ctx.drawRadialGradient(g, startCenter: center, startRadius: 0, endCenter: center, endRadius: radius, options: [])
+}
+
 func draw(size: CGFloat) -> CGImage {
     let s = size / 1024  // design is laid out on a 1024 grid
     let width = Int(size), height = Int(size)
@@ -53,77 +61,78 @@ func draw(size: CGFloat) -> CGImage {
     let plate = CGRect(x: 100, y: 108, width: 824, height: 824)
     let platePath = squircle(in: plate)
 
-    // Soft shadow under the plate.
+    // Shadow under the plate.
     ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -18), blur: 42, color: color("#7A3C10", 0.32))
+    ctx.setShadow(offset: CGSize(width: 0, height: -18), blur: 40, color: color("#000000", 0.45))
     ctx.addPath(platePath)
-    ctx.setFillColor(color("#F4852B"))
+    ctx.setFillColor(color("#121214"))
     ctx.fillPath()
     ctx.restoreGState()
 
-    // Warm gradient background.
+    // Dark plate with the same glow as the app's header.
     ctx.saveGState()
     ctx.addPath(platePath)
     ctx.clip()
-    let gradient = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-                              colors: [color("#FFC062"), color("#F58A2E"), color("#E8622F")] as CFArray,
-                              locations: [0, 0.55, 1])!
-    ctx.drawLinearGradient(gradient,
-                           start: CGPoint(x: plate.minX, y: plate.maxY),
-                           end: CGPoint(x: plate.maxX, y: plate.minY),
-                           options: [])
-    // Gentle highlight in the top-left corner.
-    let glow = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-                          colors: [color("#FFFFFF", 0.32), color("#FFFFFF", 0)] as CFArray,
-                          locations: [0, 1])!
-    ctx.drawRadialGradient(glow,
-                           startCenter: CGPoint(x: plate.minX + 210, y: plate.maxY - 150), startRadius: 0,
-                           endCenter: CGPoint(x: plate.minX + 210, y: plate.maxY - 150), endRadius: 560,
-                           options: [])
+    let base = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
+                          colors: [color("#24232B"), color("#121214"), color("#0B0B0D")] as CFArray,
+                          locations: [0, 0.55, 1])!
+    ctx.drawLinearGradient(base, start: CGPoint(x: plate.minX, y: plate.maxY),
+                           end: CGPoint(x: plate.maxX, y: plate.minY), options: [])
+    glow(ctx, at: CGPoint(x: plate.minX + 150, y: plate.maxY - 120), radius: 520, hex: "#F0873F", alpha: 0.55)
+    glow(ctx, at: CGPoint(x: plate.maxX - 110, y: plate.maxY - 220), radius: 480, hex: "#7B61D9", alpha: 0.55)
+    glow(ctx, at: CGPoint(x: plate.midX + 40, y: plate.minY + 60), radius: 420, hex: "#E0679A", alpha: 0.22)
+
+    // Fine inner rim so the plate reads on dark backgrounds too.
+    ctx.addPath(squircle(in: plate.insetBy(dx: 3, dy: 3)))
+    ctx.setStrokeColor(color("#FFFFFF", 0.10))
+    ctx.setLineWidth(6)
+    ctx.strokePath()
     ctx.restoreGState()
 
-    // The day-plan card.
-    let card = CGRect(x: 208, y: 276, width: 608, height: 472)
-    ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: -14), blur: 30, color: color("#6E3208", 0.28))
-    ctx.addPath(roundedRect(card, 78))
-    ctx.setFillColor(color("#FFFDF9"))
-    ctx.fillPath()
-    ctx.restoreGState()
+    // The week: five bars on a baseline; their pale tops are the plan, the bright part what got done.
+    let barWidth: CGFloat = 92
+    let gap: CGFloat = 40
+    let baseline: CGFloat = 340
+    let bars: [(plan: CGFloat, done: CGFloat)] = [(250, 190), (330, 300), (430, 430), (290, 120), (200, 0)]
+    let lit = 2
+    let totalWidth = CGFloat(bars.count) * barWidth + CGFloat(bars.count - 1) * gap
+    var x = plate.midX - totalWidth / 2
 
-    // Three time blocks, like blocks on the planner timeline.
-    let bars: [(CGFloat, String)] = [(350, "#3F8FD2"), (446, "#4E9F6E"), (250, "#F28C38")]
-    let barHeight: CGFloat = 78
-    let gap: CGFloat = 44
-    let totalHeight = CGFloat(bars.count) * barHeight + CGFloat(bars.count - 1) * gap
-    var y = card.midY + totalHeight / 2 - barHeight
-    let barX = card.minX + 74
-    for (barWidth, hex) in bars {
-        ctx.addPath(roundedRect(CGRect(x: barX, y: y, width: barWidth, height: barHeight), barHeight / 2))
-        ctx.setFillColor(color(hex))
-        ctx.fillPath()
-        y -= barHeight + gap
+    for (i, bar) in bars.enumerated() {
+        let track = CGRect(x: x, y: baseline, width: barWidth, height: bar.plan)
+        if i == lit {
+            // Today's bar: neon with a halo, like the selected day in the planner header.
+            ctx.saveGState()
+            ctx.setShadow(offset: .zero, blur: 70, color: color("#E6F53B", 0.75))
+            ctx.addPath(roundedRect(track, barWidth / 2))
+            ctx.setFillColor(color("#E6F53B"))
+            ctx.fillPath()
+            ctx.restoreGState()
+        } else {
+            ctx.addPath(roundedRect(track, barWidth / 2))
+            ctx.setFillColor(color("#FFFFFF", 0.13))
+            ctx.fillPath()
+            if bar.done > 0 {
+                ctx.addPath(roundedRect(CGRect(x: x, y: baseline, width: barWidth, height: max(bar.done, barWidth)), barWidth / 2))
+                ctx.setFillColor(color("#FFFFFF", 0.62))
+                ctx.fillPath()
+            }
+        }
+        x += barWidth + gap
     }
 
-    // "Done" badge overlapping the card's bottom-right corner.
-    let badgeCenter = CGPoint(x: card.maxX - 14, y: card.minY + 18)
-    let badgeRadius: CGFloat = 124
-    ctx.setFillColor(color("#FFFDF9"))
-    ctx.fillEllipse(in: CGRect(x: badgeCenter.x - badgeRadius, y: badgeCenter.y - badgeRadius,
-                               width: badgeRadius * 2, height: badgeRadius * 2))
-    let inner = badgeRadius - 18
-    ctx.setFillColor(color("#4E9F6E"))
-    ctx.fillEllipse(in: CGRect(x: badgeCenter.x - inner, y: badgeCenter.y - inner,
-                               width: inner * 2, height: inner * 2))
-    ctx.setStrokeColor(color("#FFFFFF"))
-    ctx.setLineWidth(30)
-    ctx.setLineCap(.round)
-    ctx.setLineJoin(.round)
-    ctx.beginPath()
-    ctx.move(to: CGPoint(x: badgeCenter.x - 48, y: badgeCenter.y + 4))
-    ctx.addLine(to: CGPoint(x: badgeCenter.x - 14, y: badgeCenter.y - 32))
-    ctx.addLine(to: CGPoint(x: badgeCenter.x + 52, y: badgeCenter.y + 42))
-    ctx.strokePath()
+    // A row of LED dots under the bars, the dot-matrix digits' signature.
+    let dot: CGFloat = 22
+    let dotGap: CGFloat = 16
+    let dots = 15
+    let dotsWidth = CGFloat(dots) * dot + CGFloat(dots - 1) * dotGap
+    var dx = plate.midX - dotsWidth / 2
+    for i in 0..<dots {
+        let on = i < 10
+        ctx.setFillColor(on ? color("#E6F53B", i == 9 ? 1 : 0.85) : color("#FFFFFF", 0.16))
+        ctx.fillEllipse(in: CGRect(x: dx, y: 238, width: dot, height: dot))
+        dx += dot + dotGap
+    }
 
     return ctx.makeImage()!
 }
