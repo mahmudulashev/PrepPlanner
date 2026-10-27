@@ -5,8 +5,8 @@ import AppKit
 /// Vertical 06:00–24:00 timeline: drag empty space to create, drag a block to move, drag its edges to resize.
 struct DayTimeline: View {
     static let pointsPerMinute: CGFloat = 1.25
-    static let gutter: CGFloat = 58
-    static let trailingInset: CGFloat = 16
+    static let gutter: CGFloat = 64
+    static let trailingInset: CGFloat = 18
     /// Narrowest a block may get before overlapping blocks start to cascade instead of divide.
     static let minBlockWidth: CGFloat = 118
     static var hourHeight: CGFloat { 60 * pointsPerMinute }
@@ -117,7 +117,7 @@ struct DayTimeline: View {
                 isDragging: isDragging,
                 onToggleDone: { state.toggleDone(b) }
             )
-            .frame(width: width - 3, height: max(height - 2, 14))
+            .frame(width: width - 4, height: max(height - 3, 14))
             .overlay(alignment: .top) { ResizeHandle().gesture(resizeGesture(b, kind: .top)) }
             .overlay(alignment: .bottom) { ResizeHandle().gesture(resizeGesture(b, kind: .bottom)) }
             .contentShape(Rectangle())
@@ -402,10 +402,10 @@ private struct TimelineGrid: View {
 
             let label = ctx.resolve(
                 Text(verbatim: String(format: "%02d:00", hour))
-                    .font(.system(size: 10.5, weight: .medium).monospacedDigit())
-                    .foregroundStyle(.tertiary)
+                    .font(.system(size: 11.5, weight: .medium).monospacedDigit())
+                    .foregroundStyle(.secondary)
             )
-            ctx.draw(label, at: CGPoint(x: left - 10, y: y), anchor: .trailing)
+            ctx.draw(label, at: CGPoint(x: left - 14, y: y), anchor: .trailing)
         }
     }
 
@@ -441,21 +441,37 @@ private struct NowIndicator: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .fill(Theme.danger)
-                        .frame(width: width, height: 1.5)
+                        .frame(width: width, height: 2)
                         .offset(x: DayTimeline.gutter)
+                    Triangle()
+                        .fill(Theme.danger)
+                        .frame(width: 8, height: 12)
+                        .offset(x: DayTimeline.gutter - 4)
                     Text(TimeFmt.hm(m))
-                        .font(.system(size: 10, weight: .semibold).monospacedDigit())
+                        .font(.system(size: 10.5, weight: .bold).monospacedDigit())
                         .foregroundStyle(.white)
-                        .padding(.horizontal, 5)
+                        .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(Capsule().fill(Theme.danger))
-                        .frame(width: DayTimeline.gutter - 4, alignment: .trailing)
+                        .frame(width: DayTimeline.gutter - 8, alignment: .trailing)
                 }
                 .frame(height: 16)
                 .offset(y: DayTimeline.y(for: m) - 8)
             }
         }
         .allowsHitTesting(false)
+    }
+}
+
+/// Right-pointing marker at the start of the now line.
+private struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        p.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        p.closeSubpath()
+        return p
     }
 }
 

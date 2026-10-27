@@ -299,6 +299,10 @@ private struct StatCard: View {
                 .fill(Theme.card)
                 .shadow(color: .black.opacity(0.10), radius: 16, y: 6)
         )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .strokeBorder(Theme.hairline.opacity(0.7), lineWidth: 1)
+        )
     }
 }
 
