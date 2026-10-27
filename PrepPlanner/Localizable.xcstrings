@@ -111,16 +111,6 @@
         }
       }
     },
-    "%lld logged in total": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "jami %lld ta"
-          }
-        }
-      }
-    },
     "%lld min before": {
       "localizations": {
         "uz": {
@@ -747,16 +737,6 @@
         }
       }
     },
-    "Completion this week": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bu hafta bajarilish"
-          }
-        }
-      }
-    },
     "Conflicts": {
       "localizations": {
         "uz": {
@@ -927,16 +907,6 @@
         }
       }
     },
-    "Days with every habit done": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Barcha odatlar bajarilgan kunlar"
-          }
-        }
-      }
-    },
     "Days you already applied it to are not changed.": {
       "localizations": {
         "uz": {
@@ -1053,16 +1023,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bajarildi"
-          }
-        }
-      }
-    },
-    "Done 100% · Partial 50% · Skipped 0%": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bajarildi 100% · Qisman 50% · Oʻtkazildi 0%"
           }
         }
       }
@@ -1257,16 +1217,6 @@
         }
       }
     },
-    "Errors, last 7 days": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Xatolar, oxirgi 7 kun"
-          }
-        }
-      }
-    },
     "Exam dates": {
       "localizations": {
         "uz": {
@@ -1363,16 +1313,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oʻtish"
-          }
-        }
-      }
-    },
-    "Granularity": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Davr"
           }
         }
       }
@@ -1560,46 +1500,6 @@
         }
       }
     },
-    "LAST 7 DAYS": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SOʻNGGI 7 KUN"
-          }
-        }
-      }
-    },
-    "LATEST OVERALL": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OXIRGI UMUMIY"
-          }
-        }
-      }
-    },
-    "LATEST TOTAL": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OXIRGI NATIJA"
-          }
-        }
-      }
-    },
-    "LONGEST CURRENT STREAK": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ENG UZUN JORIY SERIYA"
-          }
-        }
-      }
-    },
     "Language": {
       "localizations": {
         "uz": {
@@ -1636,6 +1536,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oxirgi 60 kun"
+          }
+        }
+      }
+    },
+    "Last 7 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soʻnggi 7 kun"
           }
         }
       }
@@ -1816,6 +1726,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu turdagi yozilgan xatolar: %lld. Ular saqlanadi va “Turi yoʻq” deb belgilanadi."
+          }
+        }
+      }
+    },
+    "Longest streak": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eng uzun seriya"
           }
         }
       }
@@ -2490,22 +2410,22 @@
         }
       }
     },
-    "PERFECT DAYS, LAST 30": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MUKAMMAL KUNLAR, OXIRGI 30"
-          }
-        }
-      }
-    },
     "Partial": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Qisman"
+          }
+        }
+      }
+    },
+    "Perfect days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mukammal kunlar"
           }
         }
       }
@@ -2629,16 +2549,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chiqish"
-          }
-        }
-      }
-    },
-    "Range": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oraliq"
           }
         }
       }
@@ -2848,16 +2758,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "SAT natijasi oxirgi sinovdan beri %1$lld ballga oshdi (%2$@)."
-          }
-        }
-      }
-    },
-    "SAT view": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SAT koʻrinishi"
           }
         }
       }
@@ -3238,16 +3138,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Maqsad %@ bajarildi"
-          }
-        }
-      }
-    },
-    "Target %@ reached 🎉": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Maqsad %@ bajarildi 🎉"
           }
         }
       }
@@ -3652,12 +3542,42 @@
         }
       }
     },
+    "in the last 30 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "soʻnggi 30 kunda"
+          }
+        }
+      }
+    },
     "is today": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "bugun"
+          }
+        }
+      }
+    },
+    "last 7 days": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "soʻnggi 7 kun"
+          }
+        }
+      }
+    },
+    "latest": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "soʻnggi"
           }
         }
       }
@@ -3718,6 +3638,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "maqsad %@"
+          }
+        }
+      }
+    },
+    "this week": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "shu hafta"
           }
         }
       }
