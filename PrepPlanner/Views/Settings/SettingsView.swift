@@ -411,7 +411,7 @@ struct AboutSettings: View {
             }
             VStack(spacing: 4) {
                 Text(verbatim: "PrepPlanner")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(.system(size: 22, weight: .bold))
                 Text("Version \(version)")
                     .font(.callout)
                     .foregroundStyle(.secondary)

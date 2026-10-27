@@ -59,22 +59,23 @@ private struct SidebarCountdown: View {
         if let s = settings.first {
             VStack(alignment: .leading, spacing: 6) {
                 row("IELTS", date: s.ieltsDate, color: Theme.accent)
-                row("SAT", date: s.satDate, color: Theme.ink)
+                row("SAT", date: s.satDate, color: Color(hex: Skill.satMath.colorHex))
             }
-            .padding(12)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.cardMuted))
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.primary.opacity(0.04)))
         }
     }
 
     private func row(_ exam: String, date: Date, color: Color) -> some View {
         let days = Countdown.days(to: date)
         return HStack(spacing: 8) {
-            Circle().fill(color).frame(width: 8, height: 8)
-            Text(exam).font(.callout.weight(.semibold))
+            Circle().fill(days >= 0 ? color : Color.secondary).frame(width: 7, height: 7)
+            Text(exam).font(.system(size: 12, weight: .semibold))
             Spacer()
             Text(days >= 0 ? "\(days)d" : "done")
-                .font(.callout.monospacedDigit())
+                .font(.system(size: 12).monospacedDigit())
                 .foregroundStyle(.secondary)
         }
     }

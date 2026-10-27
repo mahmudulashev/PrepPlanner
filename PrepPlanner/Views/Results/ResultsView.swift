@@ -92,8 +92,7 @@ private struct IELTSResults: View {
             label: "LATEST OVERALL",
             value: Band.format(latest.overallBand),
             subtitle: overallSubtitle(latest: latest, previous: previous, target: s?.targetOverall),
-            fill: Theme.accent,
-            foreground: .white
+            tint: Theme.accent
         )
 
         // All five across while they fit, then the hero over one row of four, then two by two.
@@ -221,7 +220,7 @@ private struct SkillBandCard: View {
                 }
             }
             Text(Band.format(band))
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(.system(size: 28, weight: .bold))
                 .monospacedDigit()
             BandProgress(band: band, target: target, color: skill.color)
             if let t = target {
@@ -241,36 +240,36 @@ private struct ResultsHeroCard: View {
     let label: LocalizedStringKey
     let value: String
     let subtitle: String
-    let fill: Color
-    let foreground: Color
+    let tint: Color
     /// True when the card is alone on its row and should span it rather than sit centred.
     var expands = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .font(.caption.weight(.semibold))
-                .opacity(0.85)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+            HStack(spacing: 6) {
+                Circle().fill(tint).frame(width: 6, height: 6)
+                Text(label)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
             Text(verbatim: value)
-                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .font(.system(size: 38, weight: .semibold))
                 .monospacedDigit()
+                .foregroundStyle(tint)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(verbatim: subtitle)
                 .font(.caption)
-                .opacity(0.85)
+                .foregroundStyle(.secondary)
                 .lineLimit(2)
                 .minimumScaleFactor(0.75)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .foregroundStyle(foreground)
-        .padding(16)
         .frame(minWidth: 158, idealWidth: 190, maxWidth: expands ? .infinity : 230, alignment: .leading)
         .frame(minHeight: 120, maxHeight: .infinity, alignment: .topLeading)
-        .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(fill))
-        .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        .card(padding: 16)
     }
 }
 
@@ -358,8 +357,7 @@ private struct SATResults: View {
             subtitle: gap > 0
                 ? String(localized: "\(gap) to target \(String(target))")
                 : String(localized: "Target \(String(target)) reached 🎉"),
-            fill: Theme.ink,
-            foreground: Theme.onInk
+            tint: Color(hex: Skill.satMath.colorHex)
         )
 
         return ViewThatFits(in: .horizontal) {
@@ -395,7 +393,7 @@ private struct SATResults: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
             Text(verbatim: String(best))
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(.system(size: 28, weight: .bold))
                 .monospacedDigit()
                 .lineLimit(1)
             Text("^[\(mocks.count) mock](inflect: true) logged")
@@ -427,7 +425,7 @@ private struct SATResults: View {
                 }
             }
             Text(verbatim: String(score))
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(.system(size: 28, weight: .bold))
                 .monospacedDigit()
             GeometryReader { g in
                 ZStack(alignment: .leading) {

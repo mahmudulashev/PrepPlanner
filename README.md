@@ -23,8 +23,9 @@ Everything stays on your Mac: no accounts, no backend, no third-party code.
 
 ### Day Planner
 
-Drag on the timeline to create a block, drag it to move, drag its edges to resize. Mark each block
-Done, Partial or Skipped and record the minutes you really spent.
+Drag on the timeline (or double-click a slot) to create a block, drag it to move, drag its edges to
+resize. Click a block's circle to mark it done, or mark it Partial or Skipped and record the minutes
+you really spent.
 
 ![Day Planner](docs/screenshots/01-planner.png)
 
@@ -88,12 +89,14 @@ xcodebuild test -project PrepPlanner.xcodeproj -scheme PrepPlanner -destination 
 
 **Day Planner**
 - Hourly timeline from 06:00 to 24:00 in 15-minute steps, one day at a time
-- Create, move and resize blocks by dragging; overlapping blocks sit side by side
+- Create, move and resize blocks by dragging, or double-click a slot for a one-hour block;
+  overlapping blocks sit side by side
+- Blocks that have ended but are still unmarked are flagged for review
 - Category, title, times, note, status and actual minutes per block
-- Month calendar with a dot on every day that has blocks
+- Week strip with each day's progress, plus a month calendar with a dot on every day that has blocks
 - Day templates: save a day and apply it to a date or a whole range, with weekday filters and
   Merge / Replace / Skip handling for days that already have blocks
-- Planned vs completed hours and countdowns to both exams
+- Planned vs completed hours for the day, and countdowns to both exams in the sidebar
 
 **Results**
 - IELTS: raw Listening and Academic Reading scores (0–40) convert to bands automatically
@@ -179,7 +182,7 @@ xcodebuild -project PrepPlanner.xcodeproj -scheme PrepPlanner -configuration Deb
 - GitHub: [github.com/mahmudulashev](https://github.com/mahmudulashev)
 - Email: [mahmud_u@icloud.com](mailto:mahmud_u@icloud.com)
 
-Both are also in the app under **Settings ▸ About** and in the planner's day summary panel.
+Both are also in the app under **Settings ▸ About**.
 
 ## License
 

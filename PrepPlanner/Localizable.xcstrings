@@ -4,9 +4,6 @@
     "%@ %@": {
       "shouldTranslate": false
     },
-    "%@ / %@": {
-      "shouldTranslate": false
-    },
     "%@ actual": {
       "localizations": {
         "uz": {
@@ -164,16 +161,6 @@
         }
       }
     },
-    "%lld%% completed": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld%% bajarildi"
-          }
-        }
-      }
-    },
     "%lld/40": {
       "shouldTranslate": false
     },
@@ -219,9 +206,6 @@
           }
         }
       }
-    },
-    "24:00": {
-      "shouldTranslate": false
     },
     "30 days": {
       "localizations": {
@@ -623,6 +607,16 @@
         }
       }
     },
+    "By category": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toifalar boʻyicha"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "uz": {
@@ -883,16 +877,6 @@
         }
       }
     },
-    "Day summary": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kun xulosasi"
-          }
-        }
-      }
-    },
     "Day templates": {
       "localizations": {
         "uz": {
@@ -1013,16 +997,6 @@
         }
       }
     },
-    "Delete selected block": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tanlangan blokni oʻchirish"
-          }
-        }
-      }
-    },
     "Delete template “%@”?": {
       "localizations": {
         "uz": {
@@ -1069,16 +1043,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bajarildi"
-          }
-        }
-      }
-    },
-    "Done / Partial / Skipped": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bajarildi / Qisman / Oʻtkazildi"
           }
         }
       }
@@ -1323,26 +1287,6 @@
         }
       }
     },
-    "Exam day — good luck!": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imtihon kuni — omad!"
-          }
-        }
-      }
-    },
-    "Exam done": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imtihon oʻtdi"
-          }
-        }
-      }
-    },
     "Export Backup…": {
       "localizations": {
         "uz": {
@@ -1439,16 +1383,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Odatlar"
-          }
-        }
-      }
-    },
-    "Happy %@ 👋": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Xayrli %@ 👋"
           }
         }
       }
@@ -2046,16 +1980,6 @@
         }
       }
     },
-    "Move selected block 15 min": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tanlangan blokni 15 daq surish"
-          }
-        }
-      }
-    },
     "NEXT": {
       "localizations": {
         "uz": {
@@ -2082,16 +2006,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nomi"
-          }
-        }
-      }
-    },
-    "Needs review": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Belgilash kerak"
           }
         }
       }
@@ -2192,16 +2106,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yangi SAT sinovi (⇧⌘R)"
-          }
-        }
-      }
-    },
-    "New block": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Yangi blok"
           }
         }
       }
@@ -2476,6 +2380,16 @@
         }
       }
     },
+    "Nothing planned yet": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hali hech narsa rejalashtirilmagan"
+          }
+        }
+      }
+    },
     "Notifications": {
       "localizations": {
         "uz": {
@@ -2648,16 +2562,6 @@
     },
     "PrepPlanner": {
       "shouldTranslate": false
-    },
-    "Previous / next day / today": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oldingi / keyingi kun / bugun"
-          }
-        }
-      }
     },
     "Previous Day": {
       "localizations": {
@@ -2842,6 +2746,16 @@
         }
       }
     },
+    "Review": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Belgilash"
+          }
+        }
+      }
+    },
     "SAT": {
       "shouldTranslate": false
     },
@@ -2928,16 +2842,6 @@
         }
       }
     },
-    "Save / apply template": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shablonni saqlash / qoʻllash"
-          }
-        }
-      }
-    },
     "Save Day as Template…": {
       "localizations": {
         "uz": {
@@ -2974,6 +2878,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%2$@ dagi %1$lld ta blok saqlanadi: vaqtlar, nomlar, kategoriyalar va izohlar. Holatlar saqlanmaydi."
+          }
+        }
+      }
+    },
+    "Schedule": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jadval"
           }
         }
       }
@@ -3034,16 +2948,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bandni mezonlar oʻrtachasiga teng qiladi (eng yaqin yarim bandgacha pastga yaxlitlanadi)"
-          }
-        }
-      }
-    },
-    "Shortcuts": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tezkor tugmalar"
           }
         }
       }
@@ -3218,6 +3122,16 @@
         }
       }
     },
+    "Study hours": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻqish soatlari"
+          }
+        }
+      }
+    },
     "Study this week": {
       "localizations": {
         "uz": {
@@ -3244,26 +3158,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tizim tili"
-          }
-        }
-      }
-    },
-    "THIS DAY · STUDY HOURS": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "SHU KUN · MASHGʻULOT SOATLARI"
-          }
-        }
-      }
-    },
-    "TODAY · STUDY HOURS": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "BUGUN · MASHGʻULOT SOATLARI"
           }
         }
       }
@@ -3428,6 +3322,16 @@
         }
       }
     },
+    "To review": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Belgilash kerak"
+          }
+        }
+      }
+    },
     "Today": {
       "localizations": {
         "uz": {
@@ -3444,16 +3348,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bugungi odatlar"
-          }
-        }
-      }
-    },
-    "Tomorrow, %@": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ertaga, %@"
           }
         }
       }
@@ -3568,16 +3462,6 @@
         }
       }
     },
-    "Yesterday, %@": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kecha, %@"
-          }
-        }
-      }
-    },
     "^[%lld block](inflect: true) to review": {
       "localizations": {
         "uz": {
@@ -3598,6 +3482,16 @@
         }
       }
     },
+    "^[%lld day](inflect: true)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld kun"
+          }
+        }
+      }
+    },
     "^[%lld error](inflect: true)": {
       "localizations": {
         "uz": {
@@ -3614,26 +3508,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld ta sinov kiritilgan"
-          }
-        }
-      }
-    },
-    "day to %@": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "kun %@gacha"
-          }
-        }
-      }
-    },
-    "days to %@": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "kun %@gacha"
           }
         }
       }
@@ -3748,9 +3622,6 @@
         }
       }
     },
-    "· %@": {
-      "shouldTranslate": false
-    },
     "×%lld": {
       "shouldTranslate": false
     },
@@ -3763,26 +3634,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "⇧⌘↩ saqlaydi va keyingisi uchun sana, koʻnikma va sinovni qoldiradi."
-          }
-        }
-      }
-    },
-    "🏆 %lld": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🏆 %lld"
-          }
-        }
-      }
-    },
-    "🔥 ^[%lld day](inflect: true)": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "🔥 %lld kun"
           }
         }
       }

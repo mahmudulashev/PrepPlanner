@@ -58,7 +58,7 @@ struct AnalyticsView: View {
         let tiles = [
             KPITile(title: "Study this week", value: TimeFmt.hours(actual),
                     detail: String(localized: "of \(TimeFmt.hours(planned)) planned"),
-                    fill: Theme.accent, foreground: .white),
+                    tint: Theme.accent),
             KPITile(title: "Completion this week", value: rate.map { "\(Int(($0 * 100).rounded()))%" } ?? "–",
                     detail: String(localized: "Done 100% · Partial 50% · Skipped 0%")),
             KPITile(title: "Latest IELTS", value: ielts.last.map { Band.format($0.overallBand) } ?? "–",
@@ -67,7 +67,7 @@ struct AnalyticsView: View {
                     detail: String(localized: "Target \(String(s?.targetSAT ?? 1450))")),
             KPITile(title: "Errors, last 7 days", value: "\(errorsThisWeek)",
                     detail: String(localized: "\(errors.count) logged in total"),
-                    fill: Theme.ink, foreground: Theme.onInk),
+                    tint: Theme.danger),
         ]
 
         // Five tiles across only while their titles still fit; a longer translation drops
@@ -403,32 +403,33 @@ private struct KPITile: View {
     let title: LocalizedStringKey
     let value: String
     let detail: String
-    var fill: Color = Theme.card
-    var foreground: Color = .primary
+    /// Colors the value and adds a dot to the title, for the one or two tiles worth noticing first.
+    var tint: Color? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.caption.weight(.semibold))
-                .textCase(.uppercase)
-                .opacity(0.75)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 6) {
+                if let tint { Circle().fill(tint).frame(width: 6, height: 6) }
+                Text(title)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Text(verbatim: value)
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(.system(size: 26, weight: .semibold))
                 .monospacedDigit()
+                .foregroundStyle(tint ?? .primary)
             Text(verbatim: detail)
                 .font(.caption)
-                .opacity(0.75)
+                .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
-        .foregroundStyle(foreground)
         .frame(minWidth: 126, idealWidth: 142, maxWidth: .infinity, alignment: .leading)
         .frame(minHeight: 74, maxHeight: .infinity, alignment: .topLeading)
-        .padding(14)
-        .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(fill))
-        .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
+        .card(padding: 14)
     }
 }
 

@@ -147,32 +147,74 @@ private struct BlockEditor: View {
 private struct DaySummary: View {
     let blocks: [TimeBlock]
     let categories: [StudyCategory]
+    @Environment(AppState.self) private var state
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                Text("Day summary")
-                    .font(.title3.bold())
-
+            VStack(alignment: .leading, spacing: 22) {
                 if blocks.isEmpty {
                     ContentUnavailableView(
                         "No blocks yet",
                         systemImage: "calendar.badge.plus",
                         description: Text("Drag on the timeline to create a block, press ⌘N, or apply a template (⇧⌘T).")
                     )
+                    .padding(.top, 40)
                 } else {
-                    breakdown
+                    totals
+                    section("By category") { breakdown }
+                    section("Schedule") { schedule }
                 }
-
-                Divider()
-                shortcuts
-                Divider()
-                contact
             }
             .padding(18)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
+
+    private func section<C: View>(_ title: LocalizedStringKey, @ViewBuilder content: () -> C) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+            content()
+        }
+    }
+
+    // MARK: Totals
+
+    private var totals: some View {
+        TimelineView(.everyMinute) { context in
+            let study = blocks.filter(\.isStudy)
+            let planned = study.reduce(0) { $0 + $1.plannedMinutes }
+            let done = study.reduce(0) { $0 + $1.effectiveActual }
+            let review = blocks.filter { $0.status == .planned && $0.endDate < context.date }.count
+            HStack(spacing: 8) {
+                stat(TimeFmt.hours(planned), "Planned")
+                stat(TimeFmt.hours(done), "Done", color: Theme.success)
+                stat("\(review)", "To review", color: review > 0 ? Theme.accent : .primary)
+            }
+        }
+    }
+
+    private func stat(_ value: String, _ label: LocalizedStringKey, color: Color = .primary) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(verbatim: value)
+                .font(.system(size: 17, weight: .semibold).monospacedDigit())
+                .foregroundStyle(color)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(label)
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Theme.cardMuted))
+    }
+
+    // MARK: Categories
 
     private var breakdown: some View {
         let grouped = Dictionary(grouping: blocks) { $0.category?.uid }
@@ -181,80 +223,103 @@ private struct DaySummary: View {
                 guard let items = grouped[c.uid] else { return nil }
                 return (c.name, c.colorHex, items.reduce(0) { $0 + $1.plannedMinutes }, items.reduce(0) { $0 + $1.effectiveActual })
             } + (grouped[nil].map { items in
-                [("No category", "#8E8E93", items.reduce(0) { $0 + $1.plannedMinutes }, items.reduce(0) { $0 + $1.effectiveActual })]
+                [(String(localized: "No category"), "#8E8E93", items.reduce(0) { $0 + $1.plannedMinutes }, items.reduce(0) { $0 + $1.effectiveActual })]
             } ?? [])
 
-        return VStack(alignment: .leading, spacing: 12) {
+        return VStack(alignment: .leading, spacing: 11) {
             ForEach(rows, id: \.name) { row in
                 VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Circle().fill(Color(hex: row.color)).frame(width: 9, height: 9)
+                    HStack(spacing: 7) {
+                        Circle().fill(Color(hex: row.color)).frame(width: 7, height: 7)
                         Text(row.name)
-                            .font(.callout.weight(.medium))
+                            .font(.system(size: 12, weight: .medium))
                             .lineLimit(1)
                             .truncationMode(.tail)
                         Spacer(minLength: 8)
-                        Text("\(TimeFmt.hours(row.done)) / \(TimeFmt.hours(row.planned))")
-                            .font(.callout.monospacedDigit())
+                        Text(verbatim: "\(TimeFmt.hours(row.done)) / \(TimeFmt.hours(row.planned))")
+                            .font(.system(size: 11).monospacedDigit())
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
                             .layoutPriority(1)
                     }
-                    GeometryReader { g in
-                        ZStack(alignment: .leading) {
-                            Capsule().fill(Theme.cardMuted)
-                            Capsule().fill(Color(hex: row.color))
-                                .frame(width: g.size.width * min(Double(row.done) / Double(max(row.planned, 1)), 1))
-                        }
-                    }
-                    .frame(height: 6)
+                    ProgressTrack(fraction: Double(row.done) / Double(max(row.planned, 1)),
+                                  color: Color(hex: row.color), height: 4)
                 }
             }
         }
     }
 
-    private var shortcuts: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Shortcuts").font(.headline)
-            Group {
-                shortcut("⌘N", "New block")
-                shortcut("⌫", "Delete selected block")
-                shortcut("↑ ↓", "Move selected block 15 min")
-                shortcut("⇧⌘D / P / K", "Done / Partial / Skipped")
-                shortcut("⌘[  ⌘]  ⌘T", "Previous / next day / today")
-                shortcut("⇧⌘S / ⇧⌘T", "Save / apply template")
+    // MARK: Schedule
+
+    private var schedule: some View {
+        VStack(spacing: 2) {
+            ForEach(blocks) { b in
+                Button { state.selectedBlockID = b.uid } label: {
+                    HStack(spacing: 9) {
+                        RoundedRectangle(cornerRadius: 1.5)
+                            .fill(Color(hex: b.category?.colorHex ?? "#8E8E93"))
+                            .frame(width: 3, height: 24)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(b.title.isEmpty ? String(localized: "Untitled") : b.title)
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundStyle(b.status == .planned || b.status == .partial ? Color.primary : Color.secondary)
+                                .strikethrough(b.status == .done || b.status == .skipped, color: .secondary)
+                                .lineLimit(1)
+                            Text(TimeFmt.range(b.startMin, b.endMin))
+                                .font(.system(size: 11).monospacedDigit())
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer(minLength: 4)
+                        Image(systemName: statusSymbol(b.status))
+                            .font(.system(size: 13))
+                            .foregroundStyle(statusColor(b.status))
+                    }
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 5)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(ScheduleRowStyle())
             }
-            .font(.callout)
         }
     }
 
-    private var contact: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Link(destination: URL(string: "https://github.com/mahmudulashev/PrepPlanner")!) {
-                Label {
-                    Text(verbatim: "github.com/mahmudulashev/PrepPlanner")
-                        .lineLimit(1)
-                        .truncationMode(.middle)
-                } icon: { Image(systemName: "chevron.left.forwardslash.chevron.right") }
-            }
-            Link(destination: URL(string: "mailto:mahmud_u@icloud.com")!) {
-                Label { Text(verbatim: "mahmud_u@icloud.com").lineLimit(1) } icon: { Image(systemName: "envelope") }
-            }
+    private func statusSymbol(_ s: BlockStatus) -> String {
+        switch s {
+        case .planned: "circle"
+        case .done: "checkmark.circle.fill"
+        case .partial: "circle.lefthalf.filled"
+        case .skipped: "minus.circle"
         }
-        .font(.caption)
-        .tint(Theme.accent)
     }
 
-    private func shortcut(_ keys: String, _ label: LocalizedStringKey) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text(verbatim: keys)
-                .font(.callout.monospaced())
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-                .frame(width: 96, alignment: .leading)
-            Text(label)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
+    private func statusColor(_ s: BlockStatus) -> Color {
+        switch s {
+        case .planned: .secondary.opacity(0.6)
+        case .done: Theme.success
+        case .partial: Theme.accent
+        case .skipped: .secondary
+        }
+    }
+}
+
+/// Plain row that highlights on hover and press.
+private struct ScheduleRowStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HoverRow(pressed: configuration.isPressed) { configuration.label }
+    }
+
+    private struct HoverRow<Label: View>: View {
+        let pressed: Bool
+        @ViewBuilder var label: Label
+        @State private var hovering = false
+
+        var body: some View {
+            label
+                .background(
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .fill(Color.primary.opacity(pressed ? 0.09 : (hovering ? 0.05 : 0)))
+                )
+                .onHover { hovering = $0 }
         }
     }
 }

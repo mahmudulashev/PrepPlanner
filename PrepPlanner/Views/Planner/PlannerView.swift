@@ -6,14 +6,13 @@ struct PlannerView: View {
 
     var body: some View {
         @Bindable var state = state
-        VStack(spacing: 16) {
+        VStack(spacing: 0) {
             PlannerHeader(day: state.day)
+            Divider()
             DayTimeline(day: state.day)
-                .card(padding: 0)
         }
-        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Theme.background)
+        .background(Theme.card)
         .navigationTitle("Planner")
         .toolbar { toolbar }
         .inspector(isPresented: $state.showInspector) {

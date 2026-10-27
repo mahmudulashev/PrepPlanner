@@ -85,7 +85,7 @@ struct HabitsView: View {
                 }
                 Spacer()
                 Text(verbatim: "\(done)/\(habits.count)")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(.system(size: 28, weight: .bold))
                     .monospacedDigit()
                     .foregroundStyle(done == habits.count && done > 0 ? Theme.success : .primary)
             }
@@ -108,40 +108,44 @@ struct HabitsView: View {
         let today = Date().startOfDay
         let perfect = (0..<30).filter { levels[today.adding(days: -$0).startOfDay] ?? 0 >= 1 }.count
 
-        return VStack(spacing: 14) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("LONGEST CURRENT STREAK")
-                    .font(.caption.weight(.semibold))
-                    .opacity(0.85)
-                Text(verbatim: "🔥 \(top?.1.current ?? 0)")
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                Text(verbatim: top.map { $0.1.current > 0 ? $0.0.name : "" } ?? "")
-                    .font(.caption)
-                    .opacity(0.85)
-                    .lineLimit(1)
-            }
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
-            .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(Theme.accent))
-            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("PERFECT DAYS, LAST 30")
-                    .font(.caption.weight(.semibold))
-                    .opacity(0.75)
-                Text(verbatim: "\(perfect)")
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                Text("Days with every habit done")
-                    .font(.caption)
-                    .opacity(0.75)
-            }
-            .foregroundStyle(Theme.onInk)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
-            .background(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous).fill(Theme.ink))
-            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        return VStack(spacing: 12) {
+            summaryTile(
+                title: "LONGEST CURRENT STREAK",
+                value: "\(top?.1.current ?? 0)",
+                symbol: "flame.fill",
+                tint: Theme.accent,
+                detail: Text(verbatim: top.map { $0.1.current > 0 ? $0.0.name : "" } ?? "")
+            )
+            summaryTile(
+                title: "PERFECT DAYS, LAST 30",
+                value: "\(perfect)",
+                symbol: "checkmark.seal.fill",
+                tint: Theme.success,
+                detail: Text("Days with every habit done")
+            )
         }
+    }
+
+    private func summaryTile(title: LocalizedStringKey, value: String, symbol: String, tint: Color, detail: Text) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(.secondary)
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Image(systemName: symbol)
+                    .font(.system(size: 20))
+                    .foregroundStyle(tint)
+                Text(verbatim: value)
+                    .font(.system(size: 32, weight: .semibold))
+                    .monospacedDigit()
+            }
+            detail
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .card(padding: 16)
     }
 
     private var overallHeatmap: some View {
@@ -211,23 +215,23 @@ private struct HabitCheckRow: View {
                 Text(verbatim: habit.emoji)
                     .font(.title2)
                     .frame(width: 44, height: 44)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Theme.cardMuted))
+                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Theme.cardMuted))
                 VStack(alignment: .leading, spacing: 2) {
                     Text(verbatim: habit.name)
                         .font(.body.weight(.medium))
                         .strikethrough(isChecked)
                         .foregroundStyle(isChecked ? .secondary : .primary)
                     HStack(spacing: 10) {
-                        Text("🔥 ^[\(stats.current) day](inflect: true)")
-                        Text("🏆 \(stats.best)")
+                        Label { Text("^[\(stats.current) day](inflect: true)") } icon: { Image(systemName: "flame") }
+                        Label { Text(verbatim: "\(stats.best)") } icon: { Image(systemName: "trophy") }
                     }
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 }
                 Spacer()
-                Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                    .font(.title2)
-                    .foregroundStyle(isChecked ? Theme.success : .secondary)
+                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 20))
+                    .foregroundStyle(isChecked ? Theme.success : Color.secondary.opacity(0.6))
             }
             .padding(.vertical, 2)
             .contentShape(Rectangle())
@@ -265,9 +269,9 @@ private struct HabitCard<MenuContent: View>: View {
                     .fixedSize()
             }
             HStack(spacing: 10) {
-                StatTile(symbol: "🔥", value: stats.current, title: "Current streak")
-                StatTile(symbol: "🏆", value: stats.best, title: "Best streak")
-                StatTile(symbol: "✓", value: stats.lastSixty, title: "Last 60 days")
+                StatTile(symbol: "flame.fill", value: stats.current, title: "Current streak")
+                StatTile(symbol: "trophy.fill", value: stats.best, title: "Best streak")
+                StatTile(symbol: "checkmark", value: stats.lastSixty, title: "Last 60 days")
             }
             HabitHeatmap(levels: stats.checkedDays.reduce(into: [:]) { $0[$1] = 1 }, color: Theme.success, cellSize: 13)
         }
@@ -283,9 +287,14 @@ private struct StatTile: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(verbatim: "\(symbol) \(value)")
-                .font(.title3.weight(.bold))
-                .monospacedDigit()
+            HStack(spacing: 5) {
+                Image(systemName: symbol)
+                    .font(.system(size: 12))
+                    .foregroundStyle(.secondary)
+                Text(verbatim: "\(value)")
+                    .font(.title3.weight(.semibold))
+                    .monospacedDigit()
+            }
             Text(title)
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -293,7 +302,7 @@ private struct StatTile: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(10)
-        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Theme.cardMuted))
+        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Theme.cardMuted))
     }
 }
 

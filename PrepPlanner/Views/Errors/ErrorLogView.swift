@@ -210,8 +210,8 @@ struct ErrorLogView: View {
                     .font(.callout)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(Capsule().fill(typeFilter == type.uid ? type.skill.color.opacity(0.25) : Theme.card))
-                    .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+                    .background(Capsule().fill(typeFilter == type.uid ? type.skill.color.opacity(0.2) : Theme.card))
+                    .overlay(Capsule().strokeBorder(typeFilter == type.uid ? type.skill.color.opacity(0.5) : Theme.hairline))
                 }
                 .buttonStyle(.plain)
                 .help("Show only \(type.name) (\(type.skill.title))")

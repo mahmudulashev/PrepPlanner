@@ -68,13 +68,13 @@ struct IELTSEditor: View {
             VStack(alignment: .trailing, spacing: 0) {
                 Text("OVERALL").font(.caption2.weight(.semibold)).opacity(0.85)
                 Text(Band.format(overall))
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .font(.system(size: 26, weight: .bold))
                     .monospacedDigit()
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(Theme.accent)
             .padding(.horizontal, 14)
             .padding(.vertical, 6)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.accent))
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Theme.accent.opacity(0.12)))
         } content: {
             Form {
                 Section {
@@ -218,13 +218,13 @@ struct SATEditor: View {
             VStack(alignment: .trailing, spacing: 0) {
                 Text("TOTAL").font(.caption2.weight(.semibold)).opacity(0.8)
                 Text(verbatim: String(total))
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .font(.system(size: 26, weight: .bold))
                     .monospacedDigit()
             }
-            .foregroundStyle(Theme.onInk)
+            .foregroundStyle(Color(hex: Skill.satMath.colorHex))
             .padding(.horizontal, 14)
             .padding(.vertical, 6)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.ink))
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(hex: Skill.satMath.colorHex).opacity(0.12)))
         } content: {
             Form {
                 Section {

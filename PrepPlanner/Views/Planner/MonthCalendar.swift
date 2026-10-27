@@ -94,7 +94,7 @@ struct MonthCalendar: View {
         } label: {
             VStack(spacing: 3) {
                 Text(verbatim: "\(calendar.component(.day, from: day))")
-                    .font(.system(size: 15, weight: isSelected || isToday ? .semibold : .regular, design: .rounded))
+                    .font(.system(size: 15, weight: isSelected || isToday ? .semibold : .regular))
                     .monospacedDigit()
                 HStack(spacing: 3) {
                     ForEach(Array(colors.prefix(4).enumerated()), id: \.offset) { _, hex in

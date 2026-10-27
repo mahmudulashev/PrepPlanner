@@ -5,7 +5,8 @@ import AppKit
 /// Vertical 06:00–24:00 timeline: drag empty space to create, drag a block to move, drag its edges to resize.
 struct DayTimeline: View {
     static let pointsPerMinute: CGFloat = 1.25
-    static let gutter: CGFloat = 60
+    static let gutter: CGFloat = 58
+    static let trailingInset: CGFloat = 16
     /// Narrowest a block may get before overlapping blocks start to cascade instead of divide.
     static let minBlockWidth: CGFloat = 118
     static var hourHeight: CGFloat { 60 * pointsPerMinute }
@@ -32,27 +33,42 @@ struct DayTimeline: View {
         var delta: Int
     }
 
+    private var isToday: Bool { Calendar.current.isDateInToday(day) }
+
     var body: some View {
         GeometryReader { geo in
-            let columnWidth = max(geo.size.width - Self.gutter - 14, 100)
+            let columnWidth = max(geo.size.width - Self.gutter - Self.trailingInset, 100)
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     ZStack(alignment: .topLeading) {
-                        grid
+                        anchors
+                        TimelineGrid(day: day, columnWidth: columnWidth, showsHover: drag == nil && creating == nil)
+                            .gesture(createGesture)
+                            .simultaneousGesture(doubleClickToCreate)
+                            .onTapGesture {
+                                state.selectedBlockID = nil
+                                focused = true
+                            }
                         if let r = creating { creationGhost(r, width: columnWidth) }
-                        blockLayer(columnWidth: columnWidth)
-                        if Calendar.current.isDateInToday(day) { nowLine(width: columnWidth) }
+                        TimelineView(.everyMinute) { context in
+                            // TimelineView stacks several children vertically; keep the blocks in one layer.
+                            ZStack(alignment: .topLeading) {
+                                blockLayer(columnWidth: columnWidth, now: context.date)
+                            }
+                        }
+                        if isToday { NowIndicator(width: columnWidth) }
                     }
                     .frame(height: Self.totalHeight, alignment: .top)
                     .coordinateSpace(.named("timeline"))
-                    .padding(.top, 14)
-                    .padding(.bottom, 22)
+                    .padding(.top, 12)
+                    .padding(.bottom, 24)
                 }
-                .scrollIndicators(.never)
+                .scrollIndicators(.automatic)
                 .onAppear { scrollToStart(proxy) }
                 .onChange(of: day) { scrollToStart(proxy) }
             }
         }
+        .background(Theme.card)
         .focusable()
         .focusEffectDisabled()
         .focused($focused)
@@ -68,32 +84,20 @@ struct DayTimeline: View {
 
     // MARK: Layers
 
-    private var grid: some View {
+    /// Invisible per-hour views the scroll view can jump to.
+    private var anchors: some View {
         VStack(spacing: 0) {
             ForEach(6..<24, id: \.self) { hour in
-                HourRow(hour: hour)
-                    .frame(height: Self.hourHeight)
-                    .id(hour)
+                Color.clear.frame(height: Self.hourHeight).id(hour)
             }
         }
-        .overlay(alignment: .bottomLeading) {
-            Text("24:00")
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-                .frame(width: Self.gutter - 8, alignment: .trailing)
-                .offset(y: 7)
-        }
-        .contentShape(Rectangle())
-        .gesture(createGesture)
-        .onTapGesture {
-            state.selectedBlockID = nil
-            focused = true
-        }
+        .allowsHitTesting(false)
     }
 
-    private func blockLayer(columnWidth: CGFloat) -> some View {
+    private func blockLayer(columnWidth: CGFloat, now: Date) -> some View {
         let frames = blocks.map { (block: $0, range: previewRange($0)) }
         let layout = Self.columns(for: frames.map { ($0.block.uid, $0.range.lowerBound, $0.range.upperBound) })
+        let nowMinute = isToday ? TimeFmt.minutesSinceMidnight(now) : (day < now ? Int.max : Int.min)
         return ForEach(frames, id: \.block.uid) { item in
             let b = item.block
             let slot = layout[b.uid] ?? ColumnSlot(column: 0, count: 1)
@@ -103,14 +107,17 @@ struct DayTimeline: View {
             let width = max(columnWidth / CGFloat(slot.count), min(Self.minBlockWidth, columnWidth))
             let step = slot.count > 1 ? (columnWidth - width) / CGFloat(slot.count - 1) : 0
             let height = CGFloat(item.range.upperBound - item.range.lowerBound) * Self.pointsPerMinute
+            let isDragging = drag?.id == b.uid
             BlockView(
                 block: b,
                 start: item.range.lowerBound,
                 end: item.range.upperBound,
                 isSelected: state.selectedBlockID == b.uid,
+                needsReview: b.status == .planned && b.endMin <= nowMinute,
+                isDragging: isDragging,
                 onToggleDone: { state.toggleDone(b) }
             )
-            .frame(width: width - 4, height: max(height - 2, 14))
+            .frame(width: width - 3, height: max(height - 2, 14))
             .overlay(alignment: .top) { ResizeHandle().gesture(resizeGesture(b, kind: .top)) }
             .overlay(alignment: .bottom) { ResizeHandle().gesture(resizeGesture(b, kind: .bottom)) }
             .contentShape(Rectangle())
@@ -120,43 +127,29 @@ struct DayTimeline: View {
                 focused = true
             }
             .contextMenu { contextMenu(for: b) }
-            .offset(x: Self.gutter + CGFloat(slot.column) * step + 2,
+            .offset(x: Self.gutter + CGFloat(slot.column) * step + 1,
                     y: y(for: item.range.lowerBound) + 1)
-            .zIndex(drag?.id == b.uid ? 1000 : Double(slot.column))
+            .zIndex(isDragging ? 1000 : Double(slot.column))
         }
     }
 
     private func creationGhost(_ r: ClosedRange<Int>, width: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .fill(Theme.accent.opacity(0.15))
+        RoundedRectangle(cornerRadius: 6, style: .continuous)
+            .fill(Theme.accent.opacity(0.12))
             .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .strokeBorder(Theme.accent, style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .strokeBorder(Theme.accent, lineWidth: 1.5)
             )
             .overlay(alignment: .topLeading) {
                 Text("\(TimeFmt.range(r.lowerBound, r.upperBound)) · \(TimeFmt.duration(r.upperBound - r.lowerBound))")
-                    .font(.caption.weight(.semibold))
+                    .font(.system(size: 11, weight: .semibold).monospacedDigit())
                     .foregroundStyle(Theme.accent)
-                    .padding(6)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
             }
-            .frame(width: width - 4, height: CGFloat(r.upperBound - r.lowerBound) * Self.pointsPerMinute)
-            .offset(x: Self.gutter + 2, y: y(for: r.lowerBound))
+            .frame(width: width - 3, height: CGFloat(r.upperBound - r.lowerBound) * Self.pointsPerMinute)
+            .offset(x: Self.gutter + 1, y: y(for: r.lowerBound))
             .allowsHitTesting(false)
-    }
-
-    private func nowLine(width: CGFloat) -> some View {
-        TimelineView(.everyMinute) { context in
-            let m = TimeFmt.minutesSinceMidnight(context.date)
-            if m >= TimelineBounds.start && m < TimelineBounds.end {
-                HStack(spacing: 0) {
-                    Circle().fill(Theme.danger).frame(width: 9, height: 9)
-                    Rectangle().fill(Theme.danger).frame(height: 1.5)
-                }
-                .frame(width: width + 8)
-                .offset(x: Self.gutter - 5, y: y(for: m) - 4.5)
-            }
-        }
-        .allowsHitTesting(false)
     }
 
     @ViewBuilder
@@ -184,7 +177,8 @@ struct DayTimeline: View {
     private var createGesture: some Gesture {
         DragGesture(minimumDistance: 4, coordinateSpace: .named("timeline"))
             .onChanged { v in
-                creating = snappedRange(v.startLocation.y, v.location.y)
+                let r = snappedRange(v.startLocation.y, v.location.y)
+                if r != creating { creating = r }
             }
             .onEnded { v in
                 let r = snappedRange(v.startLocation.y, v.location.y)
@@ -193,11 +187,21 @@ struct DayTimeline: View {
             }
     }
 
+    /// Double-click an empty slot for a one-hour block starting there.
+    private var doubleClickToCreate: some Gesture {
+        SpatialTapGesture(count: 2, coordinateSpace: .named("timeline"))
+            .onEnded { v in
+                let start = min(snappedRange(v.location.y, v.location.y).lowerBound, TimelineBounds.end - 60)
+                state.createBlock(start: start, end: start + 60)
+            }
+    }
+
     private func moveGesture(_ b: TimeBlock) -> some Gesture {
         DragGesture(minimumDistance: 3, coordinateSpace: .named("timeline"))
             .onChanged { v in
                 if state.selectedBlockID != b.uid { state.selectedBlockID = b.uid }
-                drag = DragEdit(id: b.uid, kind: .move, delta: snappedDelta(v.translation.height))
+                let edit = DragEdit(id: b.uid, kind: .move, delta: snappedDelta(v.translation.height))
+                if edit != drag { drag = edit }
             }
             .onEnded { _ in commit(b) }
     }
@@ -206,7 +210,8 @@ struct DayTimeline: View {
         DragGesture(minimumDistance: 1, coordinateSpace: .named("timeline"))
             .onChanged { v in
                 if state.selectedBlockID != b.uid { state.selectedBlockID = b.uid }
-                drag = DragEdit(id: b.uid, kind: kind, delta: snappedDelta(v.translation.height))
+                let edit = DragEdit(id: b.uid, kind: kind, delta: snappedDelta(v.translation.height))
+                if edit != drag { drag = edit }
             }
             .onEnded { _ in commit(b) }
     }
@@ -238,9 +243,11 @@ struct DayTimeline: View {
 
     // MARK: Geometry helpers
 
-    private func y(for minute: Int) -> CGFloat {
-        CGFloat(minute - TimelineBounds.start) * Self.pointsPerMinute
+    static func y(for minute: Int) -> CGFloat {
+        CGFloat(minute - TimelineBounds.start) * pointsPerMinute
     }
+
+    private func y(for minute: Int) -> CGFloat { Self.y(for: minute) }
 
     private func snappedDelta(_ dy: CGFloat) -> Int {
         Int((dy / Self.pointsPerMinute / 15).rounded()) * 15
@@ -258,7 +265,7 @@ struct DayTimeline: View {
 
     private func scrollToStart(_ proxy: ScrollViewProxy) {
         let hour: Int
-        if Calendar.current.isDateInToday(day) {
+        if isToday {
             hour = TimeFmt.minutesSinceMidnight(Date()) / 60 - 1
         } else {
             hour = (blocks.first?.startMin ?? 7 * 60) / 60
@@ -323,36 +330,138 @@ struct DayTimeline: View {
     }
 }
 
-private struct HourRow: View {
-    let hour: Int
+// MARK: - Grid
+
+/// Hour labels, hour and half-hour lines, the elapsed part of today, and a hint under the
+/// pointer showing where a new block would start. Drawn in one Canvas so dragging a block
+/// does not rebuild a view per hour.
+private struct TimelineGrid: View {
+    let day: Date
+    let columnWidth: CGFloat
+    let showsHover: Bool
+
+    @State private var hoverMinute: Int?
+    @Environment(\.colorScheme) private var scheme
+
+    /// Hour labels sit centred on their line, so the drawing extends this far past the
+    /// timeline at both ends to keep 06:00 and 24:00 from being cut in half.
+    private static let overhang: CGFloat = 8
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Text(String(format: "%02d:00", hour))
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-                .frame(width: DayTimeline.gutter - 8, alignment: .trailing)
-                .offset(y: -7)
-            GeometryReader { g in
-                Path { p in
-                    p.move(to: .zero)
-                    p.addLine(to: CGPoint(x: g.size.width, y: 0))
+        Color.clear
+            .frame(height: DayTimeline.totalHeight)
+            .background(alignment: .top) {
+                TimelineView(.everyMinute) { context in
+                    Canvas { ctx, size in
+                        ctx.translateBy(x: 0, y: Self.overhang)
+                        draw(in: &ctx, size: size, now: context.date)
+                    }
                 }
-                .stroke(Theme.gridLine, lineWidth: 1)
-                Path { p in
-                    p.move(to: CGPoint(x: 0, y: g.size.height / 2))
-                    p.addLine(to: CGPoint(x: g.size.width, y: g.size.height / 2))
-                }
-                .stroke(Theme.gridLine, style: StrokeStyle(lineWidth: 1, dash: [3, 4]))
+                .frame(height: DayTimeline.totalHeight + 2 * Self.overhang)
+                .offset(y: -Self.overhang)
+                .allowsHitTesting(false)
             }
-            .padding(.trailing, 14)
+            .overlay(alignment: .topLeading) { hoverHint }
+            .contentShape(Rectangle())
+            .onContinuousHover(coordinateSpace: .local) { phase in
+                switch phase {
+                case .active(let p) where p.x > DayTimeline.gutter:
+                    let m = TimelineBounds.start + Int((p.y / DayTimeline.pointsPerMinute / 15).rounded(.down)) * 15
+                    let clamped = min(max(m, TimelineBounds.start), TimelineBounds.end - 15)
+                    if clamped != hoverMinute { hoverMinute = clamped }
+                default:
+                    if hoverMinute != nil { hoverMinute = nil }
+                }
+            }
+    }
+
+    private func draw(in ctx: inout GraphicsContext, size: CGSize, now: Date) {
+        let left = DayTimeline.gutter
+        let right = left + columnWidth
+
+        // Elapsed part of today, lightly shaded.
+        if Calendar.current.isDateInToday(day) {
+            let m = min(max(TimeFmt.minutesSinceMidnight(now), TimelineBounds.start), TimelineBounds.end)
+            let rect = CGRect(x: left, y: 0, width: columnWidth, height: DayTimeline.y(for: m))
+            ctx.fill(Path(rect), with: .color(.primary.opacity(scheme == .dark ? 0.025 : 0.018)))
         }
+
+        for hour in 6...24 {
+            let y = DayTimeline.y(for: hour * 60)
+            var line = Path()
+            line.move(to: CGPoint(x: left, y: y))
+            line.addLine(to: CGPoint(x: right, y: y))
+            ctx.stroke(line, with: .color(Theme.gridLine), lineWidth: 1)
+
+            if hour < 24 {
+                var half = Path()
+                half.move(to: CGPoint(x: left, y: y + DayTimeline.hourHeight / 2))
+                half.addLine(to: CGPoint(x: right, y: y + DayTimeline.hourHeight / 2))
+                ctx.stroke(half, with: .color(Theme.gridLine.opacity(0.45)), lineWidth: 1)
+            }
+
+            let label = ctx.resolve(
+                Text(verbatim: String(format: "%02d:00", hour))
+                    .font(.system(size: 10.5, weight: .medium).monospacedDigit())
+                    .foregroundStyle(.tertiary)
+            )
+            ctx.draw(label, at: CGPoint(x: left - 10, y: y), anchor: .trailing)
+        }
+    }
+
+    @ViewBuilder
+    private var hoverHint: some View {
+        if showsHover, let m = hoverMinute {
+            HStack(spacing: 4) {
+                Image(systemName: "plus")
+                Text(TimeFmt.hm(m)).monospacedDigit()
+            }
+            .font(.system(size: 10.5, weight: .medium))
+            .foregroundStyle(.tertiary)
+            .padding(.horizontal, 8)
+            .frame(width: columnWidth - 3, height: 15 * DayTimeline.pointsPerMinute, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .fill(Color.primary.opacity(0.035))
+            )
+            .offset(x: DayTimeline.gutter + 1, y: DayTimeline.y(for: m))
+            .allowsHitTesting(false)
+        }
+    }
+}
+
+/// Current time: a line across the day with the time in a pill over the gutter.
+private struct NowIndicator: View {
+    let width: CGFloat
+
+    var body: some View {
+        TimelineView(.everyMinute) { context in
+            let m = TimeFmt.minutesSinceMidnight(context.date)
+            if m >= TimelineBounds.start && m < TimelineBounds.end {
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .fill(Theme.danger)
+                        .frame(width: width, height: 1.5)
+                        .offset(x: DayTimeline.gutter)
+                    Text(TimeFmt.hm(m))
+                        .font(.system(size: 10, weight: .semibold).monospacedDigit())
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Capsule().fill(Theme.danger))
+                        .frame(width: DayTimeline.gutter - 4, alignment: .trailing)
+                }
+                .frame(height: 16)
+                .offset(y: DayTimeline.y(for: m) - 8)
+            }
+        }
+        .allowsHitTesting(false)
     }
 }
 
 /// Invisible strip at a block's top/bottom edge for resizing.
 private struct ResizeHandle: View {
-    @State private var hovering = false
+    @State private var pushed = false
 
     var body: some View {
         Color.clear
@@ -360,13 +469,22 @@ private struct ResizeHandle: View {
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
             .onHover { inside in
-                if inside, !hovering {
-                    NSCursor.resizeUpDown.push()
-                    hovering = true
-                } else if !inside, hovering {
-                    NSCursor.pop()
-                    hovering = false
-                }
+                if inside { push() } else { pop() }
             }
+            // A block can be deleted or moved away while the pointer is over its edge; without
+            // this the resize cursor would stay on screen.
+            .onDisappear { pop() }
+    }
+
+    private func push() {
+        guard !pushed else { return }
+        NSCursor.resizeUpDown.push()
+        pushed = true
+    }
+
+    private func pop() {
+        guard pushed else { return }
+        NSCursor.pop()
+        pushed = false
     }
 }
