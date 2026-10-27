@@ -93,10 +93,12 @@ struct PillButton: View {
     }
 }
 
-/// Segmented control drawn as a dark track with a light thumb.
+/// Segmented control as a pill: a light thumb sliding on a dark track inside banners, or
+/// a white thumb on a grey track on light cards.
 struct PillToggle<Value: Hashable>: View {
     @Binding var selection: Value
     let options: [(Value, String)]
+    var onDark = true
 
     @Namespace private var thumb
 
@@ -108,12 +110,15 @@ struct PillToggle<Value: Hashable>: View {
                 } label: {
                     Text(verbatim: label)
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(selection == value ? Theme.onHighlight : .white.opacity(0.65))
+                        .foregroundStyle(textColor(selected: selection == value))
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
                         .background {
                             if selection == value {
-                                Capsule().fill(.white).matchedGeometryEffect(id: "thumb", in: thumb)
+                                Capsule()
+                                    .fill(onDark ? Color.white : Theme.card)
+                                    .shadow(color: .black.opacity(onDark ? 0 : 0.08), radius: 3, y: 1)
+                                    .matchedGeometryEffect(id: "thumb", in: thumb)
                             }
                         }
                         .contentShape(Capsule())
@@ -122,7 +127,78 @@ struct PillToggle<Value: Hashable>: View {
             }
         }
         .padding(3)
-        .background(Capsule().fill(.white.opacity(0.1)))
+        .background(Capsule().fill(onDark ? Color.white.opacity(0.1) : Theme.cardMuted))
         .fixedSize()
+    }
+
+    private func textColor(selected: Bool) -> Color {
+        if onDark { return selected ? Theme.onHighlight : .white.opacity(0.65) }
+        return selected ? .primary : .secondary
+    }
+}
+
+/// The app's one stat card: a two-tone caption, then an icon chip and a dot-matrix number
+/// on the bottom row, and an optional footer such as a progress bar. Every screen's
+/// headline numbers use it so they line up and read the same.
+struct MetricCard<Footer: View>: View {
+    let title: Text
+    let subtitle: Text
+    var subtitleTint: Color?
+    let value: String
+    let symbol: String
+    let color: Color
+    var footer: Footer
+
+    init(title: Text, subtitle: Text, subtitleTint: Color? = nil, value: String, symbol: String, color: Color,
+         @ViewBuilder footer: () -> Footer) {
+        self.title = title
+        self.subtitle = subtitle
+        self.subtitleTint = subtitleTint
+        self.value = value
+        self.symbol = symbol
+        self.color = color
+        self.footer = footer()
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 0) {
+                title.foregroundStyle(.primary)
+                subtitle.foregroundStyle(subtitleTint ?? .secondary)
+            }
+            .font(.system(size: 13, weight: .semibold))
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+
+            Spacer(minLength: 0)
+
+            HStack(alignment: .bottom) {
+                IconChip(symbol: symbol, color: color, size: 34)
+                Spacer(minLength: 8)
+                DotNumber(value: value, dot: 3.4)
+                    .foregroundStyle(.primary)
+            }
+            .frame(height: 36, alignment: .bottom)
+
+            footer
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Theme.card)
+                .shadow(color: .black.opacity(0.07), radius: 14, y: 5)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .strokeBorder(Theme.hairline.opacity(0.7), lineWidth: 1)
+        )
+    }
+}
+
+extension MetricCard where Footer == EmptyView {
+    init(title: Text, subtitle: Text, subtitleTint: Color? = nil, value: String, symbol: String, color: Color) {
+        self.init(title: title, subtitle: subtitle, subtitleTint: subtitleTint, value: value, symbol: symbol,
+                  color: color) { EmptyView() }
     }
 }

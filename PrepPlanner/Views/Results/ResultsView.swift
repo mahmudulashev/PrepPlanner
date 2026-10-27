@@ -52,8 +52,8 @@ private struct IELTSResults: View {
             } description: {
                 Text("Enter raw Listening and Reading scores; bands and the overall score are calculated for you.")
             } actions: {
-                Button("Add IELTS Mock") { state.editor = .ielts(nil) }
-                    .buttonStyle(.borderedProminent)
+                PillButton(title: "Add IELTS Mock") { state.editor = .ielts(nil) }
+
             }
         } else {
             VStack(spacing: 16) {
@@ -87,12 +87,24 @@ private struct IELTSResults: View {
                 target: s?.target(for: skill)
             )
         }
-        let hero = ResultsHeroCard(
-            label: "LATEST OVERALL",
+        let target = s?.targetOverall
+        let hero = MetricCard(
+            title: Text("Overall"),
+            subtitle: Text(verbatim: overallSubtitle(latest: latest, previous: previous, target: nil)),
             value: Band.format(latest.overallBand),
-            subtitle: overallSubtitle(latest: latest, previous: previous, target: s?.targetOverall),
-            tint: Theme.accent
-        )
+            symbol: "graduationcap.fill",
+            color: Theme.accent
+        ) {
+            VStack(alignment: .leading, spacing: 6) {
+                BandProgress(band: latest.overallBand, target: target, color: Theme.accent)
+                if let t = target {
+                    Text(latest.overallBand >= t ? "Target \(Band.format(t)) reached" : "\(Band.format(t - latest.overallBand)) to target \(Band.format(t))")
+                        .font(.caption)
+                        .foregroundStyle(latest.overallBand >= t ? Theme.success : .secondary)
+                        .lineLimit(1)
+                }
+            }
+        }
 
         // All five across while they fit, then the hero over one row of four, then two by two.
         return ViewThatFits(in: .horizontal) {
@@ -101,11 +113,11 @@ private struct IELTSResults: View {
                 ForEach(0..<cards.count, id: \.self) { cards[$0] }
             }
             VStack(alignment: .leading, spacing: 14) {
-                CardRow { hero.expanded() }
+                CardRow { hero }
                 CardRow { ForEach(0..<cards.count, id: \.self) { cards[$0] } }
             }
             VStack(alignment: .leading, spacing: 14) {
-                CardRow { hero.expanded() }
+                CardRow { hero }
                 CardRow { cards[0]; cards[1] }
                 CardRow { cards[2]; cards[3] }
             }
@@ -203,77 +215,26 @@ private struct SkillBandCard: View {
     let target: Double?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 6) {
-                Image(systemName: skill.symbol).foregroundStyle(skill.color)
-                Text(skill.title)
-                    .font(.callout.weight(.semibold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Spacer(minLength: 4)
-                if let p = previous {
-                    let d = band - p
-                    Text(Band.formatDelta(d))
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(d > 0 ? Theme.success : d < 0 ? Theme.danger : .secondary)
+        let delta = previous.map { band - $0 }
+        MetricCard(
+            title: Text(skill.title),
+            subtitle: delta.map { Text("\(Band.formatDelta($0)) vs last") } ?? Text("latest"),
+            subtitleTint: delta.map { $0 > 0 ? Theme.success : $0 < 0 ? Theme.danger : nil } ?? nil,
+            value: Band.format(band),
+            symbol: skill.symbol,
+            color: skill.color
+        ) {
+            VStack(alignment: .leading, spacing: 6) {
+                BandProgress(band: band, target: target, color: skill.color)
+                if let t = target {
+                    Text(band >= t ? "Target \(Band.format(t)) reached" : "\(Band.format(t - band)) to target \(Band.format(t))")
+                        .font(.caption)
+                        .foregroundStyle(band >= t ? Theme.success : .secondary)
+                        .lineLimit(1)
                 }
             }
-            Text(Band.format(band))
-                .font(.system(size: 28, weight: .bold))
-                .monospacedDigit()
-            BandProgress(band: band, target: target, color: skill.color)
-            if let t = target {
-                Text(band >= t ? "Target \(Band.format(t)) reached" : "\(Band.format(t - band)) to target \(Band.format(t))")
-                    .font(.caption)
-                    .foregroundStyle(band >= t ? Theme.success : .secondary)
-            }
         }
-        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
-        .card(padding: 14)
-    }
-}
-
-/// The coloured card at the head of a results summary: one big number and a caption.
-private struct ResultsHeroCard: View {
-    let label: LocalizedStringKey
-    let value: String
-    let subtitle: String
-    let tint: Color
-    /// True when the card is alone on its row and should span it rather than sit centred.
-    var expands = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 6) {
-                Circle().fill(tint).frame(width: 6, height: 6)
-                Text(label)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            }
-            DotNumber(value: value, dot: 4.4)
-                .foregroundStyle(tint)
-                .frame(height: 44, alignment: .bottomLeading)
-            Text(verbatim: subtitle)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.75)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(minWidth: 158, idealWidth: 190, maxWidth: expands ? .infinity : 230, alignment: .leading)
-        .frame(minHeight: 120, maxHeight: .infinity, alignment: .topLeading)
-        .card(padding: 16)
-    }
-}
-
-private extension ResultsHeroCard {
-    func expanded() -> ResultsHeroCard {
-        var copy = self
-        copy.expands = true
-        return copy
+        .frame(minWidth: 150)
     }
 }
 
@@ -319,8 +280,8 @@ private struct SATResults: View {
             } description: {
                 Text("Enter your Reading & Writing and Math section scores; the total is calculated for you.")
             } actions: {
-                Button("Add SAT Mock") { state.editor = .sat(nil) }
-                    .buttonStyle(.borderedProminent)
+                PillButton(title: "Add SAT Mock") { state.editor = .sat(nil) }
+
             }
         } else {
             VStack(spacing: 16) {
@@ -347,14 +308,16 @@ private struct SATResults: View {
         let previous = mocks.count > 1 ? mocks[1] : nil
         let best = mocks.map(\.total).max() ?? latest.total
         let gap = target - latest.total
-        let hero = ResultsHeroCard(
-            label: "LATEST TOTAL",
+        let hero = MetricCard(
+            title: Text("Total"),
+            subtitle: gap > 0 ? Text("\(gap) to target \(String(target))") : Text("Target \(String(target)) reached"),
+            subtitleTint: gap > 0 ? nil : Theme.success,
             value: String(latest.total),
-            subtitle: gap > 0
-                ? String(localized: "\(gap) to target \(String(target))")
-                : String(localized: "Target \(String(target)) reached 🎉"),
-            tint: Color(hex: Skill.satMath.colorHex)
-        )
+            symbol: "graduationcap.fill",
+            color: Color(hex: Skill.satMath.colorHex)
+        ) {
+            ProgressTrack(fraction: Double(latest.total - 400) / 1200, color: Color(hex: Skill.satMath.colorHex), height: 8)
+        }
 
         return ViewThatFits(in: .horizontal) {
             CardRow {
@@ -364,7 +327,7 @@ private struct SATResults: View {
                 bestCard(best)
             }
             VStack(alignment: .leading, spacing: 14) {
-                CardRow { hero.expanded() }
+                CardRow { hero }
                 CardRow {
                     sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
                     sectionCard(.satMath, score: latest.math, previous: previous?.math)
@@ -372,7 +335,7 @@ private struct SATResults: View {
                 }
             }
             VStack(alignment: .leading, spacing: 14) {
-                CardRow { hero.expanded() }
+                CardRow { hero }
                 CardRow {
                     sectionCard(.satRW, score: latest.readingWriting, previous: previous?.readingWriting)
                     sectionCard(.satMath, score: latest.math, previous: previous?.math)
@@ -383,62 +346,26 @@ private struct SATResults: View {
     }
 
     private func bestCard(_ best: Int) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Best total")
-                .font(.callout.weight(.semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-            Text(verbatim: String(best))
-                .font(.system(size: 28, weight: .bold))
-                .monospacedDigit()
-                .lineLimit(1)
-            Text("^[\(mocks.count) mock](inflect: true) logged")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.75)
-                .fixedSize(horizontal: false, vertical: true)
+        MetricCard(title: Text("Best total"), subtitle: Text("^[\(mocks.count) mock](inflect: true) logged"),
+                   value: String(best), symbol: "trophy.fill", color: Theme.success) {
+            ProgressTrack(fraction: Double(best - 400) / 1200, color: Theme.success, height: 8)
         }
-        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
-        .card(padding: 14)
+            .frame(minWidth: 150)
     }
 
     private func sectionCard(_ skill: Skill, score: Int, previous: Int?) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 6) {
-                Image(systemName: skill.symbol).foregroundStyle(skill.color)
-                Text(skill.title)
-                    .font(.callout.weight(.semibold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Spacer(minLength: 4)
-                if let p = previous {
-                    let d = score - p
-                    Text(SATScore.formatDelta(d))
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(d > 0 ? Theme.success : d < 0 ? Theme.danger : .secondary)
-                }
-            }
-            Text(verbatim: String(score))
-                .font(.system(size: 28, weight: .bold))
-                .monospacedDigit()
-            GeometryReader { g in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(Theme.cardMuted)
-                    Capsule().fill(skill.color).frame(width: g.size.width * Double(score - 200) / 600)
-                }
-            }
-            .frame(height: 8)
-            Text("out of 800")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+        let delta = previous.map { score - $0 }
+        return MetricCard(
+            title: Text(skill.title),
+            subtitle: delta.map { Text("\(SATScore.formatDelta($0)) vs last") } ?? Text("out of 800"),
+            subtitleTint: delta.map { $0 > 0 ? Theme.success : $0 < 0 ? Theme.danger : nil } ?? nil,
+            value: String(score),
+            symbol: skill.symbol,
+            color: skill.color
+        ) {
+            ProgressTrack(fraction: Double(score - 200) / 600, color: skill.color, height: 8)
         }
-        .frame(minWidth: 124, idealWidth: 140, maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 88, maxHeight: .infinity, alignment: .topLeading)
-        .card(padding: 14)
+        .frame(minWidth: 150)
     }
 
     private var table: some View {

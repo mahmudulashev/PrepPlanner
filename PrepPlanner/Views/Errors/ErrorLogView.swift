@@ -69,8 +69,7 @@ struct ErrorLogView: View {
                 } description: {
                     Text("Log each mistake with its skill and type. Patterns show up here and in Analytics.")
                 } actions: {
-                    Button("Log an Error") { state.editor = .error(nil, nil) }
-                        .buttonStyle(.borderedProminent)
+                    PillButton(title: "Log an Error") { state.editor = .error(nil, nil) }
                 }
                 .frame(maxHeight: .infinity)
             } else {
@@ -147,12 +146,7 @@ struct ErrorLogView: View {
     }
 
     private var rangePicker: some View {
-        Picker("Range", selection: $range) {
-            ForEach(ErrorDateRange.allCases) { Text($0.title).tag($0) }
-        }
-        .pickerStyle(.segmented)
-        .labelsHidden()
-        .frame(width: 210)
+        PillToggle(selection: $range, options: ErrorDateRange.allCases.map { ($0, $0.title) }, onDark: false)
     }
 
     @ViewBuilder
@@ -197,6 +191,8 @@ struct ErrorLogView: View {
             if counts.isEmpty {
                 Text("No typed errors in this view.").font(.callout).foregroundStyle(.secondary)
             }
+            // Listening and Reading share type names; name the skill when a chip would be ambiguous.
+            let names = Dictionary(grouping: counts, by: \.0.name)
             ForEach(Array(counts), id: \.0.uid) { (type, n) in
                 Button {
                     skillFilter = type.skill
@@ -205,6 +201,9 @@ struct ErrorLogView: View {
                     HStack(spacing: 6) {
                         Circle().fill(type.skill.color).frame(width: 8, height: 8)
                         Text(type.name).lineLimit(1)
+                        if (names[type.name]?.count ?? 0) > 1 {
+                            Text(type.skill.title).foregroundStyle(.secondary).lineLimit(1)
+                        }
                         Text("×\(n)").fontWeight(.bold).monospacedDigit()
                     }
                     .font(.callout)
@@ -238,7 +237,11 @@ struct ErrorLogView: View {
             }
             .width(min: 110, ideal: 160)
             TableColumn("Note") { e in
-                Text(e.note).lineLimit(2)
+                // One line keeps every row the same height; the full note is in the tooltip.
+                Text(e.note)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .help(e.note)
             }
             TableColumn("Mock") { e in
                 Text(e.mockLabel ?? "–").foregroundStyle(.secondary)

@@ -60,18 +60,24 @@ struct AnalyticsView: View {
         let s = settings.first
 
         let tiles = [
-            KPITile(title: "Study this week", value: TimeFmt.hours(actual),
-                    detail: String(localized: "of \(TimeFmt.hours(planned)) planned"),
-                    tint: Theme.accent),
-            KPITile(title: "Completion this week", value: rate.map { "\(Int(($0 * 100).rounded()))%" } ?? "–",
-                    detail: String(localized: "Done 100% · Partial 50% · Skipped 0%")),
-            KPITile(title: "Latest IELTS", value: ielts.last.map { Band.format($0.overallBand) } ?? "–",
-                    detail: s.map { String(localized: "Target \(Band.format($0.targetOverall))") } ?? ""),
-            KPITile(title: "Latest SAT", value: sat.last.map { "\($0.total)" } ?? "–",
-                    detail: String(localized: "Target \(String(s?.targetSAT ?? 1450))")),
-            KPITile(title: "Errors, last 7 days", value: "\(errorsThisWeek)",
-                    detail: String(localized: "\(errors.count) logged in total"),
-                    tint: Theme.danger),
+            AnyView(MetricCard(title: Text("Study this week"),
+                               subtitle: Text("of \(TimeFmt.hours(planned)) planned"),
+                               value: TimeFmt.hours(actual), symbol: "clock.fill", color: Theme.accent)),
+            AnyView(MetricCard(title: Text("Completion"),
+                               subtitle: Text("this week"),
+                               value: rate.map { "\(Int(($0 * 100).rounded()))%" } ?? "–",
+                               symbol: "chart.bar.fill", color: Color(hex: "#9B6BE0"))),
+            AnyView(MetricCard(title: Text("Latest IELTS"),
+                               subtitle: Text(verbatim: s.map { String(localized: "Target \(Band.format($0.targetOverall))") } ?? ""),
+                               value: ielts.last.map { Band.format($0.overallBand) } ?? "–",
+                               symbol: "graduationcap.fill", color: Theme.accent)),
+            AnyView(MetricCard(title: Text("Latest SAT"),
+                               subtitle: Text("Target \(String(s?.targetSAT ?? 1450))"),
+                               value: sat.last.map { "\($0.total)" } ?? "–",
+                               symbol: "function", color: Color(hex: Skill.satMath.colorHex))),
+            AnyView(MetricCard(title: Text("Errors"),
+                               subtitle: Text("last 7 days"),
+                               value: "\(errorsThisWeek)", symbol: "exclamationmark.bubble.fill", color: Theme.danger)),
         ]
 
         // Five tiles across only while their titles still fit; a longer translation drops
@@ -101,12 +107,7 @@ struct AnalyticsView: View {
 
         return ChartCard(title: "Planned vs actual hours",
                          subtitle: "Study categories only. Light bars are planned, solid bars are actual.") {
-            Picker("Granularity", selection: $granularity) {
-                ForEach(Granularity.allCases) { Text($0.title).tag($0) }
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .frame(width: 180)
+            PillToggle(selection: $granularity, options: Granularity.allCases.map { ($0, $0.title) }, onDark: false)
         } content: {
             if rows.isEmpty {
                 EmptyChart(text: "No study blocks in this period yet.")
@@ -211,13 +212,9 @@ struct AnalyticsView: View {
                 }
                 .labelsHidden()
                 .frame(width: 160)
-                Picker("Range", selection: $errorRange) {
-                    Text("7 days").tag(ErrorDateRange.week)
-                    Text("All").tag(ErrorDateRange.all)
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .fixedSize()
+                PillToggle(selection: $errorRange,
+                           options: [(ErrorDateRange.week, ErrorDateRange.week.title), (.all, ErrorDateRange.all.title)],
+                           onDark: false)
             }
         } content: {
             if rows.isEmpty {
@@ -298,13 +295,9 @@ struct AnalyticsView: View {
 
         return ChartCard(title: "SAT scores",
                          subtitle: satShowsSections ? "Section scores (200–800)" : "Total with your target") {
-            Picker("SAT view", selection: $satShowsSections) {
-                Text("Total").tag(false)
-                Text("Sections").tag(true)
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .frame(width: 150)
+            PillToggle(selection: $satShowsSections,
+                       options: [(false, String(localized: "Total")), (true, String(localized: "Sections"))],
+                       onDark: false)
         } content: {
             if sat.isEmpty {
                 EmptyChart(text: "Log SAT mocks in Results to see your score trends.")
@@ -329,10 +322,10 @@ struct AnalyticsView: View {
                 Chart {
                     ForEach(totals) { p in
                         LineMark(x: .value("Date", p.date, unit: .day), y: .value("Total", p.value))
-                            .foregroundStyle(Theme.ink)
+                            .foregroundStyle(Color(hex: Skill.satMath.colorHex))
                             .interpolationMethod(.monotone)
                         PointMark(x: .value("Date", p.date, unit: .day), y: .value("Total", p.value))
-                            .foregroundStyle(Theme.ink)
+                            .foregroundStyle(Color(hex: Skill.satMath.colorHex))
                             .annotation(position: .top) {
                                 Text(verbatim: String(Int(p.value))).font(.caption2.weight(.semibold))
                             }
@@ -403,64 +396,34 @@ private struct EmptyChart: View {
     }
 }
 
-private struct KPITile: View {
-    let title: LocalizedStringKey
-    let value: String
-    let detail: String
-    /// Colors the value and adds a dot to the title, for the one or two tiles worth noticing first.
-    var tint: Color? = nil
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 6) {
-                if let tint { Circle().fill(tint).frame(width: 6, height: 6) }
-                Text(title)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .textCase(.uppercase)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            DotNumber(value: value, dot: 3.2)
-                .foregroundStyle(tint ?? .primary)
-                .frame(height: 30, alignment: .bottomLeading)
-            Text(verbatim: detail)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-        }
-        .frame(minWidth: 126, idealWidth: 142, maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 74, maxHeight: .infinity, alignment: .topLeading)
-        .card(padding: 14)
-    }
-}
-
 private struct InsightsCard: View {
     let insights: [Insight]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                Image(systemName: "sparkles").foregroundStyle(Theme.accent)
-                Text("Insights").font(.headline)
-            }
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 12, alignment: .top),
-                                GridItem(.flexible(), spacing: 12, alignment: .top)],
-                      alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Insights")
+                .font(.system(size: 15, weight: .bold))
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 20, alignment: .top),
+                                GridItem(.flexible(), spacing: 20, alignment: .top)],
+                      alignment: .leading, spacing: 12) {
                 ForEach(insights) { insight in
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: insight.symbol)
-                            .font(.callout.weight(.semibold))
+                            .font(.system(size: 12, weight: .semibold))
                             .foregroundStyle(color(insight.tone))
-                            .frame(width: 30, height: 30)
-                            .background(Circle().fill(color(insight.tone).opacity(0.15)))
+                            .frame(width: 16)
+                            .padding(.top, 2)
                         Text(verbatim: insight.text)
-                            .font(.callout)
+                            .font(.system(size: 13))
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 5)
                     }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(color(insight.tone).opacity(0.07))
+                    )
                 }
             }
         }
@@ -472,7 +435,7 @@ private struct InsightsCard: View {
         switch tone {
         case .positive: Theme.success
         case .warning: Theme.accent
-        case .info: .blue
+        case .info: Color(hex: "#3F8FD2")
         }
     }
 }

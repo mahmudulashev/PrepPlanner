@@ -114,40 +114,16 @@ struct HabitsView: View {
         let weekPercent = Int((week.reduce(0, +) / 7 * 100).rounded())
 
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 160), spacing: 12), count: 3), spacing: 12) {
-            summaryTile(title: "LONGEST CURRENT STREAK",
-                        detail: Text(verbatim: top.map { $0.1.current > 0 ? $0.0.name : "" } ?? ""),
-                        value: "\(top?.1.current ?? 0)", symbol: "flame.fill", tint: Theme.accent)
-            summaryTile(title: "PERFECT DAYS, LAST 30",
-                        detail: Text("Days with every habit done"),
-                        value: "\(perfect)", symbol: "checkmark.seal.fill", tint: Theme.success)
-            summaryTile(title: "LAST 7 DAYS",
-                        detail: Text("of all habits done"),
-                        value: "\(weekPercent)%", symbol: "chart.bar.fill", tint: Color(hex: "#3F8FD2"))
+            MetricCard(title: Text("Longest streak"),
+                       subtitle: Text(verbatim: top.map { $0.1.current > 0 ? $0.0.name : "" } ?? ""),
+                       value: "\(top?.1.current ?? 0)", symbol: "flame.fill", color: Theme.accent)
+            MetricCard(title: Text("Perfect days"),
+                       subtitle: Text("in the last 30 days"),
+                       value: "\(perfect)", symbol: "checkmark.seal.fill", color: Theme.success)
+            MetricCard(title: Text("Last 7 days"),
+                       subtitle: Text("of all habits done"),
+                       value: "\(weekPercent)%", symbol: "chart.bar.fill", color: Color(hex: "#3F8FD2"))
         }
-    }
-
-    private func summaryTile(title: LocalizedStringKey, detail: Text, value: String, symbol: String, tint: Color) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                detail
-                    .font(.system(size: 11))
-                    .foregroundStyle(.tertiary)
-                    .lineLimit(1)
-            }
-            HStack(alignment: .bottom) {
-                IconChip(symbol: symbol, color: tint, size: 32)
-                Spacer()
-                DotNumber(value: value, dot: 3.4)
-            }
-            .frame(height: 34, alignment: .bottom)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .card(padding: 16)
     }
 
     // MARK: Archive

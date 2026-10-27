@@ -207,14 +207,14 @@ private struct StatCards: View {
             let percent = planned > 0 ? Int((min(Double(done) / Double(planned), 1) * 100).rounded()) : 0
 
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 172), spacing: 12)], spacing: 12) {
-                StatCard(title: Text("Studied"),
+                MetricCard(title: Text("Studied"),
                          subtitle: review > 0 ? Text("^[\(review) block](inflect: true) to review") : Text("today"),
                          subtitleTint: review > 0 ? Theme.accent : nil,
                          value: TimeFmt.hours(done), symbol: "clock.fill", color: Theme.accent)
-                StatCard(title: Text("Planned"),
+                MetricCard(title: Text("Planned"),
                          subtitle: Text("^[\(blocks.count) block](inflect: true)"),
                          value: TimeFmt.hours(planned), symbol: "square.stack.fill", color: Color(hex: "#3F8FD2"))
-                StatCard(title: Text("Progress"),
+                MetricCard(title: Text("Progress"),
                          subtitle: Text("of the plan"),
                          value: "\(percent)%", symbol: "chart.bar.fill", color: Color(hex: "#9B6BE0"))
                 examCard
@@ -229,53 +229,13 @@ private struct StatCards: View {
             .filter { $0.1 >= 0 }
             .sorted { $0.1 < $1.1 }
         if let next = exams.first {
-            StatCard(title: Text(verbatim: next.0),
+            MetricCard(title: Text(verbatim: next.0),
                      subtitle: Text(next.1 == 0 ? "is today" : "exam in"),
                      value: String(localized: "\(next.1)d"), symbol: "graduationcap.fill", color: Theme.success)
         } else {
-            StatCard(title: Text("Exams"), subtitle: Text("all done"),
+            MetricCard(title: Text("Exams"), subtitle: Text("all done"),
                      value: "–", symbol: "checkmark.seal.fill", color: Theme.success)
         }
-    }
-}
-
-/// White card with a two-tone label on top and an icon chip and LED number at the bottom.
-private struct StatCard: View {
-    let title: Text
-    let subtitle: Text
-    var subtitleTint: Color? = nil
-    let value: String
-    let symbol: String
-    let color: Color
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            VStack(alignment: .leading, spacing: 0) {
-                title.foregroundStyle(.primary)
-                subtitle.foregroundStyle(subtitleTint ?? .secondary)
-            }
-            .font(.system(size: 13, weight: .semibold))
-            .lineLimit(1)
-
-            HStack(alignment: .bottom) {
-                IconChip(symbol: symbol, color: color, size: 34)
-                Spacer(minLength: 8)
-                DotNumber(value: value, dot: 3.4)
-                    .foregroundStyle(.primary)
-            }
-            .frame(height: 36, alignment: .bottom)
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Theme.card)
-                .shadow(color: .black.opacity(0.10), radius: 16, y: 6)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .strokeBorder(Theme.hairline.opacity(0.7), lineWidth: 1)
-        )
     }
 }
 
