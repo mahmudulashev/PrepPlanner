@@ -206,18 +206,27 @@ private struct StatCards: View {
             let review = blocks.filter { $0.status == .planned && $0.endDate < context.date }.count
             let percent = planned > 0 ? Int((min(Double(done) / Double(planned), 1) * 100).rounded()) : 0
 
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 172), spacing: 12)], spacing: 12) {
-                MetricCard(title: Text("Studied"),
-                         subtitle: review > 0 ? Text("^[\(review) block](inflect: true) to review") : Text("today"),
-                         subtitleTint: review > 0 ? Theme.accent : nil,
-                         value: TimeFmt.hours(done), symbol: "clock.fill", color: Theme.accent)
-                MetricCard(title: Text("Planned"),
-                         subtitle: Text("^[\(blocks.count) block](inflect: true)"),
-                         value: TimeFmt.hours(planned), symbol: "square.stack.fill", color: Color(hex: "#3F8FD2"))
-                MetricCard(title: Text("Progress"),
-                         subtitle: Text("of the plan"),
-                         value: "\(percent)%", symbol: "chart.bar.fill", color: Color(hex: "#9B6BE0"))
-                examCard
+            let cards = [
+                AnyView(MetricCard(title: Text("Studied"),
+                                   subtitle: review > 0 ? Text("^[\(review) block](inflect: true) to review") : Text("today"),
+                                   subtitleTint: review > 0 ? Theme.accent : nil,
+                                   value: TimeFmt.hours(done), symbol: "clock.fill", color: Theme.accent)),
+                AnyView(MetricCard(title: Text("Planned"),
+                                   subtitle: Text("^[\(blocks.count) block](inflect: true)"),
+                                   value: TimeFmt.hours(planned), symbol: "square.stack.fill", color: Color(hex: "#3F8FD2"))),
+                AnyView(MetricCard(title: Text("Progress"),
+                                   subtitle: Text("of the plan"),
+                                   value: "\(percent)%", symbol: "chart.bar.fill", color: Color(hex: "#9B6BE0"))),
+                AnyView(examCard),
+            ]
+            // Four across while each card keeps a readable width, otherwise two by two. A grid
+            // with adaptive columns would leave empty slots on the right of a wide window.
+            ViewThatFits(in: .horizontal) {
+                CardRow(spacing: 12) { ForEach(0..<4, id: \.self) { cards[$0].frame(minWidth: 160) } }
+                VStack(spacing: 12) {
+                    CardRow(spacing: 12) { cards[0]; cards[1] }
+                    CardRow(spacing: 12) { cards[2]; cards[3] }
+                }
             }
         }
     }

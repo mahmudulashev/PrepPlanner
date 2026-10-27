@@ -45,7 +45,10 @@ struct HabitsView: View {
                     if active.isEmpty {
                         Text("All habits are archived.").foregroundStyle(.secondary)
                     } else {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 210), spacing: 12)], spacing: 12) {
+                        // Up to four tiles a row, always spanning it; adaptive columns would leave
+                        // empty slots beside a short list in a wide window.
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible(minimum: 120), spacing: 12),
+                                                 count: min(max(active.count, 1), 4)), spacing: 12) {
                             ForEach(active) { h in
                                 HabitTile(habit: h, day: day, streak: stats[h.uid]?.current ?? 0)
                                     .contextMenu { habitMenu(h) }
