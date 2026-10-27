@@ -198,20 +198,18 @@ private struct DaySummary: View {
 
     private func stat(_ value: String, _ label: LocalizedStringKey, color: Color = .primary) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(verbatim: value)
-                .font(.system(size: 17, weight: .semibold).monospacedDigit())
+            DotNumber(value: value, dot: 2.4)
                 .foregroundStyle(color)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .frame(height: 20, alignment: .bottomLeading)
             Text(label)
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
-        .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Theme.cardMuted))
+        .padding(.horizontal, 11)
+        .padding(.vertical, 10)
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.cardMuted))
     }
 
     // MARK: Categories

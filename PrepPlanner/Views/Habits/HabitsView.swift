@@ -15,6 +15,19 @@ struct HabitsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                HeroBanner(title: Text(isToday ? "Today's habits" : "Habits"),
+                           subtitle: Text(verbatim: day.formatted(.dateTime.weekday(.wide).day().month(.wide))),
+                           colors: [Theme.success, Theme.highlight]) {
+                    HStack(alignment: .bottom, spacing: 16) {
+                        if !habits.isEmpty {
+                            let done = habits.filter { h in h.checks.contains { $0.day == day } }.count
+                            DotNumber(value: "\(done)/\(habits.count)", dot: 4)
+                                .foregroundStyle(done == habits.count ? Theme.highlight : .white)
+                        }
+                        PillButton(title: "New Habit") { state.editor = .habit(nil) }
+                            .help("New habit (⌥⌘N)")
+                    }
+                }
                 if habits.isEmpty && archived.isEmpty {
                     ContentUnavailableView {
                         Label("No habits yet", systemImage: "checkmark.circle")
@@ -52,10 +65,6 @@ struct HabitsView: View {
                 Button { day = day.adding(days: 1).startOfDay } label: { Label("Next Day", systemImage: "chevron.right") }
                     .disabled(isToday)
             }
-            ToolbarItem {
-                Button { state.editor = .habit(nil) } label: { Label("New Habit", systemImage: "plus") }
-                    .help("New habit (⌥⌘N)")
-            }
         }
         .confirmationDialog(
             "Delete “\(pendingDelete?.name ?? "")”?",
@@ -74,21 +83,9 @@ struct HabitsView: View {
     // MARK: Checklist
 
     private var checklist: some View {
-        let done = habits.filter { h in h.checks.contains { $0.day == day } }.count
-        return VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(isToday ? "Today's habits" : "Habits")
-                        .font(.title2.bold())
-                    Text(day.formatted(.dateTime.weekday(.wide).day().month(.wide)))
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                Text(verbatim: "\(done)/\(habits.count)")
-                    .font(.system(size: 28, weight: .bold))
-                    .monospacedDigit()
-                    .foregroundStyle(done == habits.count && done > 0 ? Theme.success : .primary)
-            }
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Checklist")
+                .font(.system(size: 17, weight: .bold))
             if habits.isEmpty {
                 Text("All habits are archived.").foregroundStyle(.secondary)
             }
@@ -135,9 +132,7 @@ struct HabitsView: View {
                 Image(systemName: symbol)
                     .font(.system(size: 20))
                     .foregroundStyle(tint)
-                Text(verbatim: value)
-                    .font(.system(size: 32, weight: .semibold))
-                    .monospacedDigit()
+                DotNumber(value: value, dot: 3.6)
             }
             detail
                 .font(.caption)

@@ -56,6 +56,12 @@ struct ErrorLogView: View {
     var body: some View {
         let rows = filtered
         VStack(spacing: 16) {
+            HeroBanner(title: Text("Error Log"),
+                       subtitle: Text("^[\(entries.count) mistake](inflect: true) logged"),
+                       colors: [Theme.danger, Color(hex: "#E0679A")]) {
+                PillButton(title: "Log Error") { state.editor = .error(nil, nil) }
+                    .help("Log an error (⌘E)")
+            }
             filterBar(count: rows.count)
             if entries.isEmpty {
                 ContentUnavailableView {
@@ -77,12 +83,6 @@ struct ErrorLogView: View {
         .background(Theme.background)
         .navigationTitle("Error Log")
         .searchable(text: $search, placement: .toolbar, prompt: "Search notes and types")
-        .toolbar {
-            ToolbarItem {
-                Button { state.editor = .error(nil, nil) } label: { Label("Log Error", systemImage: "plus") }
-                    .help("Log an error (⌘E)")
-            }
-        }
         .confirmationDialog(
             "Delete ^[\(pendingDelete.count) entry](inflect: true)?",
             isPresented: Binding(get: { !pendingDelete.isEmpty }, set: { if !$0 { pendingDelete = [] } })

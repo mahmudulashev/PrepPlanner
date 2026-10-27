@@ -25,6 +25,10 @@ struct AnalyticsView: View {
         let now = Date()
         ScrollView {
             VStack(spacing: 16) {
+                HeroBanner(title: Text("Analytics"), subtitle: Text("Last 12 weeks"),
+                           colors: [Color(hex: "#3F8FD2"), Color(hex: "#7B61D9"), Theme.accent]) {
+                    EmptyView()
+                }
                 kpis(now: now)
                 InsightsCard(insights: InsightEngine.make(blocks: blocks, ielts: ielts, sat: sat, errors: errors,
                                                           settings: settings.first, now: now))
@@ -418,10 +422,9 @@ private struct KPITile: View {
                     .minimumScaleFactor(0.8)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Text(verbatim: value)
-                .font(.system(size: 26, weight: .semibold))
-                .monospacedDigit()
+            DotNumber(value: value, dot: 3.2)
                 .foregroundStyle(tint ?? .primary)
+                .frame(height: 30, alignment: .bottomLeading)
             Text(verbatim: detail)
                 .font(.caption)
                 .foregroundStyle(.secondary)

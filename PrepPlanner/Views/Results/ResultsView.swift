@@ -6,33 +6,32 @@ struct ResultsView: View {
 
     var body: some View {
         @Bindable var state = state
-        Group {
-            switch state.resultsTab {
-            case .ielts: IELTSResults()
-            case .sat: SATResults()
+        VStack(spacing: 16) {
+            HeroBanner(title: Text("Results"),
+                       subtitle: Text(state.resultsTab == .ielts ? "IELTS mocks" : "SAT mocks"),
+                       colors: state.resultsTab == .ielts ? [Theme.accent, Color(hex: "#E0679A")]
+                                                          : [Color(hex: "#7B61D9"), Color(hex: "#3F8FD2")]) {
+                HStack(spacing: 10) {
+                    PillToggle(selection: $state.resultsTab,
+                               options: ResultsTab.allCases.map { ($0, $0.rawValue) })
+                    PillButton(title: "New Mock") {
+                        state.editor = state.resultsTab == .ielts ? .ielts(nil) : .sat(nil)
+                    }
+                    .help(state.resultsTab == .ielts ? "New IELTS mock (⌘R)" : "New SAT mock (⇧⌘R)")
+                }
             }
+            Group {
+                switch state.resultsTab {
+                case .ielts: IELTSResults()
+                case .sat: SATResults()
+                }
+            }
+            .frame(maxHeight: .infinity)
         }
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.background)
         .navigationTitle("Results")
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Picker("Exam", selection: $state.resultsTab) {
-                    ForEach(ResultsTab.allCases) { Text($0.rawValue).tag($0) }
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 160)
-            }
-            ToolbarItem {
-                Button {
-                    state.editor = state.resultsTab == .ielts ? .ielts(nil) : .sat(nil)
-                } label: {
-                    Label("New Mock", systemImage: "plus")
-                }
-                .help(state.resultsTab == .ielts ? "New IELTS mock (⌘R)" : "New SAT mock (⇧⌘R)")
-            }
-        }
     }
 }
 
@@ -254,12 +253,9 @@ private struct ResultsHeroCard: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
             }
-            Text(verbatim: value)
-                .font(.system(size: 38, weight: .semibold))
-                .monospacedDigit()
+            DotNumber(value: value, dot: 4.4)
                 .foregroundStyle(tint)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                .frame(height: 44, alignment: .bottomLeading)
             Text(verbatim: subtitle)
                 .font(.caption)
                 .foregroundStyle(.secondary)

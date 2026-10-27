@@ -45,7 +45,7 @@ struct PlannerHeader: View {
             .padding(.top, 22)
             .padding(.bottom, 22 + Self.overlap)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(HeroBackground(colors: glowColors(dayBlocks)))
+            .background(HeroGlow(colors: glowColors(dayBlocks)))
 
             StatCards(blocks: dayBlocks, settings: settings.first)
                 .padding(.horizontal, 16)
@@ -105,33 +105,6 @@ struct PlannerHeader: View {
         for b in blocks where b.isStudy { minutes[b.category?.colorHex ?? "#8E8E93", default: 0] += b.plannedMinutes }
         let top = minutes.sorted { $0.value > $1.value }.prefix(3).map { Color(hex: $0.key) }
         return top.isEmpty ? [Theme.accent, Color(hex: "#7B61D9")] : top
-    }
-}
-
-// MARK: - Background
-
-/// Near-black band with soft blurred light in the given colors.
-private struct HeroBackground: View {
-    let colors: [Color]
-
-    var body: some View {
-        GeometryReader { g in
-            ZStack {
-                Theme.hero
-                ForEach(Array(colors.enumerated()), id: \.offset) { i, color in
-                    Ellipse()
-                        .fill(color)
-                        .frame(width: g.size.width * 0.42, height: g.size.height * 0.9)
-                        .offset(x: g.size.width * (0.08 + 0.2 * CGFloat(i)), y: -g.size.height * (0.25 - 0.18 * CGFloat(i)))
-                        .opacity(0.55 - 0.1 * Double(i))
-                        .blur(radius: 70)
-                }
-                // Fades the light out towards the cards so the dates stay readable.
-                LinearGradient(colors: [.clear, Theme.hero.opacity(0.85)], startPoint: .top, endPoint: .bottom)
-            }
-            .animation(.easeInOut(duration: 0.6), value: colors)
-        }
-        .clipped()
     }
 }
 
