@@ -647,6 +647,16 @@
         }
       }
     },
+    "Checklist": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roʻyxat"
+          }
+        }
+      }
+    },
     "Choose a PrepPlanner backup file": {
       "localizations": {
         "uz": {
@@ -1267,22 +1277,22 @@
         }
       }
     },
-    "Exam": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imtihon"
-          }
-        }
-      }
-    },
     "Exam dates": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "Imtihon sanalari"
+          }
+        }
+      }
+    },
+    "Exams": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imtihonlar"
           }
         }
       }
@@ -1460,6 +1470,16 @@
         }
       }
     },
+    "IELTS mocks": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IELTS sinovlari"
+          }
+        }
+      }
+    },
     "Import Backup…": {
       "localizations": {
         "uz": {
@@ -1586,6 +1606,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Til"
+          }
+        }
+      }
+    },
+    "Last 12 weeks": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soʻnggi 12 hafta"
           }
         }
       }
@@ -2110,6 +2140,16 @@
         }
       }
     },
+    "New block": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yangi blok"
+          }
+        }
+      }
+    },
     "New block (⌘N)": {
       "localizations": {
         "uz": {
@@ -2380,16 +2420,6 @@
         }
       }
     },
-    "Nothing planned yet": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hali hech narsa rejalashtirilmagan"
-          }
-        }
-      }
-    },
     "Notifications": {
       "localizations": {
         "uz": {
@@ -2593,6 +2623,16 @@
         }
       }
     },
+    "Progress": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natija"
+          }
+        }
+      }
+    },
     "Quit": {
       "localizations": {
         "uz": {
@@ -2771,6 +2811,16 @@
     },
     "SAT R&W": {
       "shouldTranslate": false
+    },
+    "SAT mocks": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAT sinovlari"
+          }
+        }
+      }
     },
     "SAT scores": {
       "localizations": {
@@ -3102,6 +3152,16 @@
         }
       }
     },
+    "Studied": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oʻqildi"
+          }
+        }
+      }
+    },
     "Study": {
       "localizations": {
         "uz": {
@@ -3118,16 +3178,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Faqat mashgʻulot kategoriyalari. Och ustunlar — reja, toʻq ustunlar — amalda."
-          }
-        }
-      }
-    },
-    "Study hours": {
-      "localizations": {
-        "uz": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oʻqish soatlari"
           }
         }
       }
@@ -3462,6 +3512,16 @@
         }
       }
     },
+    "^[%lld block](inflect: true)": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta blok"
+          }
+        }
+      }
+    },
     "^[%lld block](inflect: true) to review": {
       "localizations": {
         "uz": {
@@ -3502,12 +3562,32 @@
         }
       }
     },
+    "^[%lld mistake](inflect: true) logged": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ta xato yozilgan"
+          }
+        }
+      }
+    },
     "^[%lld mock](inflect: true) logged": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld ta sinov kiritilgan"
+          }
+        }
+      }
+    },
+    "all done": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hammasi tugadi"
           }
         }
       }
@@ -3562,12 +3642,32 @@
         }
       }
     },
+    "exam in": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "imtihongacha"
+          }
+        }
+      }
+    },
     "in %@": {
       "localizations": {
         "uz": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ dan soʻng"
+          }
+        }
+      }
+    },
+    "is today": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bugun"
           }
         }
       }
@@ -3592,6 +3692,16 @@
         }
       }
     },
+    "of the plan": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rejadan"
+          }
+        }
+      }
+    },
     "out of 800": {
       "localizations": {
         "uz": {
@@ -3608,6 +3718,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "maqsad %@"
+          }
+        }
+      }
+    },
+    "today": {
+      "localizations": {
+        "uz": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bugun"
           }
         }
       }

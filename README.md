@@ -93,10 +93,11 @@ xcodebuild test -project PrepPlanner.xcodeproj -scheme PrepPlanner -destination 
   overlapping blocks sit side by side
 - Blocks that have ended but are still unmarked are flagged for review
 - Category, title, times, note, status and actual minutes per block
-- Week strip with each day's progress, plus a month calendar with a dot on every day that has blocks
+- Week bar chart in the header showing each day's plan and progress, plus a month calendar with a
+  dot on every day that has blocks
 - Day templates: save a day and apply it to a date or a whole range, with weekday filters and
   Merge / Replace / Skip handling for days that already have blocks
-- Planned vs completed hours for the day, and countdowns to both exams in the sidebar
+- Studied, planned and progress for the day, and a countdown to the next exam
 
 **Results**
 - IELTS: raw Listening and Academic Reading scores (0–40) convert to bands automatically
