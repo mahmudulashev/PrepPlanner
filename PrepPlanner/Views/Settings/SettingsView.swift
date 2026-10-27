@@ -394,7 +394,7 @@ private struct ErrorTypeRow: View {
 
 struct AboutSettings: View {
     private let repo = URL(string: "https://github.com/mahmudulashev/PrepPlanner")!
-    private let email = "mahmud_u@icloud.com"
+    private let email = "mahmud@ulashev.uz"
 
     private var version: String {
         let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
