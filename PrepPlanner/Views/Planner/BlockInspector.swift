@@ -314,7 +314,8 @@ private struct StatusTile: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
             }
-            .foregroundStyle(isOn ? .white : .secondary)
+            // Planned fills with ink, which turns light in dark mode, so its label inverts with it.
+            .foregroundStyle(isOn ? (status == .planned ? Theme.onInk : .white) : .secondary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 9)
             .background(

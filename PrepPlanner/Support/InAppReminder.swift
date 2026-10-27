@@ -185,9 +185,7 @@ private struct ReminderCard: View {
                         } label: {
                             Text(verbatim: action.title)
                         }
-                        .buttonStyle(.bordered)
-                        .tint(action.isProminent ? color : nil)
-                        .controlSize(.small)
+                        .buttonStyle(PillButtonStyle(kind: action.isProminent ? .primary : .secondary))
                     }
                 }
             }

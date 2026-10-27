@@ -80,8 +80,10 @@ struct MenuBarPanel: View {
                     NSApp.activate(ignoringOtherApps: true)
                 }
                 .keyboardShortcut(.defaultAction)
+                .buttonStyle(.pillPrimary)
                 Spacer()
                 Button("Quit") { NSApp.terminate(nil) }
+                    .buttonStyle(.pill)
             }
         }
         .padding(16)
@@ -104,8 +106,7 @@ struct MenuBarPanel: View {
         let elapsed = min(max(tracker.now.timeIntervalSince(c.start), 0), total)
         return VStack(alignment: .leading, spacing: 8) {
             blockLine(c)
-            ProgressView(value: elapsed, total: max(total, 1))
-                .tint(Color(hex: c.colorHex))
+            ProgressTrack(fraction: elapsed / max(total, 1), color: Color(hex: c.colorHex), height: 5)
             HStack {
                 if let left = tracker.minutesLeft {
                     Text("\(TimeFmt.duration(left)) left")
@@ -141,7 +142,7 @@ struct MenuBarPanel: View {
         HStack(spacing: 6) {
             ForEach([BlockStatus.done, .partial, .skipped]) { s in
                 Button(s.title) { tracker.setStatus(s, for: uid) }
-                    .controlSize(.small)
+                    .buttonStyle(PillButtonStyle(kind: s == .done ? .primary : .secondary))
             }
         }
     }

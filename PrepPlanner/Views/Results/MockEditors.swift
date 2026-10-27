@@ -15,7 +15,7 @@ struct EditorScaffold<Content: View, Trailing: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(title).font(.title2.bold())
+                Text(title).font(.system(size: 22, weight: .bold))
                 Spacer()
                 trailing
             }
@@ -30,11 +30,13 @@ struct EditorScaffold<Content: View, Trailing: View>: View {
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
+                    .buttonStyle(.pill)
                 Button(saveTitle) {
                     onSave()
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
+                .buttonStyle(.pillPrimary)
                 .disabled(!canSave)
             }
             .padding(16)

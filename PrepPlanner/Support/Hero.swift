@@ -202,3 +202,45 @@ extension MetricCard where Footer == EmptyView {
                   color: color) { EmptyView() }
     }
 }
+
+/// Button styles for sheet footers and other text buttons: the main action is a neon pill,
+/// anything else a grey one. Disabled buttons fade.
+struct PillButtonStyle: ButtonStyle {
+    enum Kind { case primary, secondary, destructive }
+    var kind: Kind = .secondary
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 13, weight: kind == .primary ? .bold : .semibold))
+            .foregroundStyle(foreground)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 7)
+            .background(Capsule().fill(background))
+            .contentShape(Capsule())
+            .opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.4)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
+    }
+
+    private var foreground: Color {
+        switch kind {
+        case .primary: Theme.onHighlight
+        case .secondary: .primary
+        case .destructive: Theme.danger
+        }
+    }
+
+    private var background: Color {
+        switch kind {
+        case .primary: Theme.highlight
+        case .secondary: Theme.cardMuted
+        case .destructive: Theme.danger.opacity(0.12)
+        }
+    }
+}
+
+extension ButtonStyle where Self == PillButtonStyle {
+    static var pillPrimary: PillButtonStyle { PillButtonStyle(kind: .primary) }
+    static var pill: PillButtonStyle { PillButtonStyle(kind: .secondary) }
+}

@@ -24,7 +24,7 @@ struct ErrorEditor: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(entry == nil ? "Log an error" : "Edit error").font(.title2.bold())
+                Text(entry == nil ? "Log an error" : "Edit error").font(.system(size: 22, weight: .bold))
                 Spacer()
                 if savedCount > 0 {
                     Label("\(savedCount) saved", systemImage: "checkmark.circle.fill")
@@ -89,6 +89,7 @@ struct ErrorEditor: View {
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
+                    .buttonStyle(.pill)
                 if entry == nil {
                     Button("Save & Add Another") {
                         save()
@@ -98,12 +99,14 @@ struct ErrorEditor: View {
                         noteFocused = true
                     }
                     .keyboardShortcut(.return, modifiers: [.command, .shift])
+                    .buttonStyle(.pill)
                 }
                 Button("Save") {
                     save()
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
+                .buttonStyle(.pillPrimary)
             }
             .padding(16)
         }

@@ -56,7 +56,7 @@ struct SaveTemplateSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text("Save day as template")
-                .font(.title2.bold())
+                .font(.system(size: 22, weight: .bold))
             Text("Saves ^[\(blocks.count) block](inflect: true) from \(state.day.formatted(date: .complete, time: .omitted)): times, titles, categories and notes. Statuses aren't saved.")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -86,8 +86,10 @@ struct SaveTemplateSheet: View {
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
+                    .buttonStyle(.pill)
                 Button(willReplace ? "Replace" : "Save", action: save)
                     .keyboardShortcut(.defaultAction)
+                    .buttonStyle(.pillPrimary)
                     .disabled(trimmed.isEmpty || blocks.isEmpty)
             }
         }
@@ -144,7 +146,7 @@ struct ApplyTemplateSheet: View {
 
         VStack(alignment: .leading, spacing: 16) {
             Text("Apply template")
-                .font(.title2.bold())
+                .font(.system(size: 22, weight: .bold))
 
             HStack(alignment: .top, spacing: 18) {
                 templateList
@@ -200,8 +202,10 @@ struct ApplyTemplateSheet: View {
                 Spacer()
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
+                    .buttonStyle(.pill)
                 Button("Apply") { apply(days) }
                     .keyboardShortcut(.defaultAction)
+                    .buttonStyle(.pillPrimary)
                     .disabled(selected == nil || days.isEmpty)
             }
         }

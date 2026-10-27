@@ -7,8 +7,12 @@ struct RootView: View {
     var body: some View {
         @Bindable var state = state
         NavigationSplitView {
-            AppSidebar()
-                .navigationSplitViewColumnWidth(min: 200, ideal: 224, max: 280)
+            // Rebuilt each minute so the badges follow the clock: blocks that just ended
+            // join the review count, and "today" moves on at midnight.
+            TimelineView(.everyMinute) { context in
+                AppSidebar(today: context.date.startOfDay)
+            }
+            .navigationSplitViewColumnWidth(min: 200, ideal: 224, max: 280)
         } detail: {
             ZStack {
                 detail
@@ -69,8 +73,10 @@ struct AppSidebar: View {
     @Query private var habits: [Habit]
     @Namespace private var selection
 
-    init() {
-        let today = Date().startOfDay
+    private let today: Date
+
+    init(today: Date = Date().startOfDay) {
+        self.today = today
         _todayBlocks = Query(filter: #Predicate<TimeBlock> { $0.day == today })
         _habits = Query(filter: #Predicate<Habit> { !$0.isArchived })
     }
@@ -118,11 +124,9 @@ struct AppSidebar: View {
     private func badge(for section: SidebarSection) -> Text? {
         switch section {
         case .planner:
-            // Read each time the sidebar redraws; good enough for a count, cheap to compute.
             let review = todayBlocks.filter(\.needsReview).count
             return review > 0 ? Text(verbatim: "\(review)") : nil
         case .habits:
-            let today = Date().startOfDay
             let left = habits.filter { h in !h.checks.contains { $0.day == today } }.count
             return left > 0 ? Text(verbatim: "\(left)") : nil
         default:
