@@ -20,6 +20,8 @@ struct HeroGlow: View {
                 // Fades the light out towards the bottom so text stays readable.
                 LinearGradient(colors: [.clear, Theme.hero.opacity(0.85)], startPoint: .top, endPoint: .bottom)
             }
+            // One flattened layer: the blur is drawn once instead of on every redraw above it.
+            .drawingGroup()
             .animation(.easeInOut(duration: 0.6), value: colors)
         }
         .clipped()

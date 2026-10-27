@@ -10,7 +10,12 @@ struct PlannerView: View {
             PlannerHeader(day: state.day)
             VStack(spacing: 0) {
                 ScheduleBar(day: state.day)
-                DayTimeline(day: state.day)
+                ZStack {
+                    DayTimeline(day: state.day)
+                        .id(state.day)
+                        .transition(.opacity)
+                }
+                .animation(.easeInOut(duration: 0.2), value: state.day)
             }
             .background(Theme.card)
             .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))

@@ -195,7 +195,9 @@ final class AppState {
     }
 
     func toggleDone(_ block: TimeBlock) {
-        block.setStatus(block.status == .done ? .planned : .done)
+        withAnimation(.spring(duration: 0.3)) {
+            block.setStatus(block.status == .done ? .planned : .done)
+        }
     }
 
     func duplicate(_ block: TimeBlock) {
